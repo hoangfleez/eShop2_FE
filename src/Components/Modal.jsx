@@ -55,6 +55,7 @@ export default function ModalLogin() {
   const [open, setOpen] = React.useState(false);
   const [isSigIn,setIsSignIn] = React.useState(true);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,8 +71,8 @@ export default function ModalLogin() {
         aria-labelledby="customized-dialog-title"
         open={open}
     >
-        <SignIn id="customized-dialog-title" onClose={handleClose}></SignIn>
-    { isSigIn ? <SignIn setIsSignIn={setIsSignIn}/>: <SignUp setIsSignIn={setIsSignIn}/>}
+        
+    { isSigIn ?<SignIn id="customized-dialog-title" onClose={handleClose} setIsSignIn={setIsSignIn}></SignIn>: <SignUp setIsSignIn={setIsSignIn}/>}
         
     </BootstrapDialog>
     </div>
