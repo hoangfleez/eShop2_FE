@@ -16,7 +16,6 @@ import { Form, Formik, Field } from "formik";
 import { TextField } from "formik-mui";
 import LinearProgress from '@mui/material/LinearProgress';
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
 import { login } from "../../sevives/useService";
 
 function Copyright(props) {
@@ -43,10 +42,9 @@ const defaultTheme = createTheme();
 
 export default function SignIn(props) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const submit = (user) => {
     dispatch(login(user)).then((data) => {
-        console.log(data)
         if(data.payload === "User is not exist"){
             localStorage.clear();
         } else {

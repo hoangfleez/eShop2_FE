@@ -14,3 +14,11 @@ export const register = createAsyncThunk(
     return res.data;
   }
 )
+export const logout = createAsyncThunk(
+  'user/logout',
+  async() => {
+  
+    localStorage.clear();
+    return  undefined;
+  }
+)
