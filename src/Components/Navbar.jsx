@@ -2,6 +2,8 @@ import React from "react";
 import ModalLogin from "./Modal";
 
 const Navbar = () => {
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
+
   return (
     <div>
       <div className="container-fluid">

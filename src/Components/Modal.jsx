@@ -70,7 +70,7 @@ export default function ModalLogin() {
         aria-labelledby="customized-dialog-title"
         open={open}
     >
-        <Login id="customized-dialog-title" onClose={handleClose}></Login>
+        <SignIn id="customized-dialog-title" onClose={handleClose}></SignIn>
     { isSigIn ? <SignIn setIsSignIn={setIsSignIn}/>: <SignUp setIsSignIn={setIsSignIn}/>}
         
     </BootstrapDialog>

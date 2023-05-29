@@ -2,7 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -12,7 +11,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./style.css"
+import "./style.css";
+import { Form, Formik, Field } from "formik";
+import { TextField } from "formik-mui";
+import LinearProgress from '@mui/material/LinearProgress';
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import { login } from "../../sevives/useService";
+
 function Copyright(props) {
   return (
     <Typography
@@ -36,6 +42,19 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const submit = (user) => {
+    dispatch(login(user)).then((data) => {
+        console.log(data)
+        if(data.payload === "User is not exist"){
+            localStorage.clear();
+        } else {
+            props.onClose();
+        }
+    });
+}
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -63,66 +82,93 @@ export default function SignIn(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+          <Formik
+            initialValues={{
+              username: "",
+              password: "",
+            }}
+            // onSubmit={(values) => {
+            //   submit(values);
+            // }}
+            onSubmit={(values, { setSubmitting }) => {
+              submit(values);
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 500);
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              color="secondary"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              color="secondary"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              id="btn-signin"
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: "pink" }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link variant="body2" sx={{color:"black"}}>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  sx={{color:"black"}}
-                  variant="body2"
-                  onClick={() => {
-                    props.setIsSignIn(false);
-                  }}
+          {({ submitForm, isSubmitting }) => (
+            <Form>
+              <Box
+                // component="form"
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 1 }}
+              >
+                <Field
+                  component={TextField}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="username"
+                  color="secondary"
+                />
+                <Field
+                  component={TextField}
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  color="secondary"
+                  autoComplete="current-password"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                {isSubmitting && <LinearProgress />}
+                <Button
+                  id="btn-signin"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={isSubmitting}
+                  onClick={submitForm}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "pink" }}
                 >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+                  Sign In
+                </Button>
+
+                <Grid container>
+                  <Grid item xs>
+                    <Link variant="body2" sx={{ color: "black" }}>
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link
+                      sx={{ color: "black" }}
+                      variant="body2"
+                      onClick={() => {
+                        props.setIsSignIn(false);
+                      }}
+                    >
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Form>
+            )}
+          </Formik>
         </Box>
+
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
