@@ -4,18 +4,17 @@ import {Field, Form, Formik} from "formik";
 import {addProduct} from "../../sevives/productService.js";
 
 
-const AddProduct = () =>{
+const AddProduct = (props) =>{
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
-    const user = useSelector(state => {
-        return state.user.currentUser
-    })
+
 
     const handleAdd = async (values) => {
         let data = {...values};
-        await dispatch(addProduct(data));
+       let product = await dispatch(addProduct(data));
+        props.handleAddNew(product)
         await navigate('/')
     }
 

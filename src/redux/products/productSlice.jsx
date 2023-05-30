@@ -1,8 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addProduct, getProduct} from "../../sevives/productService.js";
+import {addProduct, deleteProduct, findProductById, getProduct} from "../../sevives/productService.js";
 
 const initialState = {
-    list: []
+    list: [],
+    currentProduct: {}
 }
 const productSlice = createSlice({
     name: 'products',
@@ -13,8 +14,20 @@ const productSlice = createSlice({
         });
 
         builder.addCase(addProduct.fulfilled, (state, action) => {
-            state.products = action.payload
+            state.list = action.payload;
 
+        });
+
+        builder.addCase(deleteProduct.fulfilled,(state,action) => {
+            const id = action.payload;
+            const index = state.list.findIndex(item => item.id === id);
+            if (index !== -1){
+                state.list.splice(index,1)
+            }
+        });
+
+        builder.addCase(findProductById.fulfilled,(state,action) => {
+            state.currentProduct = action.payload;
         });
     }
 });

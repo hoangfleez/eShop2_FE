@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getProduct} from "../../sevives/productService.js";
+import {deleteProduct, getProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './List.css'
 import AddProduct from "./AddProduct.jsx";
+import {Link} from "react-router-dom";
 
 
 const List = () => {
@@ -17,6 +18,11 @@ const List = () => {
     const products = useSelector(({products}) => {
         return products.list;
     });
+
+    const handleAddNew = (product) =>{
+        setShow(false);
+        products.unshift(product)
+    }
 
 
     useEffect(() => {
@@ -34,11 +40,13 @@ const List = () => {
                     <Modal.Title>Add new Product</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddProduct/>
+                    <AddProduct handleAddNew={handleAddNew}/>
                 </Modal.Body>
 
             </Modal>
         </>
+
+
             <div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -114,13 +122,13 @@ const List = () => {
                                 <span className="home-product-item_sale-off-percent">10%</span>
                                 <span className="home-product-item_sale-off-label"> Giảm</span>
                             </div>
-
                         </a>
+                        <button onClick={()=>dispatch(deleteProduct(item.id))}>Delete</button>
+                        <Link to={`/edit/${item.id}`}>Edit</Link>
                     </div>
                 </div>
             </div>
             ))}
-
 
         </>
     );
