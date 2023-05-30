@@ -1,20 +1,44 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
+import Modal from 'react-bootstrap/Modal'
+import Button from "react-bootstrap/Button";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './List.css'
+import AddProduct from "./AddProduct.jsx";
 
 
 const List = () => {
     const dispatch = useDispatch();
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const products = useSelector(({products}) => {
         return products.list;
-    })
+    });
+
 
     useEffect(() => {
         dispatch(getProduct());
     }, [])
     return (
         <>
+            <>
+            <Button variant="primary" className="my-3" onClick={handleShow}>
+                Add new Product
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add new Product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AddProduct/>
+                </Modal.Body>
+
+            </Modal>
+        </>
             <div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -48,26 +72,6 @@ const List = () => {
                         <span class="sr-only">Next</span>
                     </button>
                 </div>
-            </div>
-
-            <div>
-                <table border={1}>
-                    <tbody>
-                    {
-                        products.map(item => (
-                                <tr >
-
-
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            )
-                        )
-                    }
-                    </tbody>
-
-                </table>
-
             </div>
 
             {products.map(item => (

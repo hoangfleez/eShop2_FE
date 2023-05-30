@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
 
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector(({ user }) => {
@@ -154,6 +155,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <a className="nav-item nav-link">Contact</a>
+
                 </div>
                 {user ? (
                   <div className="navbar-nav ml-auto py-0">
@@ -187,6 +189,7 @@ const Navbar = () => {
                       >
                         <MenuItem onClick={handleClose}>{user.username}</MenuItem>
                         <MenuItem onClick={clearCookies} >Log Out</MenuItem>
+
                       </Menu>
                     </div>
                   </div>

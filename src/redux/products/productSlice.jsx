@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getProduct} from "../../sevives/productService.js";
+import {addProduct, getProduct} from "../../sevives/productService.js";
 
 const initialState = {
     list: []
@@ -10,7 +10,12 @@ const productSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getProduct.fulfilled, (state, action) => {
             state.list = action.payload;
-        })
+        });
+
+        builder.addCase(addProduct.fulfilled, (state, action) => {
+            state.products = action.payload
+
+        });
     }
 });
 

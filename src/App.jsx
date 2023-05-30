@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Index } from "./pages";
 import List from "./pages/product/List";
+import AddProduct from "./pages/product/AddProduct.jsx";
 // import { List } from "./pages/product/List";
 
 function App() {
@@ -8,7 +9,10 @@ function App() {
     <>
       <Routes>
         <Route path={"/"} element={<Index/>}>
-          <Route path={"/"} element={<List/>}></Route>
+          <Route path={"/"} element={<List/>}>
+              <Route path={'add-product'} element={<AddProduct/>}></Route>
+          </Route>
+
         </Route>
       </Routes>
     </>

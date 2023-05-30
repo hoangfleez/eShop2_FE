@@ -9,3 +9,12 @@ export const getProduct = createAsyncThunk(
     }
 )
 
+export const addProduct = createAsyncThunk(
+    'products/addProduct',
+    async (data)=>{
+        await customAPI.post('products',data);
+        const res = await customAPI.get('products');
+        return res.data;
+    }
+)
+
