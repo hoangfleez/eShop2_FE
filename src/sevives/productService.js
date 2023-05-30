@@ -38,7 +38,7 @@ export const findProductById = createAsyncThunk(
 export const editProduct = createAsyncThunk(
     'products/editProduct',
     async (arg, thunkAPI) => {
-        await customAPI.put(`products/${arg.id}`, arg.product)
+        await customAPI.put(`products/${arg.id}`,arg)
     }
 )
 

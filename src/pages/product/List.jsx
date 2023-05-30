@@ -1,38 +1,65 @@
 import React, {useEffect, useState} from 'react';
-import {deleteProduct, getProduct} from "../../sevives/productService.js";
+import {deleteProduct, getProduct,editProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import ModalEdit from "./ModalEdit.jsx";
 import './List.css'
 import AddProduct from "./AddProduct.jsx";
-import {Link} from "react-router-dom";
 
 
 const List = () => {
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () =>{
+        setShow(false);
+        setShowEditModal(false);
+    }
     const handleShow = () => setShow(true);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [dataProductEdit, setDataProductEdit] = useState({})
+
+
+
+
     const products = useSelector(({products}) => {
         return products.list;
     });
+
 
     const handleAddNew = (product) =>{
         setShow(false);
         products.unshift(product)
     }
 
+    const handleUpdateProduct = (product) => {
+        const clonedProducts = [...products];
+        const index = clonedProducts.findIndex((item) => item.id === product.id);
+        if (index >= 0) {
+            clonedProducts[index] = product;
+            dispatch(getProduct(clonedProducts));
+        }
+    };
+
 
     useEffect(() => {
         dispatch(getProduct());
     }, [])
+
+
+    const handleEditProduct = (product) => {
+        console.log(product)
+        setDataProductEdit(product);
+        setShowEditModal(true);
+
+    }
+
     return (
         <>
             <>
             <Button variant="primary" className="my-3" onClick={handleShow}>
-                Add new Product
+                 Edit Product
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -46,43 +73,45 @@ const List = () => {
             </Modal>
         </>
 
+           
+
 
             <div>
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                    <ol className="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                     </ol>
-                    <div class="carousel-inner" style={{height: "700px", objectFit: "container"}}>
-                        <div class="carousel-item active">
+                    <div className="carousel-inner" style={{height: "700px", objectFit: "container"}}>
+                        <div className="carousel-item active">
                             <img
                                 src="https://sites.google.com/site/thoitrangnamnulongan/_/rsrc/1524193765627/home/free-vector-fashion-shopping-01-vector_000527_fashion_shopping_01_vector.jpg"
-                                class="d-block w-100 " alt="..."/>
+                                className="d-block w-100 " alt="..."/>
                         </div>
-                        <div class="carousel-item">
+                        <div className="carousel-item">
                             <img src="https://www.fashioncrab.com/wp-content/uploads/2016/01/Banner4.jpg"
-                                 class="d-block w-100 h-10" alt="..."/>
+                                 className="d-block w-100 h-10" alt="..."/>
                         </div>
-                        <div class="carousel-item">
+                        <div className="carousel-item">
                             <img src="https://xanhlo.com/media/wysiwyg/tintuc/mua-quan-ao-sale-off.jpg"
-                                 class="d-block w-100 h-10" alt="..."/>
+                                 className="d-block w-100 h-10" alt="..."/>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
+                    <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
                             data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
+                    <button className="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
                             data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Next</span>
                     </button>
                 </div>
             </div>
 
-            {products.map(item => (
+            {products && products.map(item => (
             <div className="home-product" key={item.id}>
                 <div className="grid__row">
                     <div className="grid__column-2-4">
@@ -124,12 +153,21 @@ const List = () => {
                             </div>
                         </a>
                         <button onClick={()=>dispatch(deleteProduct(item.id))}>Delete</button>
-                        <Link to={`/edit/${item.id}`}>Edit</Link>
+                        <button
+                        onClick={() => handleEditProduct(item)}
+                        >Edit</button>
+                        
                     </div>
                 </div>
             </div>
-            ))}
 
+            ))}
+            <ModalEdit
+            show = {showEditModal}
+            dataProductEdit={dataProductEdit}
+            handleClose={handleClose}
+            handleUpdateProduct={handleUpdateProduct}
+            />
         </>
     );
 };
