@@ -11,9 +11,11 @@ import { logout } from "../sevives/useService";
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector(({ user }) => {
+    console.log(user);
     return user.currentUser;
   });
   const [anchorEl, setAnchorEl] = React.useState(null);
+
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -171,7 +173,7 @@ const Navbar = () => {
                       </IconButton>
                       <Menu
                         id="menu-appbar"
-                        // anchorEl={anchorEl}
+                        anchorEl={anchorEl}
                         anchorOrigin={{
                           vertical: "top",
                           horizontal: "right",

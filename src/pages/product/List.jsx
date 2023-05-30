@@ -22,7 +22,7 @@ const List = () => {
                         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                     </ol>
-                    <div class="carousel-inner" style={{height: "700px", objectFit: "container"}}>
+                    <div class="carousel-inner" style={{height: "700px", objectFit: "cover"}}>
                         <div class="carousel-item active">
                             <img
                                 src="https://sites.google.com/site/thoitrangnamnulongan/_/rsrc/1524193765627/home/free-vector-fashion-shopping-01-vector_000527_fashion_shopping_01_vector.jpg"

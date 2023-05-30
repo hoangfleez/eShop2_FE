@@ -17,7 +17,6 @@ export const register = createAsyncThunk(
 export const logout = createAsyncThunk(
   'user/logout',
   async() => {
-  
     localStorage.clear();
     return  undefined;
   }
