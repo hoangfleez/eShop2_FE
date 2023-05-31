@@ -4,8 +4,9 @@ import {Field, Form, Formik} from "formik";
 import {addProduct} from "../../sevives/productService.js";
 import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../sevives/firebase.js";
+import {getCategory} from "../../sevives/categoryService.js";
 import { v4 } from "uuid";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const AddProduct = (props) =>{
@@ -30,9 +31,19 @@ const AddProduct = (props) =>{
     const handleAdd = async (values) => {
         let data = {...values};
        let product = await dispatch(addProduct(data));
-        props.handleAddNew(product)
-        await navigate('/')
+       await props.handleAddNew(product)
+         navigate('/')
     }
+
+    const category = useSelector(state =>{
+        return state.category.category
+    });
+
+
+
+    useEffect( ()=>{
+         dispatch(getCategory())
+    },[]);
 
 
 
@@ -69,8 +80,13 @@ const AddProduct = (props) =>{
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="exampleInput" className="form-label">The loai</label>
-                        <Field type="text" className="form-control" id="exampleInput" name={'category'}/>
+                        <Field as='select' name={'category'} >
+                            {category !== undefined && category.map((item)=>(
+                                <option value={item.id}>{item.name}</option>
+                            ))
+
+                            }
+                        </Field>
                     </div>
 
                     <Form>
@@ -95,7 +111,7 @@ const AddProduct = (props) =>{
                             />
                         </div>
 
-                        <button style={{margin: 15}} onClick={uploadFile}> Upload</button>
+                        <button style={{margin: 30}} onClick={uploadFile}> Upload</button>
                     </Form>
 
 

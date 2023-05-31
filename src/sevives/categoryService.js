@@ -4,7 +4,8 @@ import customAPI from "./customAPI";
 export const getCategory = createAsyncThunk(
     'category/getCategory',
     async ()=>{
-        const res = await customAPI.get('products/getCategories');
+        console.log(1)
+        const res = await customAPI.get('category');
         return res.data;
     }
 )

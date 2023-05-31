@@ -29,7 +29,7 @@ const List = () => {
 
 
     const handleAddNew = (product) =>{
-        setShow(false);
+         setShow(false);
         products.unshift(product)
     }
 
@@ -49,7 +49,6 @@ const List = () => {
 
 
     const handleEditProduct = (product) => {
-        console.log(product)
         setDataProductEdit(product);
         setShowEditModal(true);
 
