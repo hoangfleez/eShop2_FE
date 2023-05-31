@@ -13,9 +13,15 @@ const ListClient = () => {
         return products.list;
     });
 
-    const addToCartProduct = (id, quantity, price) =>{
-        dispatch(addCart(id, quantity, price))
-        console.log(id, quantity, price )
+    const addToCartProduct = (id,quantity,price) =>{
+        let data = {
+            productId: id,
+            quantity: quantity,
+            price: price
+        }
+
+         dispatch(addCart(data))
+
     }
 
     useEffect(() => {

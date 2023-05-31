@@ -48,7 +48,7 @@ const [message, setMessage] = React.useState("")
 
   const submit = (user) => {
     dispatch(register(user)).then((data) => {
-
+      console.log(data)
       if (data.payload === "User already existed!") {
         props.setIsSignIn();
         setMessage("User already existed!")
