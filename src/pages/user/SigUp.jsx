@@ -15,7 +15,7 @@ import "./style.css";
 import { Form, Formik, Field } from "formik";
 import { register } from "../../sevives/useService";
 import ModalLogin from "../../Components/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinearProgress } from "@mui/material";
 
 function Copyright(props) {
@@ -42,13 +42,22 @@ const defaultTheme = createTheme();
 
 export default function SignUp(props) {
   const dispatch = useDispatch();
+
+const [message, setMessage] = React.useState("")
+
+
   const submit = (user) => {
     dispatch(register(user)).then((data) => {
-      console.log(data);
+
+      if (data.payload === "User already existed!") {
+        props.setIsSignIn();
+        setMessage("User already existed!")
+      }
       if (data.payload === "Create User Success!") {
         props.setIsSignIn(true);
+        
       } else {
-        props.setIsSignIn(false);
+        // props.setIsSignIn(true);
       }
     });
   };
@@ -113,6 +122,7 @@ export default function SignUp(props) {
                       />
                     </Grid>
                   </Grid>
+                  {message ? <small className="small">{message}</small> : ""}
                   {isSubmitting && <LinearProgress />}
                   <Button
                     type="submit"
