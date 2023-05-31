@@ -119,6 +119,7 @@ export default function SignIn(props) {
                     label="User Name"
                     name="username"
                     autoComplete="username"
+                    inputProps={{ minLength: 2 }}
                     color="secondary"
                   />
 
@@ -127,6 +128,7 @@ export default function SignIn(props) {
                     margin="normal"
                     required
                     fullWidth
+                    inputProps={{ minLength: 6 }}
                     name="password"
                     label="Password"
                     type="password"

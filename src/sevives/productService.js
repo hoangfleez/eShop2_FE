@@ -14,6 +14,7 @@ export const addProduct = createAsyncThunk(
     async (data)=>{
         await customAPI.post('products',data);
         const res = await customAPI.get('products');
+        console.log(res)
         return res.data;
     }
 )

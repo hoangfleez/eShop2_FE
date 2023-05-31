@@ -88,7 +88,6 @@ const ModalEdit = (props) => {
                             value={category}
                             onChange={(event) => setCategory(event.target.value)}
                         >
-                            <option value="">Select Category</option>
                             <option value="1">hoa qua</option>
                             <option value="2">banh keo</option>
                         </select>

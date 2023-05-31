@@ -105,6 +105,7 @@ const [message, setMessage] = React.useState("")
                         label="User Name"
                         name="username"
                         autoComplete="username"
+                        inputProps={{ minLength: 2 }}
                         color="secondary"
                       />
                     </Grid>
@@ -113,6 +114,7 @@ const [message, setMessage] = React.useState("")
                         component={TextField}
                         required
                         fullWidth
+                        inputProps={{ minLength: 6 }}
                         name="password"
                         label="Password"
                         type="password"
