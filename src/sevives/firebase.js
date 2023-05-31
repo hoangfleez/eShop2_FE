@@ -1,16 +1,18 @@
 import { initializeApp } from "firebase/app";
-import {getStorage} from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBEeuc5h9lXVdFBD9f4zU1ICvR6foavC4Q",
-    authDomain: "blog-reactjs-4074e.firebaseapp.com",
-    projectId: "blog-reactjs-4074e",
-    storageBucket: "blog-reactjs-4074e.appspot.com",
-    messagingSenderId: "366723734041",
-    appId: "1:366723734041:web:fc6a90dfa25a659e786888",
-    measurementId: "G-REVKTWL4CG"
+    // Thêm cấu hình Firebase của bạn ở đây
+        apiKey: "AIzaSyCsLtfXRnMh36DyM2C6y5ffdTXaKZAM4-I",
+    authDomain: "quang-7e2eb.firebaseapp.com",
+    projectId: "quang-7e2eb",
+    storageBucket: "quang-7e2eb.appspot.com",
+    messagingSenderId: "432810140051",
+    appId: "1:432810140051:web:a71ad866b6445a6d394866",
+    measurementId: "G-FX66SEMWHZ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+const storage = getStorage(app);
+
+export { storage };

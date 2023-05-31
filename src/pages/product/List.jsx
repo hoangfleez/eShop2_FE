@@ -57,25 +57,6 @@ const List = () => {
 
     return (
         <>
-            <>
-            <Button variant="primary" className="my-3" onClick={handleShow}>
-                 Edit Product
-            </Button>
-
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add new Product</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <AddProduct handleAddNew={handleAddNew}/>
-                </Modal.Body>
-
-            </Modal>
-        </>
-
-           
-
-
             <div>
                 <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                     <ol className="carousel-indicators">
@@ -111,12 +92,30 @@ const List = () => {
                 </div>
             </div>
 
+
+            <>
+                <Button variant="primary" className="my-3" onClick={handleShow}>
+                    <i className="fa-solid fa-plus"></i> Add
+                </Button>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add new Product</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <AddProduct handleAddNew={handleAddNew}/>
+                    </Modal.Body>
+
+                </Modal>
+            </>
+
+
             {products && products.map(item => (
             <div className="home-product" key={item.id}>
                 <div className="grid__row">
                     <div className="grid__column-2-4">
                         <a className="home-product-item" href="#">
-                            <div className="home-product-item__img"></div>
+                            <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
 
                             <div className="home-product-item__price">
@@ -152,10 +151,13 @@ const List = () => {
                                 <span className="home-product-item_sale-off-label"> Giảm</span>
                             </div>
                         </a>
-                        <button onClick={()=>dispatch(deleteProduct(item.id))}>Delete</button>
+                        <button onClick={()=>dispatch(deleteProduct(item.id))}><i className="fa-solid fa-trash-can"></i></button>
                         <button
                         onClick={() => handleEditProduct(item)}
-                        >Edit</button>
+                        style={{marginLeft: 20}}
+                        >
+                        <i className="fa-solid fa-pen-to-square"></i>
+                        </button>
                         
                     </div>
                 </div>
