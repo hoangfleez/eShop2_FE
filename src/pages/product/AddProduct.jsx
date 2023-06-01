@@ -17,7 +17,8 @@ const AddProduct = (props) =>{
     const [imageUpload, setImageUpload] = useState(null);
     const [imageUrls, setImageUrls] = useState('');
 
-    const uploadFile = () => {
+    const uploadFile = (event) => {
+        event.preventDefault();
         if (imageUpload == null) return;
         const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -111,7 +112,7 @@ const AddProduct = (props) =>{
                             />
                         </div>
 
-                        <button style={{margin: 10}} onClick={uploadFile}> Upload</button>
+                        <button style={{margin: 10}} onClick={(event) => uploadFile(event)}> Upload</button>
                     </Form>
                     <br/>
 

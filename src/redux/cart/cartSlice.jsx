@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addCart, deleteCart, getCart} from "../../sevives/cartService.js";
-import {deleteProduct} from "../../sevives/productService.js";
+import {addCart, deleteCart,getCart, increaseCart, reduceCart} from "../../sevives/cartService.js";
+
+
 
 
 const initialState = {
-    cart:[],
+    cart:[]
 }
 
 const cartSlice = createSlice({
@@ -28,6 +29,12 @@ const cartSlice = createSlice({
                 }
             });
 
+            builder.addCase(increaseCart.fulfilled,(state,action) => {
+                state.cart = action.payload;
+            });
+            builder.addCase(reduceCart.fulfilled,(state,action) => {
+                state.cart = action.payload;
+            });
         }
     }
 )

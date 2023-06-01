@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Cart.css"
 import {useDispatch, useSelector} from "react-redux";
-import {deleteCart, getCart} from "../../sevives/cartService.js";
+import {deleteCart, getCart, increaseCart, reduceCart} from "../../sevives/cartService.js";
 import {useNavigate} from "react-router-dom";
 
 
@@ -11,8 +11,10 @@ const CartDetail = () => {
     const navigate = useNavigate();
 
     const cart = useSelector(state => {
+        console.log(state.cart.cart,11)
         return state.cart.cart;
     });
+
 
     useEffect(() => {
         dispatch(getCart());
@@ -22,6 +24,25 @@ const CartDetail = () => {
     const handleDelete =  (id) =>{
         dispatch(deleteCart(id))
         navigate("/cart-detail")
+    }
+
+    const handleIncrease = (product,price) =>{
+        let productFound = {
+            productId: product.id,
+            quantity: 1,
+            price: price
+        }
+        console.log(productFound)
+        dispatch(increaseCart(productFound))
+    }
+
+    const handleReduce = (product,price) => {
+        let productFound = {
+            productId: product.id,
+            quantity: -1,
+            price: price
+        }
+        dispatch(reduceCart(productFound))
     }
 
     return (
@@ -61,7 +82,10 @@ const CartDetail = () => {
                                 <td className="align-middle">
                                     <div className="input-group quantity mx-auto" style={{width: 100}}>
                                         <div className="input-group-btn">
-                                            <button className="btn btn-sm btn-primary btn-minus">
+                                            <button className="btn btn-sm btn-primary btn-minus"
+                                            onClick={() => handleReduce(item.product,item.price)}
+
+                                            >
                                                 <i className="fa fa-minus"></i>
                                             </button>
                                         </div>
@@ -70,7 +94,7 @@ const CartDetail = () => {
                                                value={item.quantity} />
                                             <div className="input-group-btn">
                                                 <button className="btn btn-sm btn-primary btn-plus"
-
+                                                        onClick={() => handleIncrease(item.product,item.price)}
                                                 >
                                                     <i className="fa fa-plus"></i>
                                                 </button>
