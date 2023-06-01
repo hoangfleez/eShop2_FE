@@ -29,6 +29,7 @@ const List = () => {
 
 
     const handleAddNew = (product) =>{
+
          setShow(false);
         products.unshift(product)
     }

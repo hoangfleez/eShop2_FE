@@ -21,6 +21,7 @@ const ListClient = () => {
         }
 
          dispatch(addCart(data))
+        alert('them san pham thanh cong')
 
     }
 

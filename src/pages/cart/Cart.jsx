@@ -1,12 +1,31 @@
 import React, {useEffect} from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Cart.css"
+import {useDispatch, useSelector} from "react-redux";
+import {deleteCart, getCart} from "../../sevives/cartService.js";
+import {useNavigate} from "react-router-dom";
+
 
 const CartDetail = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const cart = useSelector(state => {
+        return state.cart.cart;
+    });
+
+    useEffect(() => {
+        dispatch(getCart());
+    }, [])
+
+
+    const handleDelete =  (id) =>{
+        dispatch(deleteCart(id))
+        navigate("/cart-detail")
+    }
+
     return (
         <>
-
 
             <div className="container-fluid bg-secondary mb-5">
                 <div className="d-flex flex-column align-items-center justify-content-center" style={{minHeight: "300"}}>
@@ -33,11 +52,12 @@ const CartDetail = () => {
                                 <th>Remove</th>
                             </tr>
                             </thead>
+                            {cart && cart.map(item => (
                             <tbody className="align-middle">
                             <tr>
                                 <td className="align-middle"><img src="https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/350048665_601131325317742_487636768014765375_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=_kU2Tv_YyEkAX-ffuPA&_nc_ht=scontent.fhan2-5.fna&oh=00_AfAAR8BjRG3Rv7cPIBiRANqro1oG8DMHjKiuzlM6MFJ8bA&oe=647CB005" alt=""
                                                                   style={{width: 50}}/> Colorful Stylish Shirt</td>
-                                <td className="align-middle">$150</td>
+                                <td className="align-middle">{item.price}</td>
                                 <td className="align-middle">
                                     <div className="input-group quantity mx-auto" style={{width: 100}}>
                                         <div className="input-group-btn">
@@ -47,21 +67,26 @@ const CartDetail = () => {
                                         </div>
                                         <input type="text"
                                                className="form-control form-control-sm bg-secondary text-center"
-                                               value="1" />
+                                               value={item.quantity} />
                                             <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-primary btn-plus">
+                                                <button className="btn btn-sm btn-primary btn-plus"
+
+                                                >
                                                     <i className="fa fa-plus"></i>
                                                 </button>
                                             </div>
                                     </div>
                                 </td>
-                                <td className="align-middle">$150</td>
+                                <td className="align-middle">{item.totalPrice}</td>
                                 <td className="align-middle">
-                                    <button className="btn btn-sm btn-primary"><i className="fa fa-times"></i></button>
+                                    <button className="btn btn-sm btn-primary"
+                                    onClick={() => handleDelete(item.id)}
+                                    ><i className="fa fa-times"></i></button>
                                 </td>
                             </tr>
 
                             </tbody>
+                                ))}
                         </table>
                     </div>
                     <div className="col-lg-4">

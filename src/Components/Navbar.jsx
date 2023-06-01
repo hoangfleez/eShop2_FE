@@ -7,6 +7,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
+import {Link} from "react-router-dom";
 
 
 const Navbar = () => {
@@ -40,7 +41,7 @@ const Navbar = () => {
                 <span className="text-primary font-weight-bold border px-3 mr-1">
                   E
                 </span>
-                Shopper
+                <Link style={{textDecoration:"none"}} to="/client">Shopper</Link>
               </h1>
             </a>
           </div>
@@ -65,10 +66,10 @@ const Navbar = () => {
               <i className="fas fa-heart text-primary"></i>
               <span className="badge">0</span>
             </a>
-            <a className="btn border">
+            <Link to="/cart-detail" className="btn border">
               <i className="fas fa-shopping-cart text-primary"></i>
               <span className="badge">0</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

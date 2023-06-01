@@ -111,11 +111,12 @@ const AddProduct = (props) =>{
                             />
                         </div>
 
-                        <button style={{margin: 30}} onClick={uploadFile}> Upload</button>
+                        <button style={{margin: 10}} onClick={uploadFile}> Upload</button>
                     </Form>
+                    <br/>
 
 
-                    <button type="submit" className="btn btn-outline-primary" >Add</button>
+                    <button style={{marginTop: 50}} type="submit" className="btn btn-outline-primary" >Add</button>
 
                 </Form>
 
