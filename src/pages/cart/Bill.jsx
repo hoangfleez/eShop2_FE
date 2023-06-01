@@ -29,90 +29,89 @@ const Bill = () => {
 
 
     return(
-        <table className="body-wrap">
-            <tbody>
-            <tr>
-                <td></td>
-                <td className="container" width="600">
-                    <div className="content">
-                        <table className="main" width="100%" cellPadding="0" cellSpacing="0">
-                            <tbody>
-                            <tr>
-                                <td className="content-wrap aligncenter">
-                                    <table width="100%" cellPadding="0" cellSpacing="0">
+        <div className="box-bill">
+            <div className="container">
+                <div className="row">
+                    <div className="col-xs-12">
+                        <div className="invoice-title">
+                            <h1>Thanks for using our app</h1>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <h3>Name: {user.username}</h3>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">
+                                <h4 className="panel-title">
+                                    <strong>Order summary</strong>
+                                </h4>
+                            </div>
+                            <div className="panel-body">
+                                <div className="table-responsive">
+                                    <table className="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <td>
+                                                <strong>Item</strong>
+                                            </td>
+                                            <td className="text-center">
+                                                <strong>Price</strong>
+                                            </td>
+                                            <td className="text-center">
+                                                <strong>Quantity</strong>
+                                            </td>
+                                            <td className="text-right">
+                                                <strong>Totals</strong>
+                                            </td>
+                                        </tr>
+                                        </thead>
                                         <tbody>
+                                        {cart &&
+                                            cart.map((item) => (
+                                                <tr>
+                                                    <td>{item.product.name}</td>
+                                                    <td className="text-center">{item.quantity}</td>
+                                                    <td className="text-center">${item.price}</td>
+                                                    <td className="text-right">${item.totalPrice}</td>
+                                                    <input
+                                                        type="hidden"
+                                                        classNameName="form-control form-control-sm bg-secondary text-center"
+                                                        value={(total += item.totalPrice)}
+                                                    />
+                                                </tr>
+                                            ))}
                                         <tr>
-                                            <td className="content-block">
-                                                <h2>Thanks for using our app</h2>
+                                            <td className="thick-line"></td>
+                                            <td className="thick-line"></td>
+                                            <td className="thick-line text-center">
+                                                <strong>Subtotal</strong>
                                             </td>
+                                            <td className="thick-line text-right">${total}</td>
                                         </tr>
                                         <tr>
-                                            <td className="content-block">
-                                                <table className="invoice">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td> Khach hang: {user.username}</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>ten san pham</td>
-                                                        <td>so luong</td>
-                                                        <td>gia</td>
-                                                        <td>tong gia</td>
-                                                    </tr>
-                                                    {cart && cart.map (item => (
-                                                    <tr>
-                                                        <td>
-                                                            <table className="invoice-items" cellPadding="0"
-                                                                   cellSpacing="0">
-                                                                <tbody>
-
-                                                                <tr>
-                                                                    <td> {item.product.name}</td>
-                                                                    <td> {item.quantity}</td>
-                                                                    <td className="alignright">{item.price}$</td>
-                                                                    <td className="alignright">{item.totalPrice}$</td>
-                                                                </tr>
-                                                                <input type="hidden"
-                                                                       className="form-control form-control-sm bg-secondary text-center"
-                                                                       value={total += item.totalPrice} />
-
-
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-                                                    ))}
-                                                    <tr className="total">
-                                                        <td className="alignright" width="80%">Total</td>
-                                                        <td className="alignright">{total}$</td>
-
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                            <td className="no-line"></td>
+                                            <td className="no-line"></td>
+                                            <td className="no-line text-center">
+                                                <strong>Total</strong>
                                             </td>
+                                            <td className="no-line text-right">${total}</td>
                                         </tr>
-                                        <tr>
-                                            <td className="content-block">
-                                                <button onClick={() => handleBill()}>Thanh toan</button>
-                                            </td>
-                                        </tr>
-
                                         </tbody>
                                     </table>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-    )
-}
+                </div>
+            </div>
+            <div style={{justifyContent:"center", display:"flex"}}>
+                <button type="button" className="btn btn-primary btn-lg" onClick={() =>{handleBill()}}>Payment</button>
+            </div>
+        </div>
+    );
+};
+
 
 export default Bill;
