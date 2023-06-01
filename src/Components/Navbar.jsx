@@ -7,12 +7,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
 import FooComponent from "../Components/Marquee"
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
@@ -29,9 +32,9 @@ const Navbar = () => {
   const clearCookies = () => {
     localStorage.clear();
     dispatch(logout());
+    navigate("/")
   };
 
-  const handleCart = () => {};
   return (
     <div>
       <div className="container-fluid" >
