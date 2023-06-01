@@ -58,7 +58,7 @@ const List = () => {
     return (
         <>
         <Button variant="primary" className="my-3" onClick={handleShow}>
-            <i className="fa-solid fa-plus"></i> Add product
+            <i className="fa-solid fa-plus"></i> Thêm sản phẩm
         </Button>
 
 
@@ -76,24 +76,20 @@ const List = () => {
                 </Modal>
             </>
 
-            <div style={{display:"flex"}}>
+            <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (
                 <div className="grid__column-2-4" key={item.id}>
-                        <a className="home-product-item" href="#">
+                        <a className="home-product-item" style={{textDecoration:"none"}}>
                             <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
 
-                            <div className="home-product-item__price">
-                                <span className="home-product-item__price-old">{item.price}$</span>
-                                <span style={{marginLeft:"100px"}} className="home-product-item__price-current">SL: {item.quantity}</span>
+                            <div className="home-product-item__price" style={{justifyContent:"space-between"}}>
+                                <span className="home-product-item__price-old">${item.price}</span>
+                                <span style={{marginLeft:"100px"}} className="home-product-item__price-current">Số lượng {item.quantity}</span>
                             </div>
 
 
                             <div className="home-product-item__action">
-                                            <span className="home-product-item__like">
-                                                <i className="home-product-item__like-icon-empty fa-solid fa-heart"></i>
-                                                <i className="home-product-item__like-icon-fill fa-regular fa-heart"></i>
-                                            </span>
                                 <div className="home-product-item__rating">
                                     <i className="home-product-item__star--gold fa-solid fa-star"></i>
                                     <i className="home-product-item__star--gold fa-solid fa-star"></i>

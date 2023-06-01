@@ -49,10 +49,10 @@ export default function SignIn(props) {
   const submit = (user) => {
     dispatch(login(user)).then((data) => {
       if (data.payload === "Password is wrong") {
-        setMessage("Password is wrong!");
+        setMessage("Mật khẩu không đúng! Hãy nhập lại!");
       }
       if (data.payload === "User is not exist") {
-        setMessage("User is not exist!");
+        setMessage("Tài khoản không tồn tại!");
       } else{
         
       }
@@ -84,7 +84,7 @@ export default function SignIn(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Đăng nhập
           </Typography>
           <Formik
             initialValues={{
@@ -115,7 +115,7 @@ export default function SignIn(props) {
                     required
                     fullWidth
                     id="username"
-                    label="User Name"
+                    label="Tên tài khooản"
                     name="username"
                     autoComplete="username"
                     inputProps={{ minLength: 2 }}
@@ -129,7 +129,7 @@ export default function SignIn(props) {
                     fullWidth
                     inputProps={{ minLength: 6 }}
                     name="password"
-                    label="Password"
+                    label="Mật khẩu"
                     type="password"
                     id="password"
                     color="secondary"
@@ -148,13 +148,13 @@ export default function SignIn(props) {
                     onClick={submitForm}
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Sign In
+                    Đăng nhập
                   </Button>
 
                   <Grid container>
                     <Grid item xs>
                       <Link variant="body2" sx={{ color: "black" }}>
-                        Forgot password?
+                        Quên mật khẩu?
                       </Link>
                     </Grid>
                     <Grid item>
@@ -165,7 +165,7 @@ export default function SignIn(props) {
                           props.setIsSignIn(false);
                         }}
                       >
-                        {"Don't have an account? Sign Up"}
+                        {"Bạn chưa có tài khoản? Tạo ngay"}
                       </Link>
                     </Grid>
                   </Grid>
