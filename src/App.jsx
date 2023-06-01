@@ -5,8 +5,10 @@ import AddProduct from "./pages/product/AddProduct.jsx";
 import ListClient from "./pages/client/ListClient.jsx";
 import Cart from "./pages/cart/Cart";
 import {useSelector} from "react-redux";
-import { ClassSharp } from "@mui/icons-material";
+import {ClassSharp, History} from "@mui/icons-material";
 import Bill from "./pages/cart/Bill.jsx";
+import Historys from "./pages/cart/History.jsx";
+
 
 
 // import { List } from "./pages/product/List";
@@ -36,7 +38,8 @@ function App() {
                     </>}
 
                     <Route path={"/bill"} element={<Bill/>}/>
-                    
+                    <Route path={"/history"} element={<Historys/>}/>
+
                 </Route>
             </Routes>
         </>

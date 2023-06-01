@@ -59,6 +59,7 @@ const AddProduct = (props) =>{
                 category: ''
             }}
             onSubmit={(values) =>{
+                console.log(values,22)
                 values = {...values, image: imageUrls}
                 handleAdd(values)
             }}
@@ -82,7 +83,7 @@ const AddProduct = (props) =>{
 
                     <div className="mb-3">
                         <Field as='select' name={'category'} >
-                            {category !== undefined && category.map((item)=>(
+                            {category && category.map((item)=>(
                                 <option value={item.id}>{item.name}</option>
                             ))
 

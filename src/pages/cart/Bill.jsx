@@ -2,7 +2,7 @@ import './Bill.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
-import {getCart} from "../../sevives/cartService.js";
+import {getCart, paymentCart} from "../../sevives/cartService.js";
 
 const Bill = () => {
 
@@ -15,11 +15,15 @@ const Bill = () => {
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
-    console.log(user )
 
     useEffect(() => {
         dispatch(getCart());
     }, [])
+
+    const handleBill = () =>{
+        dispatch(paymentCart())
+        navigate("/")
+    }
 
     let total = 0;
 
@@ -91,7 +95,7 @@ const Bill = () => {
                                         </tr>
                                         <tr>
                                             <td className="content-block">
-                                                <a href="#">View in browser</a>
+                                                <button onClick={() => handleBill()}>Thanh toan</button>
                                             </td>
                                         </tr>
 

@@ -111,9 +111,10 @@ const Navbar = () => {
                     <div className="dropdown-menu rounded-0 m-0">
                       <a className="dropdown-item">Shopping Cart</a>
                       <a className="dropdown-item">Checkout</a>
+
                     </div>
                   </div>
-                  <a className="nav-item nav-link">Contact</a>
+                  <Link className="nav-item nav-link" to={"/history"}>History</Link>
                 </div>
                 {user && user.role === "admin" ? (
                   <div className="navbar-nav ml-auto py-0">
