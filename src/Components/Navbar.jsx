@@ -1,14 +1,13 @@
 import React from "react";
 import ModalLogin from "./Modal";
 import { useSelector } from "react-redux";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -26,10 +25,9 @@ const Navbar = () => {
   };
 
   const clearCookies = () => {
-      localStorage.clear();
-      dispatch(logout());
-  }
-
+    localStorage.clear();
+    dispatch(logout());
+  };
 
   return (
     <div>
@@ -41,7 +39,9 @@ const Navbar = () => {
                 <span className="text-primary font-weight-bold border px-3 mr-1">
                   E
                 </span>
-                <Link style={{textDecoration:"none"}} to="/">Shopper</Link>
+                <Link style={{ textDecoration: "none" }} to="/">
+                  Shopper
+                </Link>
               </h1>
             </a>
           </div>
@@ -75,7 +75,6 @@ const Navbar = () => {
       </div>
       <div className="container-fluid">
         <div className="row border-top px-xl-5">
-
           <div className="col">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
               <a className="text-decoration-none d-block d-lg-none">
@@ -115,9 +114,8 @@ const Navbar = () => {
                     </div>
                   </div>
                   <a className="nav-item nav-link">Contact</a>
-
                 </div>
-                {user ? (
+                {user && user.role === "admin" ? (
                   <div className="navbar-nav ml-auto py-0">
                     <div>
                       <IconButton
@@ -127,9 +125,9 @@ const Navbar = () => {
                         aria-haspopup="true"
                         onClick={handleMenu}
                         color="inherit"
-                        sx={{padding:"4px"}}
+                        sx={{ padding: "4px" }}
                       >
-                        <AccountCircle  sx={{ width: 45, height: 45 }} />
+                        <AccountCircle sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"
@@ -145,11 +143,50 @@ const Navbar = () => {
                         }}
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
-                        sx={{top: "130px", left: "-35px"}}
+                        sx={{ top: "130px", left: "-35px" }}
                       >
                         <MenuItem>Hi, {user.username}</MenuItem>
-                        <MenuItem onClick={clearCookies} >Log Out</MenuItem>
-
+                        <MenuItem>
+                          <Link style={{ textDecoration: "none", color:"black"}} to="/admin">
+                            Shop
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={clearCookies}>Log Out</MenuItem>
+                      </Menu>
+                    </div>
+                  </div>
+                ) : user && user.role !== "admin" ? (
+                  <div className="navbar-nav ml-auto py-0">
+                    <div>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                        sx={{ padding: "4px" }}
+                      >
+                        <AccountCircle sx={{ width: 45, height: 45 }} />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        // anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        sx={{ top: "130px", left: "-35px" }}
+                      >
+                        <MenuItem>Hi, {user.username}</MenuItem>
+                        <MenuItem onClick={clearCookies}>Log Out</MenuItem>
                       </Menu>
                     </div>
                   </div>

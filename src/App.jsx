@@ -22,9 +22,18 @@ function App() {
                 <Route path={"/"} element={<Index/>}>
                     <Route path={'/'} element={<ListClient/>}/>
                     <Route path={'/cart-detail'} element={<Cart/>}/>
+                    {user && user.role==="admin" 
+                    ?
+                    <>
                     <Route path={"/admin"} element={<List/>}>
                         <Route path={'add-product'} element={<AddProduct/>}/>
                     </Route>
+                    </>
+                    :
+                    <>
+                    <Route path={"*"} element={<Navigate to={'/'}/>}/> 
+                    </>}
+                    
                 </Route>
             </Routes>
         </>
