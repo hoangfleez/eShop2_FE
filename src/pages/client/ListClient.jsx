@@ -4,8 +4,11 @@ import {addCart} from "../../sevives/cartService.js";
 import {useDispatch, useSelector} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ListClient.css'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const ListClient = () => {
+    const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
 
@@ -20,8 +23,12 @@ const ListClient = () => {
             price: price
         }
 
-         dispatch(addCart(data))
-        alert('them san pham thanh cong')
+        dispatch(addCart(data))
+        MySwal.fire({
+            icon: 'success',
+            title: 'Add to cart successfully',
+            timer: 2000,
+        })
 
     }
 
@@ -67,13 +74,12 @@ const ListClient = () => {
             </div>
 
 
+            <hr style={{color:"red"}} className='hr' />
 
-
-
+            <div style={{display:"flex", padding: 20}}>
             {products && products.map(item => (
-                <div className="home-product" key={item.id}>
-                    <div className="grid__row">
-                        <div className="grid__column-2-4">
+                
+                    <div className="grid__column-2-4" key={item.id} >
                             <a className="home-product-item" href="#">
                                 <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                                 <h4 className="home-product-item__name">{item.name}</h4>
@@ -110,15 +116,12 @@ const ListClient = () => {
                                     <span className="home-product-item_sale-off-percent">10%</span>
                                     <span className="home-product-item_sale-off-label"> Giảm</span>
                                 </div>
-                                <button onClick={()=>(addToCartProduct(item.id,item.quantity, item.price))}>ADD TO CART</button>
+                                <button className='btn-cart' onClick={()=>(addToCartProduct(item.id,item.quantity, item.price))}><i className="fa-solid fa-cart-shopping" style={{fontSize:25}}></i></button>
                             </a>
-
-                        </div>
-                    </div>
-                </div>
-
+                            </div>
+                    
             ))}
-
+            </div>
         </>
     );
 };
