@@ -6,6 +6,7 @@ import ListClient from "./pages/client/ListClient.jsx";
 import Cart from "./pages/cart/Cart";
 import {useSelector} from "react-redux";
 import { ClassSharp } from "@mui/icons-material";
+import Bill from "./pages/cart/Bill.jsx";
 
 
 // import { List } from "./pages/product/List";
@@ -14,7 +15,7 @@ function App() {
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
-    console.log(user);
+
 
     return (
         <>
@@ -33,6 +34,8 @@ function App() {
                     <>
                     <Route path={"*"} element={<Navigate to={'/'}/>}/> 
                     </>}
+
+                    <Route path={"/bill"} element={<Bill/>}/>
                     
                 </Route>
             </Routes>

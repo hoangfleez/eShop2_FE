@@ -11,7 +11,6 @@ const CartDetail = () => {
     const navigate = useNavigate();
 
     const cart = useSelector(state => {
-        console.log(state.cart.cart,11)
         return state.cart.cart;
     });
 
@@ -44,6 +43,7 @@ const CartDetail = () => {
         }
         dispatch(reduceCart(productFound))
     }
+    let total = 0;
 
     return (
         <>
@@ -76,8 +76,8 @@ const CartDetail = () => {
                             {cart && cart.map(item => (
                             <tbody className="align-middle">
                             <tr>
-                                <td className="align-middle"><img src="https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/350048665_601131325317742_487636768014765375_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=_kU2Tv_YyEkAX-ffuPA&_nc_ht=scontent.fhan2-5.fna&oh=00_AfAAR8BjRG3Rv7cPIBiRANqro1oG8DMHjKiuzlM6MFJ8bA&oe=647CB005" alt=""
-                                                                  style={{width: 50}}/> Colorful Stylish Shirt</td>
+                                <td className="align-middle"><img src={item.product.image} alt=""
+                                                                  style={{width: 50}}/> {item.product.name}</td>
                                 <td className="align-middle">{item.price}</td>
                                 <td className="align-middle">
                                     <div className="input-group quantity mx-auto" style={{width: 100}}>
@@ -108,8 +108,12 @@ const CartDetail = () => {
                                     ><i className="fa fa-times"></i></button>
                                 </td>
                             </tr>
+                            <input type="hidden"
+                                   className="form-control form-control-sm bg-secondary text-center"
+                                   value={total += item.totalPrice} />
 
                             </tbody>
+
                                 ))}
                         </table>
                     </div>
@@ -126,20 +130,11 @@ const CartDetail = () => {
                             <div className="card-header bg-secondary border-0">
                                 <h4 className="font-weight-semi-bold m-0">Cart Summary</h4>
                             </div>
-                            <div className="card-body">
-                                <div className="d-flex justify-content-between mb-3 pt-1">
-                                    <h6 className="font-weight-medium">Subtotal</h6>
-                                    <h6 className="font-weight-medium">$150</h6>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <h6 className="font-weight-medium">Shipping</h6>
-                                    <h6 className="font-weight-medium">$10</h6>
-                                </div>
-                            </div>
+
                             <div className="card-footer border-secondary bg-transparent">
                                 <div className="d-flex justify-content-between mt-2">
                                     <h5 className="font-weight-bold">Total</h5>
-                                    <h5 className="font-weight-bold">$160</h5>
+                                    <h5 className="font-weight-bold">{total}</h5>
                                 </div>
                                 <button className="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                             </div>
