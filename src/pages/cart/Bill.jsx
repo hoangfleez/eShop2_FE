@@ -23,6 +23,7 @@ const Bill = () => {
     const handleBill = () =>{
         dispatch(paymentCart())
         navigate("/")
+        alert("da thanh toan")
     }
 
     let total = 0;

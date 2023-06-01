@@ -13,7 +13,8 @@ import {
 
 
 const initialState = {
-    cart:[]
+    cart:[],
+    historyCart: []
 }
 
 const cartSlice = createSlice({
@@ -50,7 +51,7 @@ const cartSlice = createSlice({
             });
 
             builder.addCase(historyCart.fulfilled,(state,action) => {
-                state.cart = action.payload;
+                state.historyCart = action.payload;
             });
 
         }

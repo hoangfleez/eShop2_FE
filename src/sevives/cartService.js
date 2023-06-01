@@ -54,8 +54,8 @@ export const paymentCart = createAsyncThunk(
 
 export const historyCart = createAsyncThunk(
     'cart/historyCart',
-    async (data)=>{
-        const res = await customAPI.get('/order-detail/history/detail',data);
+    async ()=>{
+        const res = await customAPI.get('/order-detail/history/detail');
         return res.data;
     }
 )
