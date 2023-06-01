@@ -48,7 +48,6 @@ export default function SignIn(props) {
 
   const submit = (user) => {
     dispatch(login(user)).then((data) => {
-      console.log(data.payload);
       if (data.payload === "Password is wrong") {
         setMessage("Password is wrong!");
       }
@@ -60,14 +59,14 @@ export default function SignIn(props) {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -106,7 +105,7 @@ export default function SignIn(props) {
               <Form>
                 <Box
                   // component="form"
-                  onSubmit={handleSubmit}
+                  // onSubmit={handleSubmit}
                   noValidate
                   sx={{ mt: 1 }}
                 >
@@ -147,7 +146,7 @@ export default function SignIn(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2, backgroundColor: "pink" }}
+                    sx={{ mt: 3, mb: 2 }}
                   >
                     Sign In
                   </Button>

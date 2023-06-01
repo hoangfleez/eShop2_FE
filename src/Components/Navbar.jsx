@@ -7,6 +7,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
+import { ListItemText } from "@mui/material";
 
 
 const Navbar = () => {
@@ -146,7 +147,7 @@ const Navbar = () => {
                         onClose={handleClose}
                         sx={{top: "130px", left: "-35px"}}
                       >
-                        <MenuItem onClick={handleClose}>{user.username}</MenuItem>
+                        <MenuItem>Hi, {user.username}</MenuItem>
                         <MenuItem onClick={clearCookies} >Log Out</MenuItem>
 
                       </Menu>

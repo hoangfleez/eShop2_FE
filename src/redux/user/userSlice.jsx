@@ -17,6 +17,8 @@ const userSlice = createSlice({
         state.currentUser = undefined;
       } else if(action.payload === "Password is wrong"){
         state.currentUser = undefined;
+      } else if (action.payload === "Please fill all the information!"){
+        state.currentUser = undefined;
       }
       else {
         state.currentUser = action.payload;

@@ -2,7 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-// import TextField from "@mui/material/TextField";
 import { TextField } from "formik-mui";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -12,9 +11,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./style.css";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik, Field, ErrorMessage } from "formik";
 import { register } from "../../sevives/useService";
-import ModalLogin from "../../Components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearProgress } from "@mui/material";
 
@@ -43,24 +41,22 @@ const defaultTheme = createTheme();
 export default function SignUp(props) {
   const dispatch = useDispatch();
 
-const [message, setMessage] = React.useState("")
-
+  const [message, setMessage] = React.useState("");
 
   const submit = (user) => {
     dispatch(register(user)).then((data) => {
-      console.log(data)
       if (data.payload === "User already existed!") {
         props.setIsSignIn();
-        setMessage("User already existed!")
-      }
-      if (data.payload === "Create User Success!") {
-        props.setIsSignIn(true);
-        
+        setMessage("User already existed!");
+      } else if (data.payload === "Please fill all the information!") {
+        props.setIsSignIn();
+        setMessage("Please fill all the information!");
       } else {
-        // props.setIsSignIn(true);
+        props.setIsSignIn(true);
       }
     });
   };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -92,7 +88,7 @@ const [message, setMessage] = React.useState("")
               }, 500);
             }}
           >
-            {({ submitForm, isSubmitting }) => (
+            {({ submitForm, isSubmitting, values, error }) => (
               <Form>
                 <Box noValidate sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
@@ -105,7 +101,7 @@ const [message, setMessage] = React.useState("")
                         label="User Name"
                         name="username"
                         autoComplete="username"
-                        inputProps={{ minLength: 2 }}
+                        // helperText={<ErrorMessage name="username" />}
                         color="secondary"
                       />
                     </Grid>
@@ -132,7 +128,7 @@ const [message, setMessage] = React.useState("")
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2, backgroundColor: "pink" }}
+                    sx={{ mt: 3, mb: 2 }}
                     id="btn-sigup"
                   >
                     Sign Up

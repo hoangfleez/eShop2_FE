@@ -66,13 +66,12 @@ const ListClient = () => {
             </div>
 
 
+            <hr style={{color:"red"}} className='hr' />
 
-
-
+            <div style={{display:"flex", padding: 20}}>
             {products && products.map(item => (
-                <div className="home-product" key={item.id}>
-                    <div className="grid__row">
-                        <div className="grid__column-2-4">
+                
+                    <div className="grid__column-2-4" key={item.id} >
                             <a className="home-product-item" href="#">
                                 <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                                 <h4 className="home-product-item__name">{item.name}</h4>
@@ -109,15 +108,12 @@ const ListClient = () => {
                                     <span className="home-product-item_sale-off-percent">10%</span>
                                     <span className="home-product-item_sale-off-label"> Giảm</span>
                                 </div>
-                                <button onClick={()=>(addToCartProduct(item.id,item.quantity, item.price))}>ADD TO CART</button>
+                                <button className='btn-cart' onClick={()=>(addToCartProduct(item.id,item.quantity, item.price))}><i className="fa-solid fa-cart-shopping" style={{fontSize:25}}></i></button>
                             </a>
-
-                        </div>
-                    </div>
-                </div>
-
+                            </div>
+                    
             ))}
-
+            </div>
         </>
     );
 };
