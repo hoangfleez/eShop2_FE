@@ -4,8 +4,11 @@ import {addCart} from "../../sevives/cartService.js";
 import {useDispatch, useSelector} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ListClient.css'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const ListClient = () => {
+    const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
 
@@ -20,8 +23,12 @@ const ListClient = () => {
             price: price
         }
 
-         dispatch(addCart(data))
-        alert('them san pham thanh cong')
+        dispatch(addCart(data))
+        MySwal.fire({
+            icon: 'success',
+            title: 'Add to cart successfully',
+            timer: 2000,
+        })
 
     }
 
