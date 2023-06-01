@@ -57,46 +57,13 @@ const List = () => {
 
     return (
         <>
-            <div>
-                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div className="carousel-inner" style={{height: "700px", objectFit: "container"}}>
-                        <div className="carousel-item active">
-                            <img
-                                src="https://sites.google.com/site/thoitrangnamnulongan/_/rsrc/1524193765627/home/free-vector-fashion-shopping-01-vector_000527_fashion_shopping_01_vector.jpg"
-                                className="d-block w-100 " alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://www.fashioncrab.com/wp-content/uploads/2016/01/Banner4.jpg"
-                                 className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://xanhlo.com/media/wysiwyg/tintuc/mua-quan-ao-sale-off.jpg"
-                                 className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Next</span>
-                    </button>
-                </div>
-            </div>
+        <Button variant="primary" className="my-3" onClick={handleShow}>
+            <i className="fa-solid fa-plus"></i> Add product
+        </Button>
 
 
             <>
-                <Button variant="primary" className="my-3" onClick={handleShow}>
-                    <i className="fa-solid fa-plus"></i> Add
-                </Button>
+                
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
@@ -109,11 +76,9 @@ const List = () => {
                 </Modal>
             </>
 
-
+            <div style={{display:"flex"}}>
             {products && products.map(item => (
-            <div className="home-product" key={item.id}>
-                <div className="grid__row">
-                    <div className="grid__column-2-4">
+                <div className="grid__column-2-4" key={item.id}>
                         <a className="home-product-item" href="#">
                             <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
@@ -150,20 +115,24 @@ const List = () => {
                                 <span className="home-product-item_sale-off-percent">10%</span>
                                 <span className="home-product-item_sale-off-label"> Giảm</span>
                             </div>
-                        </a>
-                        <button onClick={()=>dispatch(deleteProduct(item.id))}><i className="fa-solid fa-trash-can"></i></button>
+
+                        <div style={{display:"flex", justifyContent:"space-around", padding:10}}>
+                        <button style={{border:"none", backgroundColor:"transparent"}} onClick={()=>dispatch(deleteProduct(item.id))}><i style={{fontSize:30, color:"red"}} className="fa-solid fa-trash-can"></i></button>
                         <button
                         onClick={() => handleEditProduct(item)}
-                        style={{marginLeft: 20}}
+                        style={{border:"none", backgroundColor:"transparent"}}
                         >
-                        <i className="fa-solid fa-pen-to-square"></i>
+                        <i style={{fontSize:30}} className="fa-solid fa-pen-to-square"></i>
                         </button>
+                            </div>
+                        </a>
+                        
                         
                     </div>
-                </div>
-            </div>
 
             ))}
+            </div>
+            
             <ModalEdit
             show = {showEditModal}
             dataProductEdit={dataProductEdit}

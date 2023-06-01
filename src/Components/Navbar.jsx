@@ -41,7 +41,7 @@ const Navbar = () => {
                 <span className="text-primary font-weight-bold border px-3 mr-1">
                   E
                 </span>
-                <Link style={{textDecoration:"none"}} to="/client">Shopper</Link>
+                <Link style={{textDecoration:"none"}} to="/">Shopper</Link>
               </h1>
             </a>
           </div>
@@ -147,7 +147,7 @@ const Navbar = () => {
                         onClose={handleClose}
                         sx={{top: "130px", left: "-35px"}}
                       >
-                        <MenuItem onClick={handleClose}>{user.username}</MenuItem>
+                        <MenuItem>Hi, {user.username}</MenuItem>
                         <MenuItem onClick={clearCookies} >Log Out</MenuItem>
 
                       </Menu>

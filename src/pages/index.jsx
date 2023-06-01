@@ -8,7 +8,7 @@ export const Index = () => {
     <>
       <Navbar/>
       <Outlet />
-       <Footer/>
+      <Footer/>
     </>
   );
 };
