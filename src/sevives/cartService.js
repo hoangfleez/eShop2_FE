@@ -4,7 +4,7 @@ import customAPI from "./customAPI";
 export const addCart = createAsyncThunk(
     'cart/addCart',
     async (data) => {
-        const res = await customAPI.post('order-detail/add-detail', data);
+        const res = await customAPI.post('order-detail/add/detail/new', data);
         return res.data;
     }
 )
@@ -39,6 +39,23 @@ export const reduceCart = createAsyncThunk(
     'cart/reduceCart',
     async (data)=>{
         const res = await customAPI.post('/order-detail/minus/detail',data);
+        return res.data;
+    }
+)
+
+
+export const paymentCart = createAsyncThunk(
+    'cart/paymentCart',
+    async (data)=>{
+        const res = await customAPI.get('/order-detail/payment/detail',data);
+        return res.data;
+    }
+)
+
+export const historyCart = createAsyncThunk(
+    'cart/historyCart',
+    async (data)=>{
+        const res = await customAPI.get('/order-detail/history/detail',data);
         return res.data;
     }
 )
