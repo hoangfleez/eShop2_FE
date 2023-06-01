@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Cart.css"
 import {useDispatch, useSelector} from "react-redux";
 import {deleteCart, getCart, increaseCart, reduceCart} from "../../sevives/cartService.js";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const CartDetail = () => {
@@ -80,7 +80,7 @@ const CartDetail = () => {
                                                                   style={{width: 50}}/> {item.product.name}</td>
                                 <td className="align-middle">{item.price}</td>
                                 <td className="align-middle">
-                                    <div className="input-group quantity mx-auto" style={{width: 100}}>
+                                    <div className="input-group quantity mx-auto" style={{width: 135, flexWrap:"nowrap", alignItems:"center"}}>
                                         <div className="input-group-btn">
                                             <button className="btn btn-sm btn-primary btn-minus"
                                             onClick={() => handleReduce(item.product,item.price)}
@@ -89,9 +89,13 @@ const CartDetail = () => {
                                                 <i className="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text"
-                                               className="form-control form-control-sm bg-secondary text-center"
-                                               value={item.quantity} />
+                                        <div>
+                                        <input
+                                            style={{backgroundColor:"white", height:40, width:40, textAlign:"center"}}
+                                            type="text"
+                                            // className="form-control form-control-sm  text-center"
+                                            value={item.quantity} />
+                                        </div>
                                             <div className="input-group-btn">
                                                 <button className="btn btn-sm btn-primary btn-plus"
                                                         onClick={() => handleIncrease(item.product,item.price)}
@@ -108,9 +112,10 @@ const CartDetail = () => {
                                     ><i className="fa fa-times"></i></button>
                                 </td>
                             </tr>
+                            
                             <input type="hidden"
-                                   className="form-control form-control-sm bg-secondary text-center"
-                                   value={total += item.totalPrice} />
+                                className="form-control form-control-sm bg-secondary text-center"
+                                value={total += item.totalPrice} />
 
                             </tbody>
 
@@ -136,7 +141,7 @@ const CartDetail = () => {
                                     <h5 className="font-weight-bold">Total</h5>
                                     <h5 className="font-weight-bold">{total}</h5>
                                 </div>
-                                <button className="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                                <button className="btn btn-block btn-primary my-3 py-3"><Link style={{color:"black"}} to={"/bill"}>Proceed To Checkout</Link></button>
                             </div>
                         </div>
                     </div>
