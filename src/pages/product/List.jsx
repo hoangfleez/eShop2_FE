@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {deleteProduct, getProduct,editProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
-import Modal from 'react-bootstrap/Modal'
-import Button from "react-bootstrap/Button";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalEdit from "./ModalEdit.jsx";
 import './List.css'
@@ -10,29 +9,21 @@ import AddProduct from "./AddProduct.jsx";
 
 
 const List = () => {
-    const dispatch = useDispatch();
-    const [show, setShow] = useState(false);
-    const handleClose = () =>{
-        setShow(false);
-        setShowEditModal(false);
+    const [isShowModalAddNew, setIsShowModalAddNew] = useState()
+    const handleClose = () => {
+        setIsShowModalAddNew(false)
     }
-    const handleShow = () => setShow(true);
+
+    const dispatch = useDispatch();
+
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({})
-
-
 
 
     const products = useSelector(({products}) => {
         return products.list;
     });
 
-
-    const handleAddNew = (product) =>{
-
-         setShow(false);
-        products.unshift(product)
-    }
 
     const handleUpdateProduct = (product) => {
         const clonedProducts = [...products];
@@ -57,24 +48,11 @@ const List = () => {
 
     return (
         <>
-        <Button variant="primary" className="my-3" onClick={handleShow}>
-            <i className="fa-solid fa-plus"></i> Add product
-        </Button>
 
-
-            <>
-                
-
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add new Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <AddProduct handleAddNew={handleAddNew}/>
-                    </Modal.Body>
-
-                </Modal>
-            </>
+            <button
+            className="btn-btn-success"
+            onClick={() => setIsShowModalAddNew(true)}
+            >Add new Product</button>
 
             <div style={{display:"flex"}}>
             {products && products.map(item => (
@@ -132,6 +110,11 @@ const List = () => {
 
             ))}
             </div>
+            <AddProduct
+                show ={isShowModalAddNew}
+                handleClose={handleClose}
+
+            />
             
             <ModalEdit
             show = {showEditModal}
