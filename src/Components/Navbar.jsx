@@ -20,10 +20,8 @@ const Navbar = () => {
     return user.currentUser;
   });
 
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
-
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
