@@ -18,7 +18,10 @@ const CartDetail = () => {
     return state.cart.cart;
     });
 
-
+    useEffect(() => {
+        dispatch(getCart());
+    }, [])
+    
     const handleDelete = (id) => {
     dispatch(deleteCart(id));
     }

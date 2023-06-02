@@ -28,7 +28,6 @@ const List = () => {
 
 
     const products = useSelector(({products}) => {
-         console.log(products)
         return products.list;
 
     });
