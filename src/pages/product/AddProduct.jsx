@@ -112,7 +112,7 @@ const AddProduct = (props) => {
                             <lable className="form-label">Category</lable>
                             <select as='select' name={'category'} onChange={(event) => setCategory(event.target.value)}>
                                 {categorys && categorys.map((item) => (
-                                    <option value={item.id}>{item.name}</option>
+                                    <option key={item.id} value={item.id}>{item.name}</option>
                                 ))
                                 }
                             </select>

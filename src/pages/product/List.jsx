@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {deleteProduct, getProduct,editProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
-
+import ReactPaginate from 'react-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalEdit from "./ModalEdit.jsx";
 import './List.css'
@@ -17,12 +17,20 @@ const List = () => {
     const dispatch = useDispatch();
 
     const [showEditModal, setShowEditModal] = useState(false);
-    const [dataProductEdit, setDataProductEdit] = useState({})
+    const [dataProductEdit, setDataProductEdit] = useState({});
+    const [totalProducts, setTotalProducts] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
 
 
     const products = useSelector(({products}) => {
+
+        // setTotalProducts(products.list);
+        // setTotalPages()
         return products.list;
+
     });
+
+
 
 
     const handleUpdateProduct = (product) => {
@@ -35,14 +43,21 @@ const List = () => {
     };
 
 
+
+
     useEffect(() => {
         dispatch(getProduct());
+
     }, [])
 
 
     const handleEditProduct = (product) => {
         setDataProductEdit(product);
         setShowEditModal(true);
+
+    }
+
+    const handlePageClick = () => {
 
     }
 
@@ -121,6 +136,26 @@ const List = () => {
             dataProductEdit={dataProductEdit}
             handleClose={handleClose}
             handleUpdateProduct={handleUpdateProduct}
+            />
+
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={6}
+                previousLabel="< previous"
+
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
             />
         </>
     );

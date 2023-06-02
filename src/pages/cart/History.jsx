@@ -9,16 +9,48 @@ const Historys = () => {
     const navigate = useNavigate();
 
     const history = useSelector(state => {
+        console.log(state.cart.historyCart)
          return state.cart.historyCart;
     });
+
 
 
     useEffect(() => {
         dispatch(historyCart());
     }, [])
 
+    let totalMoney = 0;
+
     return(
-        <div>day la trang lich su mua hang</div>
+      <>
+
+          <table>
+              <tr>
+                  <th>Name</th>
+                  {/*<th>Image</th>*/}
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>totalPrice</th>
+                  <th>Date</th>
+                  <th>so tien da tieu cho E shoper: </th>
+              </tr>
+
+              {history && history.map(item => (
+              <tr>
+                  <td>{item.product.name}</td>
+                  {/*<td>{item.product.image}</td>*/}
+                  <td>{item.price}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.totalPrice}</td>
+                  <td>{item.order.date}</td>
+                  <input type="hidden" value={totalMoney += item.totalPrice}/>
+              </tr>
+              ))}
+              <td>{totalMoney}</td>
+
+          </table>
+
+      </>
     )
 }
 
