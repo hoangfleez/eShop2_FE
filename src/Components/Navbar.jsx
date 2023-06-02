@@ -136,6 +136,11 @@ const Navbar = () => {
                             Quản lý của hàng
                           </Link>
                         </MenuItem>
+                        <MenuItem>
+                          <Link className="nav-item nav-link" to={"/history"}>
+                            Lịch sử mua
+                          </Link>
+                        </MenuItem>
                         <MenuItem onClick={clearCookies}>Thoát!</MenuItem>
                       </Menu>
                     </div>

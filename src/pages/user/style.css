@@ -1,3 +1,6 @@
 .small {
   color: red;
 }
+#btn-sigup:hover, #btn-signin:hover{
+  background-color: plum;
+}
