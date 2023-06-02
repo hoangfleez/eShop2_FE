@@ -129,7 +129,6 @@ const AddProduct = (props) => {
                             </select>
                         </div>
 
-
                         <form>
                             <div className="mb3">
                                 {imageUrls && (
@@ -152,7 +151,6 @@ const AddProduct = (props) => {
 
                             <button style={{margin: 10}} onClick={(event) => uploadFile(event)}> Upload</button>
                         </form>
-
 
                     </div>
                 </Modal.Body>

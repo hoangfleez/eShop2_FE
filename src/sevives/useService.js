@@ -13,3 +13,8 @@ export const logout = createAsyncThunk("user/logout", async () => {
   localStorage.clear();
   return undefined;
 });
+
+export const getAllUsers = createAsyncThunk("user/alluser", async () => {
+const res = await axios.get("http://localhost:3001/admin/alluser");
+return res.data
+});

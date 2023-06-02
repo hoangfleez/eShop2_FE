@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { login, logout } from "../../sevives/useService";
+import {getAllUsers, login, logout} from "../../sevives/useService";
 import { Message } from "@mui/icons-material";
 
 
 const initialState = {
-  currentUser: JSON.parse(localStorage.getItem('user')),
-
+    listUser: [],
+    currentUser: JSON.parse(localStorage.getItem('user')),
 }
 
 const userSlice = createSlice({
@@ -25,11 +25,16 @@ const userSlice = createSlice({
         localStorage.setItem('user', JSON.stringify(action.payload))
       }
       
-    })
+    });
 
     builder.addCase(logout.fulfilled, (state, action)=>{
       state.currentUser = action.payload;
-    })
+    });
+
+    builder.addCase(getAllUsers.fulfilled, (state, action)=>{
+      state.listUser = action.payload;
+    });
+
   }
 })
 
