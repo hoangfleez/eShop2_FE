@@ -10,7 +10,8 @@ export const register = createAsyncThunk("user/register", async (user) => {
   return res.data;
 });
 export const loginGoogle = createAsyncThunk("user/logingoogle", async (user) => {
-  const res = await axios.post("http://localhost:3001/auth/login-google", user);
+  console.log(user)
+  const res = await axios.post("http://localhost:3001/auth/auto/login", user);
   return res.data;
 });
 export const logout = createAsyncThunk("user/logout", async () => {

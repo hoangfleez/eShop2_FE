@@ -26,13 +26,13 @@ const userSlice = createSlice({
       }
       
     })
-
-    builder.addCase(logout.fulfilled, (state, action)=>{
-      state.currentUser = action.payload;
-    })
     builder.addCase(loginGoogle.fulfilled, (state, action)=>{
       state.currentUser = action.payload;
         localStorage.setItem('user', JSON.stringify(action.payload))
+    })
+
+    builder.addCase(logout.fulfilled, (state, action)=>{
+      state.currentUser = action.payload;
     })
   }
 })
