@@ -65,14 +65,14 @@ export default function ModalLogin() {
 
   return (
     <div>
-    <p onClick={handleClickOpen}>Login</p>
+    <p onClick={handleClickOpen}>Đăng nhập</p>
     <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
     >
         
-    { isSigIn ?<SignIn id="customized-dialog-title" onClose={handleClose} setIsSignIn={setIsSignIn}></SignIn>: <SignUp setIsSignIn={setIsSignIn}/>}
+    { isSigIn ?<SignIn id="customized-dialog-title" onClose={open}  setIsSignIn={setIsSignIn}></SignIn>: <SignUp setIsSignIn={setIsSignIn}/>}
         
     </BootstrapDialog>
     </div>

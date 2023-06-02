@@ -1,0 +1,30 @@
+.invoice-title h2,
+.invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
+
+.invoice-title{
+    text-align: center;
+}
+
+.box-bill{
+    width: 30%;
+    border: 1px solid black;
+    height: 70vh;
+    padding:20px 30px ;
+    -webkit-box-shadow: 0px 8px 21px 5px rgba(0,0,0,0.43);
+-moz-box-shadow: 0px 8px 21px 5px rgba(0,0,0,0.43);
+box-shadow: 0px 8px 21px 5px rgba(0,0,0,0.43);
+}

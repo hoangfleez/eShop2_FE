@@ -2,8 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,6 +15,7 @@ import { TextField } from "formik-mui";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../sevives/useService";
+import LoginWithGG from "./LoginWithGG";
 
 function Copyright(props) {
   return (
@@ -42,6 +41,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn(props) {
 
+//  console.log(props)
   const [message, setMessage] = React.useState("");
 
   const dispatch = useDispatch();
@@ -49,24 +49,17 @@ export default function SignIn(props) {
   const submit = (user) => {
     dispatch(login(user)).then((data) => {
       if (data.payload === "Password is wrong") {
-        setMessage("Password is wrong!");
+        setMessage("Mật khẩu không đúng! Hãy nhập lại!");
       }
-      if (data.payload === "User is not exist") {
-        setMessage("User is not exist!");
+      else if (data.payload === "User is not exist") {
+        setMessage("Tài khoản không tồn tại!");
       } else{
-        
+
       }
     });
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -84,7 +77,7 @@ export default function SignIn(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Đăng nhập
           </Typography>
           <Formik
             initialValues={{
@@ -115,7 +108,7 @@ export default function SignIn(props) {
                     required
                     fullWidth
                     id="username"
-                    label="User Name"
+                    label="Tên tài khooản"
                     name="username"
                     autoComplete="username"
                     inputProps={{ minLength: 2 }}
@@ -129,7 +122,7 @@ export default function SignIn(props) {
                     fullWidth
                     inputProps={{ minLength: 6 }}
                     name="password"
-                    label="Password"
+                    label="Mật khẩu"
                     type="password"
                     id="password"
                     color="secondary"
@@ -146,15 +139,15 @@ export default function SignIn(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, backgroundColor:"pink" }}
                   >
-                    Sign In
+                    Đăng nhập
                   </Button>
 
                   <Grid container>
                     <Grid item xs>
                       <Link variant="body2" sx={{ color: "black" }}>
-                        Forgot password?
+                        Quên mật khẩu?
                       </Link>
                     </Grid>
                     <Grid item>
@@ -165,7 +158,7 @@ export default function SignIn(props) {
                           props.setIsSignIn(false);
                         }}
                       >
-                        {"Don't have an account? Sign Up"}
+                        {"Bạn chưa có tài khoản? Tạo ngay"}
                       </Link>
                     </Grid>
                   </Grid>
@@ -173,9 +166,12 @@ export default function SignIn(props) {
               </Form>
             )}
           </Formik>
+          
+          <LoginWithGG/>
+        
         </Box>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt:2, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

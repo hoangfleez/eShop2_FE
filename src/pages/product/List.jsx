@@ -1,38 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import {deleteProduct, getProduct,editProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
-import Modal from 'react-bootstrap/Modal'
-import Button from "react-bootstrap/Button";
+import ReactPaginate from 'react-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalEdit from "./ModalEdit.jsx";
 import './List.css'
 import AddProduct from "./AddProduct.jsx";
+import ListUsers from "../user/ListUsers.jsx";
+import {Link} from "react-router-dom";
 
 
 const List = () => {
-    const dispatch = useDispatch();
-    const [show, setShow] = useState(false);
-    const handleClose = () =>{
-        setShow(false);
-        setShowEditModal(false);
+    const [isShowModalAddNew, setIsShowModalAddNew] = useState()
+    const [isShowModalListUsers, setIsShowModalListUsers] = useState()
+    const handleClose = () => {
+        setIsShowModalAddNew(false)
+        setIsShowModalListUsers(false)
     }
-    const handleShow = () => setShow(true);
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [dataProductEdit, setDataProductEdit] = useState({})
 
+    const dispatch = useDispatch();
+
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [dataProductEdit, setDataProductEdit] = useState({});
+    const [totalProducts, setTotalProducts] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
 
 
 
     const products = useSelector(({products}) => {
         return products.list;
+
     });
 
 
-    const handleAddNew = (product) =>{
 
-         setShow(false);
-        products.unshift(product)
-    }
 
     const handleUpdateProduct = (product) => {
         const clonedProducts = [...products];
@@ -55,31 +56,26 @@ const List = () => {
 
     }
 
+
+
     return (
         <>
-        <Button variant="primary" className="my-3" onClick={handleShow}>
-            <i className="fa-solid fa-plus"></i> Add product
-        </Button>
+
+            <button
+            className="btn-btn-success"
+            onClick={() => setIsShowModalAddNew(true)}
+            >Add new Product</button>
 
 
-            <>
-                
+            <button
+                className="btn-btn-success"
+                onClick={() => setIsShowModalListUsers(true)}
+            >List Users</button>
 
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add new Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <AddProduct handleAddNew={handleAddNew}/>
-                    </Modal.Body>
-
-                </Modal>
-            </>
-
-            <div style={{display:"flex"}}>
+            <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (
                 <div className="grid__column-2-4" key={item.id}>
-                        <a className="home-product-item" href="#">
+                        <Link className="home-product-item" href="#">
                             <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
 
@@ -125,19 +121,49 @@ const List = () => {
                         <i style={{fontSize:30}} className="fa-solid fa-pen-to-square"></i>
                         </button>
                             </div>
-                        </a>
+                        </Link>
                         
                         
                     </div>
 
             ))}
             </div>
+            <AddProduct
+                show ={isShowModalAddNew}
+                handleClose={handleClose}
+
+            />
             
             <ModalEdit
             show = {showEditModal}
             dataProductEdit={dataProductEdit}
             handleClose={handleClose}
             handleUpdateProduct={handleUpdateProduct}
+            />
+
+            <ListUsers
+            show = {isShowModalListUsers}
+            handleClose={handleClose}
+            />
+
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                // onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={totalPage}
+                previousLabel="< previous"
+
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
             />
         </>
     );

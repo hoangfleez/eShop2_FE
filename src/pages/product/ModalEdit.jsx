@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { editProduct } from "../../sevives/productService.js";
+import {getCategory} from "../../sevives/categoryService.js";
 
 const ModalEdit = (props) => {
     let dispatch = useDispatch();
@@ -11,7 +12,7 @@ const ModalEdit = (props) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState([]);
 
     const handleEditProduct = async () => {
         const editedProduct = {
@@ -37,13 +38,38 @@ const ModalEdit = (props) => {
         }
     };
 
+    const categorys = useSelector(state =>{
+        return state.category.category
+    });
+
+
+
+    useEffect( ()=>{
+        dispatch(getCategory())
+    },[]);
+
     useEffect(() => {
         if (show) {
             setName(dataProductEdit.name);
             setPrice(dataProductEdit.price);
             setQuantity(dataProductEdit.quantity);
+            setCategory(dataProductEdit.category);
+
         }
     }, [dataProductEdit]);
+
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try{
+                const response = await categorys;
+                setCategory(response.data)
+            }catch (error){
+                console.log("Error fetching categories:", error)
+            }
+        };
+        fetchCategories();
+    }, [])
 
     return (
         <>
@@ -88,8 +114,11 @@ const ModalEdit = (props) => {
                             value={category}
                             onChange={(event) => setCategory(event.target.value)}
                         >
-                            <option value="1">hoa qua</option>
-                            <option value="2">banh keo</option>
+
+                            {categorys.map((category) => (
+                                <option key={category.id} value={category.id}>{category.name}</option>
+                            ))}
+
                         </select>
                     </div>
                 </Modal.Body>

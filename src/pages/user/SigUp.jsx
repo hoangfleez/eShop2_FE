@@ -47,10 +47,10 @@ export default function SignUp(props) {
     dispatch(register(user)).then((data) => {
       if (data.payload === "User already existed!") {
         props.setIsSignIn();
-        setMessage("User already existed!");
+        setMessage("Tài khoản đã tồn tại!");
       } else if (data.payload === "Please fill all the information!") {
         props.setIsSignIn();
-        setMessage("Please fill all the information!");
+        setMessage("Không được để trống!!");
       } else {
         props.setIsSignIn(true);
       }
@@ -74,7 +74,7 @@ export default function SignUp(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Đăng ký
           </Typography>
           <Formik
             initialValues={{
@@ -98,7 +98,7 @@ export default function SignUp(props) {
                         required
                         fullWidth
                         id="username"
-                        label="User Name"
+                        label="Tên tào khoản"
                         name="username"
                         autoComplete="username"
                         // helperText={<ErrorMessage name="username" />}
@@ -112,7 +112,7 @@ export default function SignUp(props) {
                         fullWidth
                         inputProps={{ minLength: 6 }}
                         name="password"
-                        label="Password"
+                        label="Mật khẩu"
                         type="password"
                         id="password"
                         autoComplete="new-password"
@@ -128,10 +128,10 @@ export default function SignUp(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2 , backgroundColor:"pink"}}
                     id="btn-sigup"
                   >
-                    Sign Up
+                    Đăng ký
                   </Button>
 
                   <Grid container justifyContent="flex-end">
@@ -144,7 +144,7 @@ export default function SignUp(props) {
                         }}
                         sx={{ color: "black" }}
                       >
-                        Already have an account? Sign in
+                        Bạn đã có tài khooản? Đăng nhập ngay
                       </Link>
                     </Grid>
                   </Grid>

@@ -1,23 +1,34 @@
+
+import {Button, Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
-import {Field, Form, Formik} from "formik";
-import {addProduct} from "../../sevives/productService.js";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../sevives/firebase.js";
-import {getCategory} from "../../sevives/categoryService.js";
-import { v4 } from "uuid";
 import {useEffect, useState} from "react";
+import {addProduct} from "../../sevives/productService.js";
+import {useNavigate} from "react-router-dom";
+import {getCategory} from "../../sevives/categoryService.js";
+import {ref, uploadBytes, getDownloadURL, listAll} from "firebase/storage";
+import {storage} from "../../sevives/firebase.js";
+import {v4} from "uuid";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import {paymentCart} from "../../sevives/cartService.js";
 
 
-const AddProduct = (props) =>{
-
+const AddProduct = (props) => {
+    const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const {show, handleClose} = props;
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [category, setCategory] = useState("");
 
     const [imageUpload, setImageUpload] = useState(null);
     const [imageUrls, setImageUrls] = useState('');
 
-    const uploadFile = () => {
+    const uploadFile = (event) => {
+        event.preventDefault();
         if (imageUpload == null) return;
         const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -28,104 +39,133 @@ const AddProduct = (props) =>{
     };
 
 
-    const handleAdd = async (values) => {
-        let data = {...values};
-       let product = await dispatch(addProduct(data));
-       await props.handleAddNew(product)
-         navigate('/')
+    const handleSaveProduct = async () => {
+        let abc = {
+            name: name,
+            price: price,
+            quantity: quantity,
+            category: category,
+            image: imageUrls
+        }
+
+
+        let data = await dispatch(addProduct(abc));
+        if (data) {
+            MySwal.fire({
+                icon: 'success',
+                title: 'Them thanh cong.',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(()=>{handleClose();
+                setName("");
+                setPrice("");
+                setCategory("");
+                setQuantity("");
+                setImageUrls("")
+                navigate("/admin")}, 1500)
+
+        } else {
+
+        }
     }
 
-    const category = useSelector(state =>{
+
+    const categorys = useSelector(state => {
         return state.category.category
     });
 
 
-
-    useEffect( ()=>{
-         dispatch(getCategory())
-    },[]);
-
+    useEffect(() => {
+        dispatch(getCategory())
+    }, []);
 
 
-    return(
+    return (
         <>
-        <div className="row">
-
-            <Formik initialValues={{
-                name: '',
-                price: '',
-                quantity: '',
-                category: ''
-            }}
-            onSubmit={(values) =>{
-                values = {...values, image: imageUrls}
-                handleAdd(values)
-            }}
-            >
-
-                <Form>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add new product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <div className="mb-3">
-                        <label htmlFor="exampleInput" className="form-label">Name product</label>
-                        <Field type="text" className="form-control" id="exampleInput" name={'name'}/>
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="exampleInput" className="form-label">Price product</label>
-                        <Field type="text" className="form-control" id="exampleInput" name={'price'}/>
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="exampleInput" className="form-label">Quantity product</label>
-                        <Field type="text" className="form-control" id="exampleInput" name={'quantity'}/>
-                    </div>
-
-                    <div className="mb-3">
-                        <Field as='select' name={'category'} >
-                            {category !== undefined && category.map((item)=>(
-                                <option value={item.id}>{item.name}</option>
-                            ))
-
-                            }
-                        </Field>
-                    </div>
-
-                    <Form>
-
-                        <div className="mb3">
-
-                            {imageUrls && (
-                                <img
-                                    src={imageUrls}
-                                    alt="Preview"
-                                    style={{width: 150, height:150}}
-                                />)}
-
-                            <label htmlFor="arquivo">Upload Image:</label>
+                        <div className="body-add-new">
+                            <lable className="form-label">Name</lable>
                             <input
-                                id="exampleInput"
-                                type="file"
+                                type="text"
                                 className="form-control"
-                                onChange={(event) => {
-                                    setImageUpload(event.target.files[0]);
-                                }}
+                                value={name}
+                                onChange={(event) => setName(event.target.value)}
+                            />
+                        </div>
+                        <div className="body-add-new">
+                            <lable className="form-label">Price</lable>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={price}
+                                onChange={(event) => setPrice(event.target.value)}
                             />
                         </div>
 
-                        <button style={{margin: 10}} onClick={uploadFile}> Upload</button>
-                    </Form>
-                    <br/>
+                        <div className="body-add-new">
+                            <lable className="form-label">Quantity</lable>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={quantity}
+                                onChange={(event) => setQuantity(event.target.value)}
+                            />
+                        </div>
 
 
-                    <button style={{marginTop: 50}} type="submit" className="btn btn-outline-primary" >Add</button>
+                        <div className="body-add-new">
+                            <lable className="form-label">Category</lable>
+                            <select as='select' name={'category'} onChange={(event) => setCategory(event.target.value)}>
+                                {categorys && categorys.map((item) => (
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                ))
+                                }
+                            </select>
+                        </div>
 
-                </Form>
+                        <form>
+                            <div className="mb3">
+                                {imageUrls && (
+                                    <img
+                                        src={imageUrls}
+                                        alt="Preview"
+                                        style={{width: 150, height: 150}}
+                                    />)}
 
-            </Formik>
+                                <label htmlFor="arquivo">Upload Image:</label>
+                                <input
+                                    id="exampleInput"
+                                    type="file"
+                                    className="form-control"
+                                    onChange={(event) => {
+                                        setImageUpload(event.target.files[0]);
+                                    }}
+                                />
+                            </div>
 
-        </div>
+                            <button style={{margin: 10}} onClick={(event) => uploadFile(event)}> Upload</button>
+                        </form>
+
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => handleSaveProduct()}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
-    )
 
+    )
 }
 
 export default AddProduct
