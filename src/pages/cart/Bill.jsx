@@ -1,10 +1,13 @@
 import './Bill.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import React, {useEffect} from "react";
+import React, {useEffect} from "react"; 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import {getCart, paymentCart} from "../../sevives/cartService.js";
 
 const Bill = () => {
+    const MySwal = withReactContent(Swal)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,32 +24,38 @@ const Bill = () => {
     }, [])
 
     const handleBill = () =>{
+        MySwal.fire({
+            icon: 'success',
+            title: 'Đã thanh toán.',
+            showConfirmButton: false,
+            timer: 1500
+        })
         dispatch(paymentCart())
-        navigate("/")
-        alert("da thanh toan")
+        setTimeout(()=>{navigate("/")}, 1500)
     }
 
     let total = 0;
 
 
     return(
+        <div style={{display:"flex", alignItems:"flex-start", justifyContent:"space-evenly"}}>
         <div className="box-bill">
             <div className="container">
                 <div className="row">
                     <div className="col-xs-12">
                         <div className="invoice-title">
-                            <h1>Thanks for using our app</h1>
+                            <h1>Hóa đơn mua hàng</h1>
                         </div>
                         <hr />
                     </div>
                 </div>
-                <h3>Name: {user.username}</h3>
+                <h5>Tên khách hàng: {user.username}</h5>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h4 className="panel-title">
-                                    <strong>Order summary</strong>
+                                    <strong>Nội dung mua hàng</strong>
                                 </h4>
                             </div>
                             <div className="panel-body">
@@ -55,16 +64,16 @@ const Bill = () => {
                                         <thead>
                                         <tr>
                                             <td>
-                                                <strong>Item</strong>
+                                                <strong>Sản phẩm</strong>
                                             </td>
                                             <td className="text-center">
-                                                <strong>Price</strong>
+                                                <strong>Giá</strong>
                                             </td>
                                             <td className="text-center">
-                                                <strong>Quantity</strong>
+                                                <strong>Số lượng</strong>
                                             </td>
                                             <td className="text-right">
-                                                <strong>Totals</strong>
+                                                <strong>Thành tiền</strong>
                                             </td>
                                         </tr>
                                         </thead>
@@ -87,7 +96,7 @@ const Bill = () => {
                                             <td className="thick-line"></td>
                                             <td className="thick-line"></td>
                                             <td className="thick-line text-center">
-                                                <strong>Subtotal</strong>
+                                                <strong>Tổng</strong>
                                             </td>
                                             <td className="thick-line text-right">${total}</td>
                                         </tr>
@@ -95,20 +104,30 @@ const Bill = () => {
                                             <td className="no-line"></td>
                                             <td className="no-line"></td>
                                             <td className="no-line text-center">
-                                                <strong>Total</strong>
+                                                <strong>Thuế</strong>
                                             </td>
-                                            <td className="no-line text-right">${total}</td>
+                                            <td className="no-line text-right">10%</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="no-line"></td>
+                                            <td className="no-line"></td>
+                                            <td className="no-line text-center">
+                                                <strong>Số tiền thanh toán</strong>
+                                            </td>
+                                            <td className="no-line text-right">${(total * 1.1).toFixed(2)}</td>
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <small style={{color:"red"}}>*Đóng thuế là trách nhiệm và nghĩa vụ của mỗi công dân!</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style={{justifyContent:"center", display:"flex"}}>
-                <button type="button" className="btn btn-primary btn-lg" onClick={() =>{handleBill()}}>Payment</button>
+        </div>
+        <div style={{justifyContent:"center", display:"flex",height:"50px"}}>
+                <button type="button" className="btn btn-primary btn-lg" onClick={() =>{handleBill()}}>Thanh toán</button>
             </div>
         </div>
     );

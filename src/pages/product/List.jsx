@@ -69,7 +69,7 @@ const List = () => {
             onClick={() => setIsShowModalAddNew(true)}
             >Add new Product</button>
 
-            <div style={{display:"flex"}}>
+            <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (
                 <div className="grid__column-2-4" key={item.id}>
                         <a className="home-product-item" href="#">

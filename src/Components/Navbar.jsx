@@ -7,10 +7,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { ShoppingCart } from "@mui/icons-material";
+import FooComponent from "../Components/Marquee"
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
@@ -27,19 +32,20 @@ const Navbar = () => {
   const clearCookies = () => {
     localStorage.clear();
     dispatch(logout());
+    navigate("/")
   };
 
   return (
     <div>
-      <div className="container-fluid">
-        <div className="row align-items-center py-3 px-xl-5">
-          <div className="col-lg-3 d-none d-lg-block">
+      <div className="container-fluid" >
+        <div className="row align-items-center py-3 px-xl-5" style={{backgroundColor:"pink"}}>
+          <div className="col-lg-3 d-none d-lg-block" >
             <a className="text-decoration-none">
-              <h1 className="m-0 display-5 font-weight-semi-bold">
-                <span className="text-primary font-weight-bold border px-3 mr-1">
+              <h1 className="m-0 display-5 font-weight-semi-bold" >
+                <span className=" font-weight-bold border px-3 mr-1" style={{color:"black"}}>
                   E
                 </span>
-                <Link style={{ textDecoration: "none" }} to="/">
+                <Link style={{ textDecoration: "none" ,color:"black"}} to="/">
                   Shopper
                 </Link>
               </h1>
@@ -51,26 +57,17 @@ const Navbar = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search for products"
+                  placeholder="Tìm kiếm sản phẩm ..."
                 />
                 <div className="input-group-append">
-                  <span className="input-group-text bg-transparent text-primary">
+                  <span className="input-group-text bg-transparent text-pink">
                     <i className="fa fa-search"></i>
                   </span>
                 </div>
               </div>
             </form>
           </div>
-          <div className="col-lg-3 col-6 text-right">
-            <a className="btn border">
-              <i className="fas fa-heart text-primary"></i>
-              <span className="badge">0</span>
-            </a>
-            <Link to="/cart-detail" className="btn border">
-              <i className="fas fa-shopping-cart text-primary"></i>
-              <span className="badge">0</span>
-            </Link>
-          </div>
+
         </div>
       </div>
       <div className="container-fluid">
@@ -98,23 +95,7 @@ const Navbar = () => {
                 id="navbarCollapse"
               >
                 <div className="navbar-nav mr-auto py-0">
-                  <a className="nav-item nav-link">Home</a>
-                  <a className="nav-item nav-link active">Shop</a>
-                  <a className="nav-item nav-link">Shop Detail</a>
-                  <div className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
-                      Pages
-                    </a>
-                    <div className="dropdown-menu rounded-0 m-0">
-                      <a className="dropdown-item">Shopping Cart</a>
-                      <a className="dropdown-item">Checkout</a>
-
-                    </div>
-                  </div>
-                  <Link className="nav-item nav-link" to={"/history"}>History</Link>
+                  <h5  ><FooComponent/></h5>
                 </div>
                 {user && user.role === "admin" ? (
                   <div className="navbar-nav ml-auto py-0">
@@ -146,19 +127,31 @@ const Navbar = () => {
                         onClose={handleClose}
                         sx={{ top: "130px", left: "-35px" }}
                       >
-                        <MenuItem>Hi, {user.username}</MenuItem>
+                        <MenuItem>Chào, {user.username}</MenuItem>
                         <MenuItem>
-                          <Link style={{ textDecoration: "none", color:"black"}} to="/admin">
-                            Shop
+                          <Link
+                            style={{ textDecoration: "none", color: "black" }}
+                            to="/admin"
+                          >
+                            Quản lý của hàng
                           </Link>
                         </MenuItem>
-                        <MenuItem onClick={clearCookies}>Log Out</MenuItem>
+                        <MenuItem>
+                          <Link className="nav-item nav-link" to={"/history"}>
+                            Lịch sử mua
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={clearCookies}>Thoát!</MenuItem>
                       </Menu>
                     </div>
                   </div>
                 ) : user && user.role !== "admin" ? (
                   <div className="navbar-nav ml-auto py-0">
                     <div>
+                      <Link Link to="/cart-detail" style={{color:"black"}}>
+                        <ShoppingCart sx={{ width: 30, height: 30 }} />
+                      </Link>
+
                       <IconButton
                         size="large"
                         aria-label="account of current user"
@@ -166,7 +159,7 @@ const Navbar = () => {
                         aria-haspopup="true"
                         onClick={handleMenu}
                         color="inherit"
-                        sx={{ padding: "4px" }}
+                        sx={{ padding: "4px", marginLeft: "4px" }}
                       >
                         <AccountCircle sx={{ width: 45, height: 45 }} />
                       </IconButton>
@@ -186,8 +179,13 @@ const Navbar = () => {
                         onClose={handleClose}
                         sx={{ top: "130px", left: "-35px" }}
                       >
-                        <MenuItem>Hi, {user.username}</MenuItem>
-                        <MenuItem onClick={clearCookies}>Log Out</MenuItem>
+                        <MenuItem>Chào, {user.username}</MenuItem>
+                        <MenuItem>
+                          <Link className="nav-item nav-link" to={"/history"}>
+                            Lịch sử mua
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={clearCookies}>Thoát!</MenuItem>
                       </Menu>
                     </div>
                   </div>

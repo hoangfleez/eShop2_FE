@@ -8,9 +8,13 @@ import {getCategory} from "../../sevives/categoryService.js";
 import {ref, uploadBytes, getDownloadURL, listAll} from "firebase/storage";
 import {storage} from "../../sevives/firebase.js";
 import {v4} from "uuid";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import {paymentCart} from "../../sevives/cartService.js";
 
 
 const AddProduct = (props) => {
+    const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,16 +48,23 @@ const AddProduct = (props) => {
             image: imageUrls
         }
 
-        console.log(abc)
+
         let data = await dispatch(addProduct(abc));
         if (data) {
-            handleClose();
-            setName("");
-            setPrice("");
-            setCategory("");
-            setQuantity("");
-            setImageUrls("")
-            navigate("/")
+            MySwal.fire({
+                icon: 'success',
+                title: 'Them thanh cong.',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(()=>{handleClose();
+                setName("");
+                setPrice("");
+                setCategory("");
+                setQuantity("");
+                setImageUrls("")
+                navigate("/admin")}, 1500)
+
         } else {
 
         }
