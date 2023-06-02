@@ -9,6 +9,14 @@ export const getProduct = createAsyncThunk(
     }
 )
 
+// export const getProduct = createAsyncThunk(
+//     'products/getProducts',
+//     async (page) => {
+//         const res = await customAPI.get(`products/?page=${page}`);
+//         return res.data;
+//     }
+// )
+
 export const addProduct = createAsyncThunk(
     'products/addProduct',
     async (data)=>{
@@ -36,6 +44,7 @@ export const findProductById = createAsyncThunk(
         return res.data;
     }
 )
+
 export const editProduct = createAsyncThunk(
     'products/editProduct',
     async (arg, thunkAPI) => {
@@ -43,3 +52,18 @@ export const editProduct = createAsyncThunk(
     }
 )
 
+export const searchProduct = createAsyncThunk(
+    'products/searchProduct',
+    async (name) => {
+        const response = await customAPI.get(`products/name/?name=${name}`);
+        return response.data;
+    }
+);
+
+export const searchCategoryProduct = createAsyncThunk(
+    'products/searchCategoryProduct',
+    async (id) => {
+        const response = await customAPI.get(`products/categories/${id}`);
+        return response.data;
+    }
+);

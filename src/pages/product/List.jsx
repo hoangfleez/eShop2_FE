@@ -6,10 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalEdit from "./ModalEdit.jsx";
 import './List.css'
 import AddProduct from "./AddProduct.jsx";
+import ListUsers from "../user/ListUsers.jsx";
+import {Link} from "react-router-dom";
 
 
 const List = () => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState()
+    const [isShowModalListUsers, setIsShowModalListUsers] = useState()
     const handleClose = () => {
         setIsShowModalAddNew(false)
     }
@@ -19,11 +22,14 @@ const List = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
     const [totalProducts, setTotalProducts] = useState(0)
-    const [totalPages, setTotalPages] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
+
 
 
     const products = useSelector(({products}) => {
+         console.log(products)
         return products.list;
+
     });
 
 
@@ -50,31 +56,40 @@ const List = () => {
 
     }
 
+
+
     return (
         <>
-
-
-
 
             <button
             className="btn-btn-success"
             onClick={() => setIsShowModalAddNew(true)}
             >Add new Product</button>
+
+
+            <button
+                className="btn-btn-success"
+                onClick={() => setIsShowModalListUsers(true)}
+            >List Users</button>
+
             <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (
                 <div className="grid__column-2-4" key={item.id}>
-                        <a className="home-product-item" style={{textDecoration:"none"}}>
+                        <Link className="home-product-item" href="#">
                             <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
 
-                            <div className="home-product-item__price" style={{justifyContent:"space-between"}}>
-                                <span className="home-product-item__price-old">${item.price}</span>
-                                <span style={{marginLeft:"100px"}} className="home-product-item__price-current">Số lượng {item.quantity}</span>
+                            <div className="home-product-item__price">
+                                <span className="home-product-item__price-old">{item.price}$</span>
+                                <span style={{marginLeft:"100px"}} className="home-product-item__price-current">SL: {item.quantity}</span>
                             </div>
 
 
                             <div className="home-product-item__action">
-
+                                            <span className="home-product-item__like">
+                                                <i className="home-product-item__like-icon-empty fa-solid fa-heart"></i>
+                                                <i className="home-product-item__like-icon-fill fa-regular fa-heart"></i>
+                                            </span>
                                 <div className="home-product-item__rating">
                                     <i className="home-product-item__star--gold fa-solid fa-star"></i>
                                     <i className="home-product-item__star--gold fa-solid fa-star"></i>
@@ -106,7 +121,7 @@ const List = () => {
                         <i style={{fontSize:30}} className="fa-solid fa-pen-to-square"></i>
                         </button>
                             </div>
-                        </a>
+                        </Link>
                         
                         
                     </div>
@@ -118,7 +133,7 @@ const List = () => {
                 handleClose={handleClose}
 
             />
-
+            
             <ModalEdit
             show = {showEditModal}
             dataProductEdit={dataProductEdit}
@@ -126,12 +141,17 @@ const List = () => {
             handleUpdateProduct={handleUpdateProduct}
             />
 
+            <ListUsers
+            show = {isShowModalListUsers}
+            handleClose={handleClose}
+            />
+
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
-                onPageChange={handlePageClick}
+                // onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
-                pageCount={6}
+                pageCount={totalPage}
                 previousLabel="< previous"
 
                 pageClassName="page-item"

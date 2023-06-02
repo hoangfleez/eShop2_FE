@@ -7,6 +7,7 @@ import './ListClient.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { ClassSharp } from '@mui/icons-material';
+import {Link} from "react-router-dom";
 
 const ListClient = () => {
     const MySwal = withReactContent(Swal)
@@ -93,7 +94,7 @@ const ListClient = () => {
             {products && products.map(item => (
                 
                     <div className="grid__column-2-4" key={item.id} >
-                            <a className="home-product-item" style={{textDecoration:"none"}}>
+                            <Link className="home-product-item" style={{textDecoration:"none"}}>
                                 <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`,objectFit:"cover"}}></div>
                                 <h4 className="home-product-item__name">{item.name}</h4>
 
@@ -138,7 +139,7 @@ const ListClient = () => {
                                     </div>
                                 
                                 </div>
-                            </a>
+                            </Link>
                             </div>
                     
             ))}
