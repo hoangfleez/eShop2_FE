@@ -2,60 +2,38 @@
 import {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllUsers} from "../../sevives/useService.js";
+import {showUser} from "../../sevives/adminService.js";
+
+
 
 const ListUsers = (props) =>{
     const dispatch = useDispatch();
     const {show, handleClose} = props;
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-
-    const users = useSelector(state => {
-        console.log(state.user, 111 )
-
+    const user = useSelector(state => {
+        return state.admin.listUser
     });
 
 
-    useEffect(() => {
-        dispatch(getAllUsers());
-    }, [])
-
+    useEffect(() =>{
+        dispatch(showUser())
+    },[])
     return (
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add new product</Modal.Title>
+                    <Modal.Title>Danh sách người dùng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="mb-3">
-                        <div className="body-add-new">
-                            <lable className="form-label">Name</lable>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                            />
-                        </div>
-                        <div className="body-add-new">
-                            <lable className="form-label">Price</lable>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={price}
-                                onChange={(event) => setPrice(event.target.value)}
-                            />
-                        </div>
 
-                    </div>
+                    {user.map((item) => (
+                        <div key={item.id} className="mb-3">
+                            <p> <span style={{fontWeight:600}}>Tên tài khoản:</span> &emsp; {item.username}</p>
+                        </div>
+                    ))}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="primary" onClick={handleClose}>Save Changes</Button>
                 </Modal.Footer>
             </Modal>
         </>

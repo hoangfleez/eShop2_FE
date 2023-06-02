@@ -14,7 +14,8 @@ const List = () => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState()
     const [isShowModalListUsers, setIsShowModalListUsers] = useState()
     const handleClose = () => {
-        setIsShowModalAddNew(false)
+        setIsShowModalAddNew(false);
+        setIsShowModalListUsers(false);
     }
 
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const List = () => {
 
     const products = useSelector(({products}) => {
          console.log(products)
-        return products.list.products;
+        return products.list;
     });
 
 

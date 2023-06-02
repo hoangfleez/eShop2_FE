@@ -5,6 +5,8 @@ export const login = createAsyncThunk("user/login", async (user) => {
   const res = await axios.post("http://localhost:3001/auth/login", user);
   return res.data;
 });
+
+
 export const register = createAsyncThunk("user/register", async (user) => {
   const res = await axios.post("http://localhost:3001/auth/register", user);
   return res.data;
@@ -14,7 +16,4 @@ export const logout = createAsyncThunk("user/logout", async () => {
   return undefined;
 });
 
-export const getAllUsers = createAsyncThunk("user/alluser", async () => {
-const res = await axios.get("http://localhost:3001/admin/alluser");
-return res.data
-});
+
