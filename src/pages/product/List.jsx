@@ -13,26 +13,36 @@ import {Link} from "react-router-dom";
 const List = () => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState()
     const [isShowModalListUsers, setIsShowModalListUsers] = useState()
-    const handleClose = () => {
-        setIsShowModalAddNew(false);
-        setIsShowModalListUsers(false);
-    }
-
     const dispatch = useDispatch();
-
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
     const [totalProducts, setTotalProducts] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
 
+    const handleClose = () => {
+        setIsShowModalAddNew(false);
+        setIsShowModalListUsers(false);
+    }
 
-
-    const products = useSelector(({products}) => {
-         console.log(products)
-        return products.list;
+    const products = useSelector((state) => {
+        const { totalCount, totalPages, products } = state.products.list;
+        useEffect(() => {
+            if (totalCount && totalPages) {
+                setTotalProducts(totalCount);
+                setTotalPage(totalPages);
+            }
+        }, [totalCount, totalPages]);
+        return products;
     });
 
+    useEffect(() => {
+        dispatch(getProduct());
+    }, [dispatch]);
 
+
+    const handlePageClick = (event) => {
+        dispatch(getProduct(+event.selected + 1));
+    };
 
 
     const handleUpdateProduct = (product) => {
@@ -45,19 +55,10 @@ const List = () => {
     };
 
 
-
-
-    useEffect(() => {
-        dispatch(getProduct());
-    }, [])
-
-
     const handleEditProduct = (product) => {
         setDataProductEdit(product);
         setShowEditModal(true);
-
     }
-
 
 
     return (
@@ -66,13 +67,17 @@ const List = () => {
             <button
             className="btn-btn-success"
             onClick={() => setIsShowModalAddNew(true)}
-            >Add new Product</button>
+            >
+                Add new Product
+            </button>
 
 
             <button
                 className="btn-btn-success"
                 onClick={() => setIsShowModalListUsers(true)}
-            >List Users</button>
+            >
+                List Users
+            </button>
 
             <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (
@@ -124,8 +129,8 @@ const List = () => {
                         </button>
                             </div>
                         </Link>
-                        
-                        
+
+
                     </div>
 
             ))}
@@ -135,7 +140,7 @@ const List = () => {
                 handleClose={handleClose}
 
             />
-            
+
             <ModalEdit
             show = {showEditModal}
             dataProductEdit={dataProductEdit}
@@ -151,7 +156,7 @@ const List = () => {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
-                // onPageChange={handlePageClick}
+                onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
                 pageCount={totalPage}
                 previousLabel="< previous"

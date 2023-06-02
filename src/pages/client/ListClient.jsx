@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { getProduct} from "../../sevives/productService.js";
 import {addCart} from "../../sevives/cartService.js";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,8 +8,12 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { ClassSharp } from '@mui/icons-material';
 import {Link} from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 const ListClient = () => {
+
+    const [totalProducts, setTotalProducts] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
@@ -18,9 +22,24 @@ const ListClient = () => {
     })
 
 
-    const products = useSelector(({products}) => {
-        return products.list;
+    const products = useSelector((state) => {
+        const { totalCount, totalPages, products } = state.products.list;
+        useEffect(() => {
+            if (totalCount && totalPages) {
+                setTotalProducts(totalCount);
+                setTotalPage(totalPages);
+            }
+        }, [totalCount, totalPages]);
+        return products;
     });
+
+    useEffect(() => {
+        dispatch(getProduct());
+    }, [dispatch]);
+
+    const handlePageClick = (event) => {
+        dispatch(getProduct(+event.selected + 1));
+    };
 
     const addToCartProduct = (id,quantity,price) =>{
         let data = {
@@ -46,9 +65,7 @@ const ListClient = () => {
 
     }
 
-    useEffect(() => {
-        dispatch(getProduct());
-    }, [])
+
 
     return (
         <>
@@ -144,6 +161,25 @@ const ListClient = () => {
                     
             ))}
             </div>
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={totalPage}
+                previousLabel="< previous"
+
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+            />
         </>
     );
 };

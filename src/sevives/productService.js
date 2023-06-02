@@ -1,21 +1,21 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import customAPI from "./customAPI";
 
-export const getProduct = createAsyncThunk(
-    'products/getProducts',
-    async () => {
-        const res = await customAPI.get('products');
-        return res.data;
-    }
-)
-
 // export const getProduct = createAsyncThunk(
 //     'products/getProducts',
-//     async (page) => {
-//         const res = await customAPI.get(`products/?page=${page}`);
+//     async () => {
+//         const res = await customAPI.get('products');
 //         return res.data;
 //     }
 // )
+
+export const getProduct = createAsyncThunk(
+    'products/getProducts',
+    async (page) => {
+        const res = await customAPI.get(`products?page=${page}`);
+        return res.data;
+    }
+)
 
 export const addProduct = createAsyncThunk(
     'products/addProduct',
