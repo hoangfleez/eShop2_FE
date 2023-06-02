@@ -2,8 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,7 +15,6 @@ import { TextField } from "formik-mui";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../sevives/useService";
-import { Flare } from "@mui/icons-material";
 import LoginWithGG from "./LoginWithGG";
 
 function Copyright(props) {

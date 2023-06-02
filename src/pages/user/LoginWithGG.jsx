@@ -19,9 +19,8 @@ const LoginWithGG = () => {
             const details = jwt_decode(credentialResponse.credential)
             dispatch(loginGoogle({
               usename: details.email,
-              password: details.sub
+              // password: details.sub
             }))
-              console.log(details,111111)
           }}
           onError={() => {
             console.log("Login Failed");

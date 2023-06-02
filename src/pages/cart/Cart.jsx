@@ -18,37 +18,24 @@ const CartDetail = () => {
     return state.cart.cart;
     });
 
-    console.log(cart, 2525252);
-    useEffect(() => {
-    dispatch(getCart());
-    }, [])
-
-
-    const [updatedCart, setUpdatedCart] = useState([]);
-
-    useEffect(() => {
-    setUpdatedCart(cart);
-    }, [cart]);
 
     const handleDelete = (id) => {
     dispatch(deleteCart(id));
-    navigate("/cart-detail");
     }
 
     const handleIncrease = (product, price) => {
     let productFound = {
         productId: product.id,
-        quantity: 1,
+        quantity:1,
         price: price
     }
-    console.log(productFound)
     dispatch(increaseCart(productFound))
     }
 
     const handleReduce = (product, price) => {
     let productFound = {
         productId: product.id,
-        quantity: -1,
+        quantity:cart.length === 0 ? 0 :-1,
         price: price
     }
     dispatch(reduceCart(productFound))
@@ -62,20 +49,14 @@ const CartDetail = () => {
         text: 'Không có sản phẩm nào để thanh toán!!',
         showConfirmButton: false,
         timer: 1500
-        })
-        setTimeout(() => { navigate("/"), 1500 })
-
+        }).then(() => {navigate("/")})
     } else {
         navigate("/bill")
     }
     }
 
-    let total = 0;
 
-    useEffect(() => {
-    const updatedCart = cart.filter(item => item.quantity !== 0);
-    setUpdatedCart(updatedCart);
-    }, [cart]);
+
 
     return (
         <>
@@ -145,9 +126,9 @@ const CartDetail = () => {
                                 </td>
                             </tr>
                             
-                            <input type="hidden"
+                            {/* <input type="hidden"
                                 className="form-control form-control-sm bg-secondary text-center"
-                                value={total += item.totalPrice} />
+                                value={total += item.totalPrice} /> */}
 
                             </tbody>
 
@@ -164,7 +145,7 @@ const CartDetail = () => {
                             <div className="card-footer border-secondary bg-transparent">
                                 <div className="d-flex justify-content-between mt-2">
                                     <h5 className="font-weight-bold">Tổng sản phẩm</h5>
-                                    <h5 className="font-weight-bold">{total}</h5>
+                                    {/* <h5 className="font-weight-bold">{total}</h5> */}
                                 </div>
                                 <button className="btn btn-block btn-success my-3 py-3" onClick={toPayment}>Tiến hành thanh toán</button>
                             </div>
