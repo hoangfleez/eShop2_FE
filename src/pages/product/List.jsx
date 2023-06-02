@@ -15,6 +15,7 @@ const List = () => {
     const [isShowModalListUsers, setIsShowModalListUsers] = useState()
     const handleClose = () => {
         setIsShowModalAddNew(false)
+        setIsShowModalListUsers(false)
     }
 
     const dispatch = useDispatch();
