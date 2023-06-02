@@ -17,6 +17,8 @@ import { TextField } from "formik-mui";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../sevives/useService";
+import { Flare } from "@mui/icons-material";
+import LoginWithGG from "./LoginWithGG";
 
 function Copyright(props) {
   return (
@@ -42,6 +44,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn(props) {
 
+
   const [message, setMessage] = React.useState("");
 
   const dispatch = useDispatch();
@@ -51,10 +54,10 @@ export default function SignIn(props) {
       if (data.payload === "Password is wrong") {
         setMessage("Mật khẩu không đúng! Hãy nhập lại!");
       }
-      if (data.payload === "User is not exist") {
+      else if (data.payload === "User is not exist") {
         setMessage("Tài khoản không tồn tại!");
       } else{
-        
+
       }
     });
   };
@@ -146,7 +149,7 @@ export default function SignIn(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, backgroundColor:"pink" }}
                   >
                     Đăng nhập
                   </Button>
@@ -173,6 +176,7 @@ export default function SignIn(props) {
               </Form>
             )}
           </Formik>
+          <LoginWithGG/>
         </Box>
 
         <Copyright sx={{ mt: 8, mb: 4 }} />

@@ -72,7 +72,7 @@ export default function ModalLogin() {
         open={open}
     >
         
-    { isSigIn ?<SignIn id="customized-dialog-title" onClose={handleClose} setIsSignIn={setIsSignIn}></SignIn>: <SignUp setIsSignIn={setIsSignIn}/>}
+    { isSigIn ?<SignIn id="customized-dialog-title" onClose={open}  setIsSignIn={setIsSignIn}></SignIn>: <SignUp setIsSignIn={setIsSignIn}/>}
         
     </BootstrapDialog>
     </div>
