@@ -19,6 +19,8 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {
@@ -109,7 +111,7 @@ const Navbar = () => {
                         color="inherit"
                         sx={{ padding: "4px" }}
                       >
-                        <AccountCircle sx={{ width: 45, height: 45 }} />
+                      <AccountCircle sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"

@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { login, logout } from "../../sevives/useService";
+import { login, loginGoogle, logout } from "../../sevives/useService";
 import { Message } from "@mui/icons-material";
 
 
@@ -29,6 +29,10 @@ const userSlice = createSlice({
 
     builder.addCase(logout.fulfilled, (state, action)=>{
       state.currentUser = action.payload;
+    })
+    builder.addCase(loginGoogle.fulfilled, (state, action)=>{
+      state.currentUser = action.payload;
+        localStorage.setItem('user', JSON.stringify(action.payload))
     })
   }
 })

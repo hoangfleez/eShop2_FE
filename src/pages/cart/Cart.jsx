@@ -1,49 +1,81 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Cart.css"
 import {useDispatch, useSelector} from "react-redux";
 import {deleteCart, getCart, increaseCart, reduceCart} from "../../sevives/cartService.js";
 import {Link, useNavigate} from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 const CartDetail = () => {
+    const MySwal = withReactContent(Swal)
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const cart = useSelector(state => {
-        return state.cart.cart;
+    return state.cart.cart;
     });
 
-
+    console.log(cart, 2525252);
     useEffect(() => {
-        dispatch(getCart());
+    dispatch(getCart());
     }, [])
 
 
-    const handleDelete =  (id) =>{
-        dispatch(deleteCart(id))
-        navigate("/cart-detail")
+    const [updatedCart, setUpdatedCart] = useState([]);
+
+    useEffect(() => {
+    setUpdatedCart(cart);
+    }, [cart]);
+
+    const handleDelete = (id) => {
+    dispatch(deleteCart(id));
+    navigate("/cart-detail");
     }
 
-    const handleIncrease = (product,price) =>{
-        let productFound = {
-            productId: product.id,
-            quantity: 1,
-            price: price
-        }
-        console.log(productFound)
-        dispatch(increaseCart(productFound))
+    const handleIncrease = (product, price) => {
+    let productFound = {
+        productId: product.id,
+        quantity: 1,
+        price: price
+    }
+    console.log(productFound)
+    dispatch(increaseCart(productFound))
     }
 
-    const handleReduce = (product,price) => {
-        let productFound = {
-            productId: product.id,
-            quantity: -1,
-            price: price
-        }
-        dispatch(reduceCart(productFound))
+    const handleReduce = (product, price) => {
+    let productFound = {
+        productId: product.id,
+        quantity: -1,
+        price: price
     }
+    dispatch(reduceCart(productFound))
+    }
+
+    const toPayment = () => {
+    if (cart.length === 0) {
+        MySwal.fire({
+        icon: 'warning',
+        title: 'Ooopss....',
+        text: 'Không có sản phẩm nào để thanh toán!!',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        setTimeout(() => { navigate("/"), 1500 })
+
+    } else {
+        navigate("/bill")
+    }
+    }
+
     let total = 0;
+
+    useEffect(() => {
+    const updatedCart = cart.filter(item => item.quantity !== 0);
+    setUpdatedCart(updatedCart);
+    }, [cart]);
 
     return (
         <>
@@ -74,6 +106,7 @@ const CartDetail = () => {
                             {cart && cart.map(item => (
                             <tbody className="align-middle">
                             <tr>
+                            
                                 <td className="align-middle"><img src={item.product.image} alt=""
                                             style={{width: 120, height:80}}/> {item.product.name}</td>
                                 <td className="align-middle">{item.price}</td>
@@ -92,7 +125,8 @@ const CartDetail = () => {
                                             style={{backgroundColor:"white", height:40, width:40, textAlign:"center"}}
                                             type="text"
                                             // className="form-control form-control-sm  text-center"
-                                            value={item.quantity} />
+                                            value={item.quantity === 0 ? handleDelete(item.id) : item.quantity}
+                                        />
                                         </div>
                                             <div className="input-group-btn">
                                                 <button className="btn btn-sm btn-secondary btn-plus"
@@ -132,7 +166,7 @@ const CartDetail = () => {
                                     <h5 className="font-weight-bold">Tổng sản phẩm</h5>
                                     <h5 className="font-weight-bold">{total}</h5>
                                 </div>
-                                <button className="btn btn-block btn-success my-3 py-3"><Link style={{color:"white", textDecoration:"none"}} to={"/bill"}>Tiến hành thanh toán</Link></button>
+                                <button className="btn btn-block btn-success my-3 py-3" onClick={toPayment}>Tiến hành thanh toán</button>
                             </div>
                         </div>
                     </div>
