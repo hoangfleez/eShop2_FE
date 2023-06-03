@@ -6,14 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ListClient.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { ClassSharp } from '@mui/icons-material';
 import {Link} from "react-router-dom";
 import SimpleSlider from '../slick/Slick.jsx';
 import CenterMode from '../slick/ProductSlick.jsx';
-import { getCategory } from '../../sevives/categoryService.js';
-import {searchCategoryProduct, searchProduct} from "../../sevives/productService.js";
-import ModalLogin from '../../Components/Modal.jsx';
 import ReactPaginate from "react-paginate";
+import CategorizeAndSort from '../search/CategorizeAndSort.jsx';
 
 const ListClient = () => {
 
@@ -67,21 +64,7 @@ const ListClient = () => {
             })
         }
         
-
     }
-    const category = useSelector(state => {
-        return state.category.category
-    });
-
-    console.log(category,1114141)
-
-    const handleCategory = (id) =>{
-        dispatch(searchCategoryProduct(id))
-    }
-    useEffect(() => {
-        dispatch(getCategory())
-    }, []);
-
 
 
     return (
@@ -92,8 +75,10 @@ const ListClient = () => {
             <CenterMode/>
             <hr style={{color:"red"}} className='hr' />
 
-            <div style={{display:"flex", padding: 20,flexWrap:"wrap"}}>
-            {products && products.map(item => (
+            <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
+                <CategorizeAndSort/>
+                <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
+                    {products && products.map(item => (
                 
                     <div className="grid__column-2-4" key={item.id} >
                             <Link className="home-product-item" style={{textDecoration:"none"}}>
@@ -144,8 +129,9 @@ const ListClient = () => {
                             </Link>
                             </div>
                     
-            ))}
+                    ))}
                 </div>
+            </div>
 
             <ReactPaginate
                 breakLabel="..."
