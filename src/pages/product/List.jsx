@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {deleteProduct, getProduct,editProduct} from "../../sevives/productService.js";
+import {deleteProduct, getProduct, editProduct} from "../../sevives/productService.js";
 import {useDispatch, useSelector} from "react-redux";
 import ReactPaginate from 'react-paginate';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,8 +8,7 @@ import './List.css'
 import AddProduct from "./AddProduct.jsx";
 import ListUsers from "../user/ListUsers.jsx";
 import {Link} from "react-router-dom";
-import { orderBy } from 'lodash';
-
+import {orderBy} from 'lodash';
 
 
 const List = () => {
@@ -24,17 +23,17 @@ const List = () => {
 
     const [sortBy, setSortBy] = useState('asc');
     const [sortField, setSortField] = useState('price');
+    const [sortedProducts, setSortedProducts] = useState([]);
 
 
-    const handleSort = (sortBy,sortField ) =>{
+    const handleSort = (sortBy, sortField) => {
         setSortBy(sortBy);
         setSortField(sortField);
 
         let cloneListProduct = [...products];
-         cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
+        cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
         console.log(cloneListProduct)
     }
-
 
 
     const handleClose = () => {
@@ -46,7 +45,7 @@ const List = () => {
     const products = useSelector((state) => {
         const productList = state.products.list;
         if (!productList) return [];
-        const { totalCount, totalPages, products } = state.products.list;
+        const {totalCount, totalPages, products} = state.products.list;
         useEffect(() => {
             if (totalCount && totalPages) {
                 setTotalProducts(totalCount);
@@ -60,6 +59,12 @@ const List = () => {
     useEffect(() => {
         dispatch(getProduct());
     }, [dispatch]);
+
+    useEffect(() => {
+        let clonedProducts = [...products];
+        clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+        setSortedProducts(clonedProducts);
+    }, [products, sortField, sortBy]);
 
 
     const handlePageClick = (event) => {
@@ -77,8 +82,6 @@ const List = () => {
     };
 
 
-
-
     useEffect(() => {
         dispatch(getProduct());
     }, [])
@@ -91,13 +94,12 @@ const List = () => {
     }
 
 
-
     return (
         <>
 
             <button
-            className="btn-btn-success"
-            onClick={() => setIsShowModalAddNew(true)}
+                className="btn-btn-success"
+                onClick={() => setIsShowModalAddNew(true)}
             >
                 Add new Product
             </button>
@@ -111,27 +113,30 @@ const List = () => {
             </button>
 
             <button
-            onClick={() => handleSort("desc", "price")}
+                onClick={() => handleSort("desc", "price")}
             >
                 <i className="fa-solid fa-arrow-up"></i>
             </button>
             <button
-                onClick={() =>  handleSort("asc", "price")}
+                onClick={() => handleSort("asc", "price")}
             >
                 <i className="fa-sharp fa-solid fa-arrow-down">
 
-                </i></button>
+                </i>
+            </button>
 
-            <div style={{display:"flex", flexWrap:"wrap"}}>
-            {products && products.map(item => (
-                <div className="grid__column-2-4" key={item.id}>
+            <div style={{display: "flex", flexWrap: "wrap"}}>
+                {sortedProducts && sortedProducts.map(item => (
+                    <div className="grid__column-2-4" key={item.id}>
                         <Link className="home-product-item" href="#">
-                            <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`}}></div>
+                            <div className="home-product-item__img"
+                                 style={{backgroundImage: `url(${item.image})`}}></div>
                             <h4 className="home-product-item__name">{item.name}</h4>
 
                             <div className="home-product-item__price">
                                 <span className="home-product-item__price-old">{item.price}$</span>
-                                <span style={{marginLeft:"100px"}} className="home-product-item__price-current">SL: {item.quantity}</span>
+                                <span style={{marginLeft: "100px"}}
+                                      className="home-product-item__price-current">SL: {item.quantity}</span>
                             </div>
 
 
@@ -162,44 +167,46 @@ const List = () => {
                                 <span className="home-product-item_sale-off-label"> Giảm</span>
                             </div>
 
-                        <div style={{display:"flex", justifyContent:"space-around", padding:10}}>
-                        <button style={{border:"none", backgroundColor:"transparent"}} onClick={()=>dispatch(deleteProduct(item.id))}><i style={{fontSize:30, color:"red"}} className="fa-solid fa-trash-can"></i></button>
-                        <button
-                        onClick={() => handleEditProduct(item)}
-                        style={{border:"none", backgroundColor:"transparent"}}
-                        >
-                        <i style={{fontSize:30}} className="fa-solid fa-pen-to-square"></i>
-                        </button>
+                            <div style={{display: "flex", justifyContent: "space-around", padding: 10}}>
+                                <button style={{border: "none", backgroundColor: "transparent"}}
+                                        onClick={() => dispatch(deleteProduct(item.id))}><i
+                                    style={{fontSize: 30, color: "red"}} className="fa-solid fa-trash-can"></i></button>
+                                <button
+                                    onClick={() => handleEditProduct(item)}
+                                    style={{border: "none", backgroundColor: "transparent"}}
+                                >
+                                    <i style={{fontSize: 30}} className="fa-solid fa-pen-to-square"></i>
+                                </button>
                             </div>
                         </Link>
-                        
-                        
+
+
                     </div>
 
-            ))}
+                ))}
             </div>
             <AddProduct
-                show ={isShowModalAddNew}
+                show={isShowModalAddNew}
                 handleClose={handleClose}
 
             />
-            
+
             <ModalEdit
-            show = {showEditModal}
-            dataProductEdit={dataProductEdit}
-            handleClose={handleClose}
-            handleUpdateProduct={handleUpdateProduct}
+                show={showEditModal}
+                dataProductEdit={dataProductEdit}
+                handleClose={handleClose}
+                handleUpdateProduct={handleUpdateProduct}
             />
 
             <ListUsers
-            show = {isShowModalListUsers}
-            handleClose={handleClose}
+                show={isShowModalListUsers}
+                handleClose={handleClose}
             />
 
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
-                // onPageChange={handlePageClick}
+                onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
                 pageCount={totalPage}
                 previousLabel="< previous"

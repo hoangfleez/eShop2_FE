@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import { getProduct} from "../../sevives/productService.js";
+import {getProduct} from "../../sevives/productService.js";
 import {addCart} from "../../sevives/cartService.js";
 import {useDispatch, useSelector} from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ListClient.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { ClassSharp } from '@mui/icons-material';
+import {ClassSharp} from '@mui/icons-material';
 import {Link} from "react-router-dom";
 import SimpleSlider from '../slick/Slick.jsx';
 import CenterMode from '../slick/ProductSlick.jsx';
-import { getCategory } from '../../sevives/categoryService.js';
+import {getCategory} from '../../sevives/categoryService.js';
 import {searchCategoryProduct, searchProduct} from "../../sevives/productService.js";
 import ModalLogin from '../../Components/Modal.jsx';
 import ReactPaginate from "react-paginate";
+import {orderBy} from "lodash";
 
 const ListClient = () => {
 
@@ -22,13 +23,27 @@ const ListClient = () => {
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
+    const [sortBy, setSortBy] = useState('asc');
+    const [sortField, setSortField] = useState('price');
+    const [sortedProducts, setSortedProducts] = useState([]);
+
+
+    const handleSort = (sortBy, sortField) => {
+        setSortBy(sortBy);
+        setSortField(sortField);
+
+        let cloneListProduct = [...products];
+        cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
+        console.log(cloneListProduct)
+    }
+
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
 
 
     const products = useSelector((state) => {
-        const { totalCount, totalPages, products } = state.products.list;
+        const {totalCount, totalPages, products} = state.products.list;
         useEffect(() => {
             if (totalCount && totalPages) {
                 setTotalProducts(totalCount);
@@ -39,6 +54,12 @@ const ListClient = () => {
     });
 
     useEffect(() => {
+        let clonedProducts = [...products];
+        clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+        setSortedProducts(clonedProducts);
+    }, [products, sortField, sortBy]);
+
+    useEffect(() => {
         dispatch(getProduct());
     }, [dispatch]);
 
@@ -46,40 +67,40 @@ const ListClient = () => {
         dispatch(getProduct(+event.selected + 1));
     };
 
-    const addToCartProduct = (id,quantity,price) =>{
+    const addToCartProduct = (id, quantity, price) => {
         let data = {
             productId: id,
             quantity: quantity,
             price: price
         }
-        if (user){
+        if (user) {
             dispatch(addCart(data))
             MySwal.fire({
                 icon: 'success',
                 title: 'Thêm vào giỏ hàng thành công ^^',
                 timer: 1500,
             })
-        }else{
+        } else {
             MySwal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Hãy đăng nhập để mua hàng!',
             })
         }
-        
+
 
     }
     const category = useSelector(state => {
         return state.category.category
     });
 
-    console.log(category,1114141)
+    console.log(category, 1114141)
 
-    const handleCategory = (id) =>{
+    const handleCategory = (id) => {
         dispatch(searchCategoryProduct(id))
     }
 
-    const handleAllProducts =()=>{
+    const handleAllProducts = () => {
         dispatch(getProduct());
     }
 
@@ -88,50 +109,77 @@ const ListClient = () => {
     }, []);
 
 
-
     return (
         <>
-            
-            <SimpleSlider/>
-            <hr style={{color:"red"}} className='hr' />
-            <CenterMode/>
-            <hr style={{color:"red"}} className='hr' />
 
-            <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
-                <div style={{paddingTop:"30px", width:"10%"}}>
-                    <div style={{display:"flex",columnGap:"10px", alignItems:"center", borderBottom:"1px solid rgb(245,245,24)", padding:"10px",width:"100%"}}>
+            <SimpleSlider/>
+            <hr style={{color: "red"}} className='hr'/>
+            <CenterMode/>
+            <hr style={{color: "red"}} className='hr'/>
+
+            <div style={{display: "flex", padding: "0 20px", columnGap: "20px"}}>
+                <div style={{paddingTop: "30px", width: "10%"}}>
+                    <div style={{
+                        display: "flex",
+                        columnGap: "10px",
+                        alignItems: "center",
+                        borderBottom: "1px solid rgb(245,245,24)",
+                        padding: "10px",
+                        width: "100%"
+                    }}>
                         <i class="fa-solid fa-bars"></i>
                         <span>Tất cả danh mục</span>
                     </div>
-                    <div style={{marginLeft:"40px"}}>
-                    <div style={{padding:5, cursor:"pointer"}} onClick={()=>{handleAllProducts()}}>
-                        <span>Tât cả sản phẩm </span>
-                    </div>
-                    
-                    {category && category.map(item => (
-                        <div key={item.id} style={{padding:5,cursor:"pointer"}} onClick={() => handleCategory(item.id)} >
-                            <span >{item.name}</span>
-                            
+                    <div style={{marginLeft: "40px"}}>
+                        <div style={{padding: 5, cursor: "pointer"}} onClick={() => {
+                            handleAllProducts()
+                        }}>
+                            <span>Tât cả sản phẩm </span>
                         </div>
-            ))}
+
+                        {category && category.map(item => (
+                            <div key={item.id} style={{padding: 5, cursor: "pointer"}}
+                                 onClick={() => handleCategory(item.id)}>
+                                <span>{item.name}</span>
+
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
-                {products && products.map(item => (
-                
-                    <div className="grid__column-2-4" key={item.id} >
-                            <Link className="home-product-item" style={{textDecoration:"none"}}>
-                                <div className="home-product-item__img" style={{backgroundImage: `url(${item.image})`,objectFit:"cover"}}></div>
+
+                <div>
+                    <button
+                        onClick={() => handleSort("desc", "price")}
+                    >
+                        <i className="fa-solid fa-arrow-up"></i>
+                    </button>
+                    <button
+                        onClick={() => handleSort("asc", "price")}
+                    >
+                        <i className="fa-sharp fa-solid fa-arrow-down">
+
+                        </i>
+                    </button>
+                </div>
+                <div style={{display: "flex", padding: 20, flexWrap: "wrap", width: "100%"}}>
+
+                    {sortedProducts && sortedProducts.map(item => (
+
+                        <div className="grid__column-2-4" key={item.id}>
+                            <Link className="home-product-item" style={{textDecoration: "none"}}>
+                                <div className="home-product-item__img"
+                                     style={{backgroundImage: `url(${item.image})`, objectFit: "cover"}}></div>
                                 <h4 className="home-product-item__name">{item.name}</h4>
 
-                                <div className="home-product-item__price" style={{display:"flex", justifyContent:"space-between"}}>
+                                <div className="home-product-item__price"
+                                     style={{display: "flex", justifyContent: "space-between"}}>
                                     <span className="home-product-item__price-old">${item.price}</span>
-                                    <span  className="home-product-item__price-current">Số lượng:{item.quantity}</span>
+                                    <span className="home-product-item__price-current">Số lượng:{item.quantity}</span>
                                 </div>
 
 
                                 <div className="home-product-item__action">
-                                            
+
                                     <div className="home-product-item__rating">
                                         <i className="home-product-item__star--gold fa-solid fa-star"></i>
                                         <i className="home-product-item__star--gold fa-solid fa-star"></i>
@@ -153,9 +201,12 @@ const ListClient = () => {
                                     <span className="home-product-item_sale-off-percent">10%</span>
                                     <span className="home-product-item_sale-off-label"> Giảm</span>
                                 </div>
-                                <div style={{display:"flex",justifyContent:"space-between", padding:"20px"}}>
+                                <div style={{display: "flex", justifyContent: "space-between", padding: "20px"}}>
                                     <div>
-                                        <button className='btn-cart' onClick={()=>(addToCartProduct(item.id,item.quantity, item.price))}><i className="fa-solid fa-cart-shopping" style={{fontSize:25}}></i></button>
+                                        <button className='btn-cart'
+                                                onClick={() => (addToCartProduct(item.id, item.quantity, item.price))}>
+                                            <i className="fa-solid fa-cart-shopping" style={{fontSize: 25}}></i>
+                                        </button>
                                     </div>
                                     <div>
                                     <span className="home-product-item__like">
@@ -163,12 +214,12 @@ const ListClient = () => {
                                                 <i className="home-product-item__like-icon-fill fa-regular fa-heart"></i>
                                 </span>
                                     </div>
-                                
+
                                 </div>
                             </Link>
-                            </div>
-                    
-            ))}
+                        </div>
+
+                    ))}
                 </div>
             </div>
 
