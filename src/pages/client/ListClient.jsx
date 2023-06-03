@@ -8,6 +8,11 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { ClassSharp } from '@mui/icons-material';
 import {Link} from "react-router-dom";
+import SimpleSlider from '../slick/Slick.jsx';
+import CenterMode from '../slick/ProductSlick.jsx';
+import { getCategory } from '../../sevives/categoryService.js';
+import {searchCategoryProduct, searchProduct} from "../../sevives/productService.js";
+import ModalLogin from '../../Components/Modal.jsx';
 import ReactPaginate from "react-paginate";
 
 const ListClient = () => {
@@ -64,47 +69,27 @@ const ListClient = () => {
         
 
     }
+    const category = useSelector(state => {
+        return state.category.category
+    });
+
+    console.log(category,1114141)
+
+    const handleCategory = (id) =>{
+        dispatch(searchCategoryProduct(id))
+    }
+    useEffect(() => {
+        dispatch(getCategory())
+    }, []);
 
 
 
     return (
         <>
-            <div>
-                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div className="carousel-inner" style={{height: "700px", objectFit: "container"}}>
-                        <div className="carousel-item active">
-                            <img
-                                src="https://sites.google.com/site/thoitrangnamnulongan/_/rsrc/1524193765627/home/free-vector-fashion-shopping-01-vector_000527_fashion_shopping_01_vector.jpg"
-                                className="d-block w-100 " alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://www.fashioncrab.com/wp-content/uploads/2016/01/Banner4.jpg"
-                                className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://xanhlo.com/media/wysiwyg/tintuc/mua-quan-ao-sale-off.jpg"
-                                className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Next</span>
-                    </button>
-                </div>
-            </div>
-
-
+            
+            <SimpleSlider/>
+            <hr style={{color:"red"}} className='hr' />
+            <CenterMode/>
             <hr style={{color:"red"}} className='hr' />
 
             <div style={{display:"flex", padding: 20,flexWrap:"wrap"}}>
@@ -160,7 +145,8 @@ const ListClient = () => {
                             </div>
                     
             ))}
-            </div>
+                </div>
+
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
@@ -180,6 +166,7 @@ const ListClient = () => {
                 containerClassName="pagination"
                 activeClassName="active"
             />
+
         </>
     );
 };

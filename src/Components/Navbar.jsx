@@ -12,6 +12,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import FooComponent from "../Components/Marquee"
 import {searchCategoryProduct, searchProduct} from "../sevives/productService.js";
 import {getCategory} from "../sevives/categoryService.js";
+import UserAvatar from "./Avatar";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Navbar = () => {
   };
 
   let handleInput = (e) =>{
-     setName(e.target.value)
+    setName(e.target.value)
   };
 
   let handleSearch = async (event) =>{
@@ -47,9 +48,7 @@ const Navbar = () => {
     setName("")
   };
 
-  const category = useSelector(state => {
-    return state.category.category
-  });
+
 
 
   useEffect(() => {
@@ -97,11 +96,11 @@ const Navbar = () => {
               </div>
             </form>
 
-            {category && category.map(item => (
+            {/* {category && category.map(item => (
                 <div key={item.id}>{item.name}
                 <button onClick={() => handleCategory(item.id)}>bam</button>
                 </div>
-            ))}
+            ))} */}
           </div>
 
         </div>
@@ -145,7 +144,7 @@ const Navbar = () => {
                         color="inherit"
                         sx={{ padding: "4px" }}
                       >
-                        <AccountCircle sx={{ width: 45, height: 45 }} />
+                      <UserAvatar sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"
@@ -197,7 +196,7 @@ const Navbar = () => {
                         color="inherit"
                         sx={{ padding: "4px", marginLeft: "4px" }}
                       >
-                        <AccountCircle sx={{ width: 45, height: 45 }} />
+                        <UserAvatar sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"

@@ -15,6 +15,7 @@ const Bill = () => {
     const cart = useSelector(state => {
         return state.cart.cart;
     });
+    console.log(cart,333333);
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
@@ -24,6 +25,7 @@ const Bill = () => {
     }, [])
 
     const handleBill = () =>{
+        
         MySwal.fire({
             icon: 'success',
             title: 'Đã thanh toán.',

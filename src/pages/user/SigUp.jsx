@@ -128,7 +128,7 @@ export default function SignUp(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2 , backgroundColor:"pink"}}
                     id="btn-sigup"
                   >
                     Đăng ký

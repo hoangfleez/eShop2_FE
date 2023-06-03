@@ -2,8 +2,6 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,6 +15,7 @@ import { TextField } from "formik-mui";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../sevives/useService";
+import LoginWithGG from "./LoginWithGG";
 
 function Copyright(props) {
   return (
@@ -42,6 +41,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn(props) {
 
+//  console.log(props)
   const [message, setMessage] = React.useState("");
 
   const dispatch = useDispatch();
@@ -51,22 +51,15 @@ export default function SignIn(props) {
       if (data.payload === "Password is wrong") {
         setMessage("Mật khẩu không đúng! Hãy nhập lại!");
       }
-      if (data.payload === "User is not exist") {
+      else if (data.payload === "User is not exist") {
         setMessage("Tài khoản không tồn tại!");
       } else{
-        
+
       }
     });
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -146,7 +139,7 @@ export default function SignIn(props) {
                     variant="contained"
                     disabled={isSubmitting}
                     onClick={submitForm}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, backgroundColor:"pink" }}
                   >
                     Đăng nhập
                   </Button>
@@ -173,9 +166,12 @@ export default function SignIn(props) {
               </Form>
             )}
           </Formik>
+          
+          <LoginWithGG/>
+        
         </Box>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt:2, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

@@ -16,6 +16,7 @@ const List = () => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
     const [isShowModalListUsers, setIsShowModalListUsers] = useState(false)
     const dispatch = useDispatch();
+
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
     const [totalProducts, setTotalProducts] = useState(0);
@@ -71,17 +72,23 @@ const List = () => {
         const index = clonedProducts.findIndex((item) => item.id === product.id);
         if (index >= 0) {
             clonedProducts[index] = product;
-            dispatch({ type: "SET_PRODUCTS", payload: { products: clonedProducts }});
+            dispatch(getProduct(clonedProducts));
         }
     };
 
 
 
+
+    useEffect(() => {
+        dispatch(getProduct());
+    }, [])
+
+
     const handleEditProduct = (product) => {
         setDataProductEdit(product);
         setShowEditModal(true);
-    }
 
+    }
 
 
 
@@ -165,8 +172,8 @@ const List = () => {
                         </button>
                             </div>
                         </Link>
-
-
+                        
+                        
                     </div>
 
             ))}
@@ -176,7 +183,7 @@ const List = () => {
                 handleClose={handleClose}
 
             />
-
+            
             <ModalEdit
             show = {showEditModal}
             dataProductEdit={dataProductEdit}
@@ -192,7 +199,7 @@ const List = () => {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
-                onPageChange={handlePageClick}
+                // onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
                 pageCount={totalPage}
                 previousLabel="< previous"
