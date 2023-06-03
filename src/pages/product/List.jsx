@@ -25,16 +25,10 @@ const List = () => {
     const [sortField, setSortField] = useState('price');
     const [sortedProducts, setSortedProducts] = useState([]);
 
-
     const handleSort = (sortBy, sortField) => {
         setSortBy(sortBy);
         setSortField(sortField);
-
-        let cloneListProduct = [...products];
-        cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
-        console.log(cloneListProduct)
     }
-
 
     const handleClose = () => {
         setIsShowModalAddNew(false);
@@ -43,9 +37,9 @@ const List = () => {
     }
 
     const products = useSelector((state) => {
-        const productList = state.products.list;
+        const productList = state.products.list || {};
         if (!productList) return [];
-        const {totalCount, totalPages, products} = state.products.list;
+        const {totalCount, totalPages, products} = productList;
         useEffect(() => {
             if (totalCount && totalPages) {
                 setTotalProducts(totalCount);
@@ -58,12 +52,16 @@ const List = () => {
 
     useEffect(() => {
         dispatch(getProduct());
-    }, [dispatch]);
+    }, []);
+
+
 
     useEffect(() => {
-        let clonedProducts = [...products];
-        clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
-        setSortedProducts(clonedProducts);
+        if (Array.isArray(products) && products.length > 0) {
+            let clonedProducts = [...products];
+            clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+            setSortedProducts(clonedProducts);
+        }
     }, [products, sortField, sortBy]);
 
 
@@ -80,12 +78,6 @@ const List = () => {
             dispatch(getProduct(clonedProducts));
         }
     };
-
-
-    useEffect(() => {
-        dispatch(getProduct());
-    }, [])
-
 
     const handleEditProduct = (product) => {
         setDataProductEdit(product);

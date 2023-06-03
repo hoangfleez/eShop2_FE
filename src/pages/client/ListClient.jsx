@@ -23,18 +23,14 @@ const ListClient = () => {
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
+
     const [sortBy, setSortBy] = useState('asc');
     const [sortField, setSortField] = useState('price');
     const [sortedProducts, setSortedProducts] = useState([]);
 
-
     const handleSort = (sortBy, sortField) => {
         setSortBy(sortBy);
         setSortField(sortField);
-
-        let cloneListProduct = [...products];
-        cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
-        console.log(cloneListProduct)
     }
 
     let user = useSelector(({user}) => {
@@ -43,7 +39,9 @@ const ListClient = () => {
 
 
     const products = useSelector((state) => {
-        const {totalCount, totalPages, products} = state.products.list;
+        const productList = state.products.list || {};
+        if (!productList) return [];
+        const {totalCount, totalPages, products} = productList;
         useEffect(() => {
             if (totalCount && totalPages) {
                 setTotalProducts(totalCount);
@@ -52,16 +50,18 @@ const ListClient = () => {
         }, [totalCount, totalPages]);
         return products;
     });
-
-    useEffect(() => {
-        let clonedProducts = [...products];
-        clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
-        setSortedProducts(clonedProducts);
-    }, [products, sortField, sortBy]);
-
     useEffect(() => {
         dispatch(getProduct());
-    }, [dispatch]);
+    },[] );
+
+    useEffect(() => {
+        if (Array.isArray(products) && products.length > 0) {
+            let clonedProducts = [...products];
+            clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+            setSortedProducts(clonedProducts);
+        }
+    }, [products, sortField, sortBy]);
+
 
     const handlePageClick = (event) => {
         dispatch(getProduct(+event.selected + 1));
