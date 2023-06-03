@@ -8,7 +8,11 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { ClassSharp } from '@mui/icons-material';
 import {Link} from "react-router-dom";
-
+import SimpleSlider from '../slick/Slick.jsx';
+import CenterMode from '../slick/ProductSlick.jsx';
+import { getCategory } from '../../sevives/categoryService.js';
+import {searchCategoryProduct, searchProduct} from "../../sevives/productService.js";
+import ModalLogin from '../../Components/Modal.jsx';
 const ListClient = () => {
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
@@ -41,10 +45,24 @@ const ListClient = () => {
                 title: 'Oops...',
                 text: 'Hãy đăng nhập để mua hàng!',
             })
+            // <ModalLogin />
+
         }
         
 
     }
+    const category = useSelector(state => {
+        return state.category.category
+    });
+
+    console.log(category,1114141)
+
+    const handleCategory = (id) =>{
+        dispatch(searchCategoryProduct(id))
+    }
+    useEffect(() => {
+        dispatch(getCategory())
+    }, []);
 
     useEffect(() => {
         dispatch(getProduct());
@@ -52,46 +70,30 @@ const ListClient = () => {
 
     return (
         <>
-            <div>
-                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div className="carousel-inner" style={{height: "700px", objectFit: "container"}}>
-                        <div className="carousel-item active">
-                            <img
-                                src="https://sites.google.com/site/thoitrangnamnulongan/_/rsrc/1524193765627/home/free-vector-fashion-shopping-01-vector_000527_fashion_shopping_01_vector.jpg"
-                                className="d-block w-100 " alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://www.fashioncrab.com/wp-content/uploads/2016/01/Banner4.jpg"
-                                className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                        <div className="carousel-item">
-                            <img src="https://xanhlo.com/media/wysiwyg/tintuc/mua-quan-ao-sale-off.jpg"
-                                className="d-block w-100 h-10" alt="..."/>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-target="#carouselExampleIndicators"
-                            data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Next</span>
-                    </button>
-                </div>
-            </div>
-
-
+            <SimpleSlider/>
+            <hr style={{color:"red"}} className='hr' />
+            <CenterMode/>
             <hr style={{color:"red"}} className='hr' />
 
-            <div style={{display:"flex", padding: 20,flexWrap:"wrap"}}>
-            {products && products.map(item => (
+
+
+            <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
+                <div style={{paddingTop:"30px", width:"10%"}}>
+                    <div style={{display:"flex",columnGap:"10px", alignItems:"center", borderBottom:"1px solid rgb(245,245,24)", padding:"10px",width:"100%"}}>
+                        <i class="fa-solid fa-bars"></i>
+                        <span>Tất cả danh mục</span>
+                    </div>
+                    <div style={{marginLeft:"40px"}}>
+                    {category && category.map(item => (
+                        <div key={item.id} style={{padding:5}} >
+                            <span onClick={() => handleCategory(item.id)}>{item.name}</span>
+                            
+                        </div>
+            ))}
+                    </div>
+                </div>
+                <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
+                {products && products.map(item => (
                 
                     <div className="grid__column-2-4" key={item.id} >
                             <Link className="home-product-item" style={{textDecoration:"none"}}>
@@ -143,7 +145,9 @@ const ListClient = () => {
                             </div>
                     
             ))}
+                </div>
             </div>
+            
         </>
     );
 };
