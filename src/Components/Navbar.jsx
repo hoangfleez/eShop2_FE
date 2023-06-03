@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   let handleInput = (e) =>{
-     setName(e.target.value)
+    setName(e.target.value)
   };
 
   let handleSearch = async (event) =>{
@@ -49,9 +49,7 @@ const Navbar = () => {
     setName("")
   };
 
-  const category = useSelector(state => {
-    return state.category.category
-  });
+
 
 
   useEffect(() => {
@@ -99,11 +97,11 @@ const Navbar = () => {
               </div>
             </form>
 
-            {category && category.map(item => (
+            {/* {category && category.map(item => (
                 <div key={item.id}>{item.name}
                 <button onClick={() => handleCategory(item.id)}>bam</button>
                 </div>
-            ))}
+            ))} */}
           </div>
 
         </div>
