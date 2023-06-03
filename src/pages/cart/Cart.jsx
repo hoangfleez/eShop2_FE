@@ -106,7 +106,7 @@ const CartDetail = () => {
                                         </div>
                                         <div>
                                         <input
-                                            style={{backgroundColor:"white", height:40, width:40, textAlign:"center"}}
+                                            style={{backgroundColor:"white", height:40, width:40, textAlign:"center", border:"none"}}
                                             type="text"
                                             // className="form-control form-control-sm  text-center"
                                             value={item.quantity === 0 ? handleDelete(item.id) : item.quantity}

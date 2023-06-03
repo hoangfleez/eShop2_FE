@@ -95,12 +95,6 @@ const Navbar = () => {
                 </button>
               </div>
             </form>
-
-            {/* {category && category.map(item => (
-                <div key={item.id}>{item.name}
-                <button onClick={() => handleCategory(item.id)}>bam</button>
-                </div>
-            ))} */}
           </div>
 
         </div>
@@ -135,6 +129,9 @@ const Navbar = () => {
                 {user && user.role === "admin" ? (
                   <div className="navbar-nav ml-auto py-0">
                     <div>
+                    <Link Link to="/cart-detail" style={{color:"black"}}>
+                        <ShoppingCart sx={{ width: 30, height: 30 }} />
+                      </Link>
                       <IconButton
                         size="large"
                         aria-label="account of current user"
