@@ -78,6 +78,11 @@ const ListClient = () => {
     const handleCategory = (id) =>{
         dispatch(searchCategoryProduct(id))
     }
+
+    const handleAllProducts =()=>{
+        dispatch(getProduct());
+    }
+
     useEffect(() => {
         dispatch(getCategory())
     }, []);
@@ -92,8 +97,27 @@ const ListClient = () => {
             <CenterMode/>
             <hr style={{color:"red"}} className='hr' />
 
-            <div style={{display:"flex", padding: 20,flexWrap:"wrap"}}>
-            {products && products.map(item => (
+            <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
+                <div style={{paddingTop:"30px", width:"10%"}}>
+                    <div style={{display:"flex",columnGap:"10px", alignItems:"center", borderBottom:"1px solid rgb(245,245,24)", padding:"10px",width:"100%"}}>
+                        <i class="fa-solid fa-bars"></i>
+                        <span>Tất cả danh mục</span>
+                    </div>
+                    <div style={{marginLeft:"40px"}}>
+                    <div style={{padding:5, cursor:"pointer"}} onClick={()=>{handleAllProducts()}}>
+                        <span>Tât cả sản phẩm </span>
+                    </div>
+                    
+                    {category && category.map(item => (
+                        <div key={item.id} style={{padding:5,cursor:"pointer"}} onClick={() => handleCategory(item.id)} >
+                            <span >{item.name}</span>
+                            
+                        </div>
+            ))}
+                    </div>
+                </div>
+                <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
+                {products && products.map(item => (
                 
                     <div className="grid__column-2-4" key={item.id} >
                             <Link className="home-product-item" style={{textDecoration:"none"}}>
@@ -146,6 +170,7 @@ const ListClient = () => {
                     
             ))}
                 </div>
+            </div>
 
             <ReactPaginate
                 breakLabel="..."
