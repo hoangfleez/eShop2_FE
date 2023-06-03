@@ -6,11 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ListClient.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import {getCategory} from '../../sevives/categoryService.js';
 import {Link} from "react-router-dom";
 import SimpleSlider from '../slick/Slick.jsx';
 import CenterMode from '../slick/ProductSlick.jsx';
 import ReactPaginate from "react-paginate";
-import CategorizeAndSort from '../search/CategorizeAndSort.jsx';
+import CategorizeAndSort from '../categorizeAndSort/CategorizeAndSort.jsx';
+import {orderBy} from "lodash";
+
 
 const ListClient = () => {
 
@@ -19,13 +22,25 @@ const ListClient = () => {
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
+
+    const [sortBy, setSortBy] = useState('asc');
+    const [sortField, setSortField] = useState('price');
+    const [sortedProducts, setSortedProducts] = useState([]);
+
+    const handleSort = (sortBy, sortField) => {
+        setSortBy(sortBy);
+        setSortField(sortField);
+    }
+
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
 
 
     const products = useSelector((state) => {
-        const { totalCount, totalPages, products } = state.products.list;
+        const productList = state.products.list || {};
+        if (!productList) return [];
+        const {totalCount, totalPages, products} = productList;
         useEffect(() => {
             if (totalCount && totalPages) {
                 setTotalProducts(totalCount);
@@ -37,7 +52,15 @@ const ListClient = () => {
 
     useEffect(() => {
         dispatch(getProduct());
-    }, [dispatch]);
+    }, []);
+
+    useEffect(() => {
+        if (Array.isArray(products) && products.length > 0) {
+            let clonedProducts = [...products];
+            clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+            setSortedProducts(clonedProducts);
+        }
+    }, [products, sortField, sortBy]);
 
     const handlePageClick = (event) => {
         dispatch(getProduct(+event.selected + 1));
@@ -66,6 +89,10 @@ const ListClient = () => {
         
     }
 
+    useEffect(() => {
+        dispatch(getCategory())
+    }, []);
+
 
     return (
         <>
@@ -76,9 +103,31 @@ const ListClient = () => {
             <hr style={{color:"red"}} className='hr' />
 
             <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
+                
+                <div style={{width:"20%"}}>
                 <CategorizeAndSort/>
+                <div style={{display:"flex" , flexDirection:"column",borderTop:"1px solid black"}}>
+                    <div style={{display:"flex" ,columnGap:10, alignItems:"center", paddingTop:10}}>
+                        <i className="fa-solid fa-filter"></i>
+                        <span>Sắp xếp theo giá</span>
+                    </div>
+                    <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center", cursor: "pointer"}}
+                        onClick={() => handleSort("desc", "price")}
+                    >
+                        <span>Giá tăng dần</span>
+                        <i className="fa-solid fa-arrow-up"></i>
+                    </div>
+                    <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center",cursor: "pointer"}}
+                        onClick={() => handleSort("asc", "price")}
+                    >   <span>Giá dảm dần</span>
+                        <i className="fa-sharp fa-solid fa-arrow-down">
+                        </i>
+                    </div>
+                </div>
+                </div>    
+                
                 <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
-                    {products && products.map(item => (
+                {sortedProducts && sortedProducts.map(item =>  (
                 
                     <div className="grid__column-2-4" key={item.id} >
                             <Link className="home-product-item" style={{textDecoration:"none"}}>

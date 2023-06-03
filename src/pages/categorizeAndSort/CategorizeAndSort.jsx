@@ -17,7 +17,7 @@ const CategorizeAndSort = () => {
   };
 
   return (
-    <div style={{width:"20%"}}>
+    <div >
       <div style={{ paddingTop: "30px", width: "100%" }}>
         <div
           style={{
