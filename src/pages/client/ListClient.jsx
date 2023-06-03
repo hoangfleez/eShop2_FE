@@ -105,7 +105,7 @@ const ListClient = () => {
             <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
                 
                 <div style={{width:"20%"}}>
-                <CategorizeAndSort/>
+                    <CategorizeAndSort/>
                 <div style={{display:"flex" , flexDirection:"column",borderTop:"1px solid black"}}>
                     <div style={{display:"flex" ,columnGap:10, alignItems:"center", paddingTop:10}}>
                         <i className="fa-solid fa-filter"></i>

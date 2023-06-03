@@ -4,6 +4,7 @@ import {
   getProduct,
   editProduct,
 } from "../../sevives/productService.js";
+import {orderBy} from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -31,11 +32,7 @@ const List = () => {
   const handleSort = (sortBy, sortField) => {
     setSortBy(sortBy);
     setSortField(sortField);
-
-    // let cloneListProduct = [...products];
-    //  cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
-    // console.log(cloneListProduct)
-  };
+  }
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
@@ -58,7 +55,15 @@ const List = () => {
 
   useEffect(() => {
     dispatch(getProduct());
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    if (Array.isArray(products) && products.length > 0) {
+        let clonedProducts = [...products];
+        clonedProducts = orderBy(clonedProducts, [sortField], [sortBy]);
+        setSortedProducts(clonedProducts);
+    }
+}, [products, sortField, sortBy]);
 
   const handlePageClick = (event) => {
     dispatch(getProduct(+event.selected + 1));
@@ -98,16 +103,28 @@ const List = () => {
         List Users
       </button>
 
-      <button onClick={() => handleSort("desc", "price")}>
-        <i className="fa-solid fa-arrow-up"></i>
-      </button>
-      <button onClick={() => handleSort("asc", "price")}>
-        <i className="fa-sharp fa-solid fa-arrow-down"></i>
-      </button>
-
       <div style={{ display: "flex", padding: "0 20px", columnGap: "20px" }}>
-        <CategorizeAndSort/>
-
+      <div style={{width:"20%"}}>
+                    <CategorizeAndSort/>
+                <div style={{display:"flex" , flexDirection:"column",borderTop:"1px solid black"}}>
+                    <div style={{display:"flex" ,columnGap:10, alignItems:"center", paddingTop:10}}>
+                        <i className="fa-solid fa-filter"></i>
+                        <span>Sắp xếp theo giá</span>
+                    </div>
+                    <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center", cursor: "pointer"}}
+                        onClick={() => handleSort("desc", "price")}
+                    >
+                        <span>Giá tăng dần</span>
+                        <i className="fa-solid fa-arrow-up"></i>
+                    </div>
+                    <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center",cursor: "pointer"}}
+                        onClick={() => handleSort("asc", "price")}
+                    >   <span>Giá dảm dần</span>
+                        <i className="fa-sharp fa-solid fa-arrow-down">
+                        </i>
+                    </div>
+                </div>
+                </div>  
         <div
           style={{
             display: "flex",
@@ -116,8 +133,7 @@ const List = () => {
             padding: 20,
           }}
         >
-          {products &&
-            products.map((item) => (
+          {sortedProducts && sortedProducts.map(item => (
               <div className="grid__column-2-4" key={item.id}>
                 <Link className="home-product-item" href="#">
                   <div
