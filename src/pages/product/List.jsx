@@ -23,16 +23,15 @@ const List = () => {
 
     const [sortBy, setSortBy] = useState('asc');
     const [sortField, setSortField] = useState('price');
-    const [sortedProducts, setSortedProducts] = useState([]);
 
 
     const handleSort = (sortBy,sortField ) =>{
         setSortBy(sortBy);
         setSortField(sortField);
 
-        // let cloneListProduct = [...products];
-        //  cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
-        // console.log(cloneListProduct)
+        let cloneListProduct = [...products];
+         cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
+        console.log(cloneListProduct)
     }
 
 
