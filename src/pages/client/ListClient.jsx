@@ -94,7 +94,7 @@ const ListClient = () => {
         return state.category.category
     });
 
-    console.log(category, 1114141)
+
 
     const handleCategory = (id) => {
         dispatch(searchCategoryProduct(id))
