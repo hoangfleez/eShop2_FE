@@ -5,7 +5,7 @@ import {
     findProductById,
     getProduct,
     editProduct,
-    searchProduct, searchCategoryProduct
+    searchProduct, searchCategoryProduct, fetchProducts
 } from "../../sevives/productService.js";
 
 const initialState = {
@@ -26,15 +26,19 @@ const productSlice = createSlice({
         });
 
         builder.addCase(editProduct.fulfilled, (state, action) => {
-            state.list = action.payload;
+            state.list.products = action.payload;
 
+        });
+
+        builder.addCase(fetchProducts.fulfilled, (state, action) => {
+            state.list = action.payload;
         });
 
         builder.addCase(deleteProduct.fulfilled,(state,action) => {
             const id = action.payload;
-            const index = state.list.findIndex(item => item.id === id);
+            const index = state.list.products.findIndex(item => item.id === id);
             if (index !== -1){
-                state.list.splice(index,1)
+                state.list.products.splice(index,1)
             }
         });
 
