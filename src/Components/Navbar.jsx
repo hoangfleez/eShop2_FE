@@ -13,6 +13,8 @@ import FooComponent from "../Components/Marquee"
 import {searchCategoryProduct, searchProduct} from "../sevives/productService.js";
 import {getCategory} from "../sevives/categoryService.js";
 import UserAvatar from "./Avatar";
+import { Button } from "@mui/material";
+import { useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -20,6 +22,11 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
+
+  const [openMoadl, setOpenMoadl] = React.useState(false);
+  console.log(openMoadl,141414)
+  
+
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
@@ -223,9 +230,10 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div className="navbar-nav ml-auto py-0">
-                    <Link className="nav-item nav-link">
-                      <ModalLogin />
-                    </Link>
+                    {/* <Button >
+                    Đăng nhập
+                    </Button> */}
+                      <ModalLogin/>
                   </div>
                 )}
               </div>

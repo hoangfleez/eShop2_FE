@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 import SimpleSlider from '../slick/Slick.jsx';
 import CenterMode from '../slick/ProductSlick.jsx';
 import ReactPaginate from "react-paginate";
-import CategorizeAndSort from '../categorizeAndSort/CategorizeAndSort.jsx';
+import CategorizeAndSort from '../search/CategorizeAndSort.jsx';
 
 const ListClient = () => {
 
