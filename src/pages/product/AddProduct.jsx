@@ -2,10 +2,10 @@
 import {Button, Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {addProduct} from "../../sevives/productService.js";
+import {addProduct, getProduct} from "../../sevives/productService.js";
 import {useNavigate} from "react-router-dom";
 import {getCategory} from "../../sevives/categoryService.js";
-import {ref, uploadBytes, getDownloadURL, listAll} from "firebase/storage";
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {storage} from "../../sevives/firebase.js";
 import {v4} from "uuid";
 import Swal from 'sweetalert2'
@@ -23,7 +23,6 @@ const AddProduct = (props) => {
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
     const [category, setCategory] = useState("");
-
     const [imageUpload, setImageUpload] = useState(null);
     const [imageUrls, setImageUrls] = useState('');
 
@@ -57,13 +56,15 @@ const AddProduct = (props) => {
                 showConfirmButton: false,
                 timer: 1500
             })
+
+
             setTimeout(()=>{handleClose();
                 setName("");
                 setPrice("");
                 setCategory("");
                 setQuantity("");
                 setImageUrls("")
-                navigate("/admin")}, 1500)
+                navigate("/admin")}, 1500);
 
         } else {
 

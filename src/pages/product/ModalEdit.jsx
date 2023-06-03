@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editProduct } from "../../sevives/productService.js";
+import {editProduct, getProduct} from "../../sevives/productService.js";
 import {getCategory} from "../../sevives/categoryService.js";
 
 const ModalEdit = (props) => {
@@ -32,11 +32,15 @@ const ModalEdit = (props) => {
                 category: category
             });
             handleClose();
-            navigate("/");
+            navigate("/admin");
+            dispatch(getProduct())
+
         } else {
             alert("Có lỗi xảy ra khi chỉnh sửa sản phẩm!");
         }
     };
+
+
 
     const categorys = useSelector(state =>{
         return state.category.category

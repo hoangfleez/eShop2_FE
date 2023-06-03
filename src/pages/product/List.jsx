@@ -8,31 +8,64 @@ import './List.css'
 import AddProduct from "./AddProduct.jsx";
 import ListUsers from "../user/ListUsers.jsx";
 import {Link} from "react-router-dom";
+import { orderBy } from 'lodash';
+
 
 
 const List = () => {
-    const [isShowModalAddNew, setIsShowModalAddNew] = useState()
-    const [isShowModalListUsers, setIsShowModalListUsers] = useState()
-    const handleClose = () => {
-        setIsShowModalAddNew(false)
-        setIsShowModalListUsers(false)
-    }
-
+    const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
+    const [isShowModalListUsers, setIsShowModalListUsers] = useState(false)
     const dispatch = useDispatch();
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
-    const [totalProducts, setTotalProducts] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [totalPage, setTotalPage] = useState(0);
+
+    const [sortBy, setSortBy] = useState('asc');
+    const [sortField, setSortField] = useState('price');
+    const [sortedProducts, setSortedProducts] = useState([]);
+
+
+    const handleSort = (sortBy,sortField ) =>{
+        setSortBy(sortBy);
+        setSortField(sortField);
+
+        // let cloneListProduct = [...products];
+        //  cloneListProduct = orderBy(cloneListProduct, [sortField], [sortBy]);
+        // console.log(cloneListProduct)
+    }
 
 
 
-    const products = useSelector(({products}) => {
-        return products.list;
+    const handleClose = () => {
+        setIsShowModalAddNew(false);
+        setIsShowModalListUsers(false);
+        setShowEditModal(false)
+    }
 
+    const products = useSelector((state) => {
+        const productList = state.products.list;
+        if (!productList) return [];
+        const { totalCount, totalPages, products } = state.products.list;
+        useEffect(() => {
+            if (totalCount && totalPages) {
+                setTotalProducts(totalCount);
+                setTotalPage(totalPages);
+            }
+        }, [totalCount, totalPages]);
+        return products;
     });
 
 
+    useEffect(() => {
+        dispatch(getProduct());
+    }, [dispatch]);
+
+
+    const handlePageClick = (event) => {
+        dispatch(getProduct(+event.selected + 1));
+    };
 
 
     const handleUpdateProduct = (product) => {
@@ -43,6 +76,8 @@ const List = () => {
             dispatch(getProduct(clonedProducts));
         }
     };
+
+
 
 
     useEffect(() => {
@@ -64,13 +99,29 @@ const List = () => {
             <button
             className="btn-btn-success"
             onClick={() => setIsShowModalAddNew(true)}
-            >Add new Product</button>
+            >
+                Add new Product
+            </button>
 
 
             <button
                 className="btn-btn-success"
                 onClick={() => setIsShowModalListUsers(true)}
-            >List Users</button>
+            >
+                List Users
+            </button>
+
+            <button
+            onClick={() => handleSort("desc", "price")}
+            >
+                <i className="fa-solid fa-arrow-up"></i>
+            </button>
+            <button
+                onClick={() =>  handleSort("asc", "price")}
+            >
+                <i className="fa-sharp fa-solid fa-arrow-down">
+
+                </i></button>
 
             <div style={{display:"flex", flexWrap:"wrap"}}>
             {products && products.map(item => (

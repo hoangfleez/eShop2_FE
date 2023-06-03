@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { getProduct} from "../../sevives/productService.js";
 import {addCart} from "../../sevives/cartService.js";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,7 +13,12 @@ import CenterMode from '../slick/ProductSlick.jsx';
 import { getCategory } from '../../sevives/categoryService.js';
 import {searchCategoryProduct, searchProduct} from "../../sevives/productService.js";
 import ModalLogin from '../../Components/Modal.jsx';
+import ReactPaginate from "react-paginate";
+
 const ListClient = () => {
+
+    const [totalProducts, setTotalProducts] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
     const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
 
@@ -22,9 +27,24 @@ const ListClient = () => {
     })
 
 
-    const products = useSelector(({products}) => {
-        return products.list;
+    const products = useSelector((state) => {
+        const { totalCount, totalPages, products } = state.products.list;
+        useEffect(() => {
+            if (totalCount && totalPages) {
+                setTotalProducts(totalCount);
+                setTotalPage(totalPages);
+            }
+        }, [totalCount, totalPages]);
+        return products;
     });
+
+    useEffect(() => {
+        dispatch(getProduct());
+    }, [dispatch]);
+
+    const handlePageClick = (event) => {
+        dispatch(getProduct(+event.selected + 1));
+    };
 
     const addToCartProduct = (id,quantity,price) =>{
         let data = {
@@ -45,8 +65,6 @@ const ListClient = () => {
                 title: 'Oops...',
                 text: 'Hãy đăng nhập để mua hàng!',
             })
-            // <ModalLogin />
-
         }
         
 
@@ -64,36 +82,18 @@ const ListClient = () => {
         dispatch(getCategory())
     }, []);
 
-    useEffect(() => {
-        dispatch(getProduct());
-    }, [])
+
 
     return (
         <>
+            
             <SimpleSlider/>
             <hr style={{color:"red"}} className='hr' />
             <CenterMode/>
             <hr style={{color:"red"}} className='hr' />
 
-
-
-            <div style={{display:"flex",padding:"0 20px", columnGap:"20px"}}>
-                <div style={{paddingTop:"30px", width:"10%"}}>
-                    <div style={{display:"flex",columnGap:"10px", alignItems:"center", borderBottom:"1px solid rgb(245,245,24)", padding:"10px",width:"100%"}}>
-                        <i class="fa-solid fa-bars"></i>
-                        <span>Tất cả danh mục</span>
-                    </div>
-                    <div style={{marginLeft:"40px"}}>
-                    {category && category.map(item => (
-                        <div key={item.id} style={{padding:5}} >
-                            <span onClick={() => handleCategory(item.id)}>{item.name}</span>
-                            
-                        </div>
-            ))}
-                    </div>
-                </div>
-                <div style={{display:"flex", padding: 20,flexWrap:"wrap", width:"100%"}}>
-                {products && products.map(item => (
+            <div style={{display:"flex", padding: 20,flexWrap:"wrap"}}>
+            {products && products.map(item => (
                 
                     <div className="grid__column-2-4" key={item.id} >
                             <Link className="home-product-item" style={{textDecoration:"none"}}>
@@ -146,8 +146,27 @@ const ListClient = () => {
                     
             ))}
                 </div>
-            </div>
-            
+
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={totalPage}
+                previousLabel="< previous"
+
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+            />
+
         </>
     );
 };
