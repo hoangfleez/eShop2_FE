@@ -17,7 +17,6 @@ const LoginWithGG = () => {
         <GoogleLogin
           onSuccess={credentialResponse => {
             const details = jwt_decode(credentialResponse.credential)
-            console.log(details,11111)
             dispatch(loginGoogle({
               username: details.family_name
               // password: details.sub

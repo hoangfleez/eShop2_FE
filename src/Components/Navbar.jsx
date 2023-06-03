@@ -12,6 +12,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import FooComponent from "../Components/Marquee"
 import {searchCategoryProduct, searchProduct} from "../sevives/productService.js";
 import {getCategory} from "../sevives/categoryService.js";
+import UserAvatar from "./Avatar";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
-
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
@@ -147,7 +147,7 @@ const Navbar = () => {
                         color="inherit"
                         sx={{ padding: "4px" }}
                       >
-                      <AccountCircle sx={{ width: 45, height: 45 }} />
+                      <UserAvatar sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"
@@ -199,7 +199,7 @@ const Navbar = () => {
                         color="inherit"
                         sx={{ padding: "4px", marginLeft: "4px" }}
                       >
-                        <AccountCircle sx={{ width: 45, height: 45 }} />
+                        <UserAvatar sx={{ width: 45, height: 45 }} />
                       </IconButton>
                       <Menu
                         id="menu-appbar"
