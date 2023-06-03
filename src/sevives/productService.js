@@ -46,6 +46,19 @@ export const editProduct = createAsyncThunk(
     }
 )
 
+export const fetchProducts = createAsyncThunk(
+    'products/fetchProducts',
+    async ({ pageNumber, pageSize }) => {
+        const response = await customAPI.get('products', {
+            params: {
+                _page: pageNumber,
+                _limit: pageSize
+            }
+        })
+        return response.data;
+    }
+);
+
 export const searchProduct = createAsyncThunk(
     'products/searchProduct',
     async (name) => {

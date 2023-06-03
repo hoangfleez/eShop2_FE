@@ -11,8 +11,8 @@ import {Link} from "react-router-dom";
 
 
 const List = () => {
-    const [isShowModalAddNew, setIsShowModalAddNew] = useState()
-    const [isShowModalListUsers, setIsShowModalListUsers] = useState()
+    const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
+    const [isShowModalListUsers, setIsShowModalListUsers] = useState(false)
     const dispatch = useDispatch();
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
@@ -22,9 +22,12 @@ const List = () => {
     const handleClose = () => {
         setIsShowModalAddNew(false);
         setIsShowModalListUsers(false);
+        setShowEditModal(false)
     }
 
     const products = useSelector((state) => {
+        const productList = state.products.list;
+        if (!productList) return [];
         const { totalCount, totalPages, products } = state.products.list;
         useEffect(() => {
             if (totalCount && totalPages) {
@@ -34,6 +37,7 @@ const List = () => {
         }, [totalCount, totalPages]);
         return products;
     });
+
 
     useEffect(() => {
         dispatch(getProduct());
@@ -50,9 +54,10 @@ const List = () => {
         const index = clonedProducts.findIndex((item) => item.id === product.id);
         if (index >= 0) {
             clonedProducts[index] = product;
-            dispatch(getProduct(clonedProducts));
+            dispatch({ type: "SET_PRODUCTS", payload: { products: clonedProducts }});
         }
     };
+
 
 
     const handleEditProduct = (product) => {

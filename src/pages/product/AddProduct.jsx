@@ -23,7 +23,6 @@ const AddProduct = (props) => {
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
     const [category, setCategory] = useState("");
-
     const [imageUpload, setImageUpload] = useState(null);
     const [imageUrls, setImageUrls] = useState('');
 
@@ -47,7 +46,6 @@ const AddProduct = (props) => {
             category: category,
             image: imageUrls
         }
-
 
         let data = await dispatch(addProduct(abc));
         if (data) {
