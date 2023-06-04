@@ -22,12 +22,14 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
-
-  const [openMoadl, setOpenMoadl] = React.useState(false);
-  console.log(openMoadl,141414)
   
+  const [isOpen,setIsOpen] = React.useState(false);
 
+  const handleModal = ()=>{
+    setIsOpen(true);
+  }
 
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
 
@@ -230,10 +232,10 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div className="navbar-nav ml-auto py-0">
-                    {/* <Button >
+                    <Button onClick={handleModal} >
                     Đăng nhập
-                    </Button> */}
-                      <ModalLogin/>
+                    </Button>
+                      <ModalLogin open={isOpen} close={setIsOpen} />
                   </div>
                 )}
               </div>

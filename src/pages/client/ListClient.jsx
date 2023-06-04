@@ -13,9 +13,12 @@ import CenterMode from '../slick/ProductSlick.jsx';
 import ReactPaginate from "react-paginate";
 import CategorizeAndSort from '../categorizeAndSort/CategorizeAndSort.jsx';
 import {orderBy} from "lodash";
+import ModalLogin from '../../Components/Modal.jsx';
 
 
 const ListClient = () => {
+    const [isOpen,setIsOpen] = React.useState(false);
+    
 
     const [totalProducts, setTotalProducts] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
@@ -80,11 +83,7 @@ const ListClient = () => {
                 timer: 1500,
             })
         }else{
-            MySwal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Hãy đăng nhập để mua hàng!',
-            })
+            setIsOpen(true)
         }
         
     }
@@ -181,7 +180,7 @@ const ListClient = () => {
                     ))}
                 </div>
             </div>
-
+            <ModalLogin open={isOpen} close={setIsOpen} />
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
