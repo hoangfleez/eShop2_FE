@@ -14,7 +14,7 @@ import {searchCategoryProduct, searchProduct} from "../sevives/productService.js
 import {getCategory} from "../sevives/categoryService.js";
 import UserAvatar from "./Avatar";
 import { Button } from "@mui/material";
-import { useState } from "react";
+
 
 const Navbar = () => {
   const navigate = useNavigate();

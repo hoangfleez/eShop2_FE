@@ -12,28 +12,6 @@ const DetailHistory = () => {
     return (
         <div style={{ width:"100%", height:"100%", padding:"20px"}}>
         <h3>Chi tiết hóa đơn</h3>
-            {/* <table>
-                <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lương</th>
-                    <th>ảnh</th>
-                </tr>
-
-
-                {detailHistory && detailHistory.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.quantity}</td>
-                        <input type="hidden" value={totalMoney += item.price * item.quantity}/>
-                        <td><img style={{width:100, height:100}} src={item.image}/></td>
-                    </tr>
-                ))}
-                <td> tổng thiêt hại: {totalMoney}</td>
-
-
-            </table> */}
             <div className="box-bill" style={{width:"70%", marginLeft:"10px"}}>
             <div className="container">
                 <div className="row">
