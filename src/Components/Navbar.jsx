@@ -24,7 +24,7 @@ const Navbar = () => {
   });
 
   const [openMoadl, setOpenMoadl] = React.useState(false);
-  console.log(openMoadl,141414)
+
   
 
 

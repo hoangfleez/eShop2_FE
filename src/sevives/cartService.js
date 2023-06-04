@@ -52,11 +52,13 @@ export const paymentCart = createAsyncThunk(
     }
 )
 
-export const historyCart = createAsyncThunk(
-    'cart/historyCart',
-    async ()=>{
-        const res = await customAPI.get('/order-detail/history/detail');
+export const detailHistoryCart = createAsyncThunk(
+    'cart/detailHistoryCart',
+    async (id)=>{
+        const res = await customAPI.get(`/order-detail/history/detail/${id}`);
         return res.data;
     }
 )
+
+
 
