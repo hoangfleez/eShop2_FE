@@ -49,6 +49,7 @@ const Navbar = () => {
     localStorage.clear();
     dispatch(logout());
     navigate("/")
+    setIsOpen(false);
   };
 
   let handleInput = (e) =>{
@@ -133,6 +134,7 @@ const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div
+                style={{backgroundColor:"white"}}
                 className="collapse navbar-collapse justify-content-between"
                 id="navbarCollapse"
               >

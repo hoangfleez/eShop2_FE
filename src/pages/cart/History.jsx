@@ -1,77 +1,66 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
-import {CleaningServices} from "@mui/icons-material";
-import {billCart} from "../../sevives/billService.js";
-import {detailHistoryCart} from "../../sevives/cartService.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { CleaningServices } from "@mui/icons-material";
+import { billCart } from "../../sevives/billService.js";
+import { detailHistoryCart } from "../../sevives/cartService.js";
 import DetailHistory from "./DetailHistory.jsx";
+import { Button } from "@mui/material";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import React, { useState } from "react";
+import { TableControl } from "react-bootstrap-table-control";
 
 const Historys = () => {
+const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+const currentUser = useSelector(({ user }) => {
+    return user.currentUser.idUser;
+});
 
-    const currentUser = useSelector(({user}) => {
-        return user.currentUser.idUser;
-    });
+const history = useSelector((state) => {
+    return state.bill.bill;
+});
+        
+const handleDetail = (id) => {
+    dispatch(detailHistoryCart(id));
+};
 
-    const history = useSelector(state => {
-        return state.bill.bill;
-    });
+useEffect(() => {
+    if (currentUser) {
+    dispatch(billCart(currentUser));
+    }
+}, [currentUser]);
 
-    const handleDetail = (id) => {
-        dispatch(detailHistoryCart(id))
-    };
+let totalMoney = 0;
 
+return (
+    <div style={{width:"100%", padding:30, display:"flex", columnGap:30}}>
+    <div style={{width:"50%"}}>
+        <h1>Lịch sử mua hàng</h1>
 
-    useEffect(() => {
-        if (currentUser) {
-            dispatch(billCart(currentUser));
-        }
-    }, [currentUser]);
-
-
-
-    let totalMoney = 0;
-
-    return (
-        <>
-
-            <table>
-                <tr>
-                    <th>Trạng thái</th>
-                    <th>Tổng tiền</th>
-                    <th>Ngày thanh toán</th>
-                    <th>so tien da tieu cho E shoper:</th>
-                </tr>
-
-                {history && history.map(item => (
-
-                    <tr key={item.id}>
-                        <td>{item.status}</td>
-                        <td>{item.totalMoney}</td>
-                        <td>{item.date}</td>
-                        <input type="hidden" value={totalMoney += item.totalMoney}/>
-                        <button onClick={() => handleDetail(item.id)}>chi tiet don hang</button>
-                    </tr>
-                ))}
-
-                {/*{detailHistory && detailHistory.map(item => (*/}
-                {/*    <tr key={item.id}>*/}
-                {/*        <td>{item.name}</td>*/}
-                {/*        <td>{item.price}</td>*/}
-                {/*        <td>{item.quantity}</td>*/}
-                {/*        <td>{item.image}</td>*/}
-                {/*    </tr>*/}
-                {/*))}*/}
-                <DetailHistory/>
-
-
-
-
-                <td>{totalMoney}</td>
-            </table>
-        </>
-    )
-}
+    <TableControl
+        header={[
+            { key: "id", name: "#" },
+            { key: "total", name: "Số tiền" },
+            { key: "date", name: "Ngày tháng" },
+            { key: "status", name: "Trạng thái" },
+            { key: "button", name: "Chi tiết" }
+        ]}
+        itens={history && history.map(item =>({
+            id: item.id,
+            total: item.totalMoney,
+            date: item.date,
+            status:item.status,
+            button:<Button onClick={() => handleDetail(item.id)}>Xem</Button>
+        }))}
+    />
+    </div>
+    <div style={{width:"50%"}}>
+        <DetailHistory />
+    </div>
+    </div>
+);
+};
 
 export default Historys;

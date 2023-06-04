@@ -76,13 +76,14 @@ const ListClient = () => {
             price: price
         }
         if (user){
-            console.log(data,555)
             dispatch(addCart(data))
-            MySwal.fire({
-                icon: 'success',
-                title: 'Thêm vào giỏ hàng thành công ^^',
-                timer: 1500,
-            })
+            .then(() => {
+                MySwal.fire({
+                    icon: 'success',
+                    title: 'Thêm vào giỏ hàng thành công ^^',
+                    timer: 1500,
+                });
+            });
         }else{
             setIsOpen(true)
         }

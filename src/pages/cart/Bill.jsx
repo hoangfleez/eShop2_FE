@@ -15,7 +15,6 @@ const Bill = () => {
     const cart = useSelector(state => {
         return state.cart.cart;
     });
-    console.log(cart,333333);
     let user = useSelector(({user}) => {
         return user.currentUser;
     })
