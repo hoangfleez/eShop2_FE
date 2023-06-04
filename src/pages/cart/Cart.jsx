@@ -80,6 +80,7 @@ const CartDetail = () => {
                         <table className="table table-bordered text-center mb-0">
                             <thead className="bg-secondary text-dark">
                             <tr>
+                                <th></th>
                                 <th>Sản phẩm</th>
                                 <th>Giá</th>
                                 <th>Số lượng</th>
@@ -92,7 +93,8 @@ const CartDetail = () => {
                             <tr>
                             
                                 <td className="align-middle"><img src={item.product.image} alt=""
-                                            style={{width: 120, height:80}}/> {item.product.name}</td>
+                                            style={{width: 120, height:80, objectFit:"cover"}}/> </td>
+                                <td className="align-middle"> {item.product.name}</td>
                                 <td className="align-middle">{item.price}</td>
                                 <td className="align-middle">
                                     <div className="input-group quantity mx-auto" style={{width: 135, flexWrap:"nowrap", alignItems:"center"}}>
