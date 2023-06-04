@@ -8,13 +8,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "@mui/icons-material";
+import { LockOpen, Login, ShoppingCart } from "@mui/icons-material";
 import FooComponent from "../Components/Marquee"
 import {searchCategoryProduct, searchProduct} from "../sevives/productService.js";
 import {getCategory} from "../sevives/categoryService.js";
 import UserAvatar from "./Avatar";
 import { Button } from "@mui/material";
-import { useState } from "react";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -22,14 +22,18 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
-  
+
   const [isOpen,setIsOpen] = React.useState(false);
 
   const handleModal = ()=>{
     setIsOpen(true);
   }
 
-  
+  const [openMoadl, setOpenMoadl] = React.useState(false);
+
+
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
 
@@ -45,6 +49,7 @@ const Navbar = () => {
     localStorage.clear();
     dispatch(logout());
     navigate("/")
+    setIsOpen(false);
   };
 
   let handleInput = (e) =>{
@@ -129,6 +134,7 @@ const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div
+                style={{backgroundColor:"white"}}
                 className="collapse navbar-collapse justify-content-between"
                 id="navbarCollapse"
               >
@@ -234,6 +240,7 @@ const Navbar = () => {
                   <div className="navbar-nav ml-auto py-0">
                     <Button onClick={handleModal} >
                     Đăng nhập
+                    <Login/>
                     </Button>
                       <ModalLogin open={isOpen} close={setIsOpen} />
                   </div>

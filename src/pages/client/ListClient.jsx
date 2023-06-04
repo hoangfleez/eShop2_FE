@@ -77,11 +77,13 @@ const ListClient = () => {
         }
         if (user){
             dispatch(addCart(data))
-            MySwal.fire({
-                icon: 'success',
-                title: 'Thêm vào giỏ hàng thành công ^^',
-                timer: 1500,
-            })
+            .then(() => {
+                MySwal.fire({
+                    icon: 'success',
+                    title: 'Thêm vào giỏ hàng thành công ^^',
+                    timer: 1500,
+                });
+            });
         }else{
             setIsOpen(true)
         }

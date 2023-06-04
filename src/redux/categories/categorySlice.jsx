@@ -4,7 +4,9 @@ import {getCategory} from "../../sevives/categoryService.js";
 
 
 const initialState = {
-    category:[]
+    category:[],
+
+
 }
 const categorySlice = createSlice({
         name:'category',

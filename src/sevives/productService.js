@@ -24,8 +24,7 @@ export const addProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
     'products/deleteProducts',
     async (id) => {
-
-       let abc = await customAPI.delete(`products/${id}`);
+    let abc = await customAPI.delete(`products/${id}`);
         console.log(abc)
         return id;
     }

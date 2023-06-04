@@ -1,9 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     addCart,
-    deleteCart,
+    deleteCart, detailHistoryCart,
     getCart,
-    historyCart,
     increaseCart,
     paymentCart,
     reduceCart
@@ -14,7 +13,6 @@ import {
 
 const initialState = {
     cart:[],
-    historyCart: []
 }
 
 const cartSlice = createSlice({
@@ -50,9 +48,10 @@ const cartSlice = createSlice({
                 state.cart = action.payload;
             });
 
-            builder.addCase(historyCart.fulfilled,(state,action) => {
-                state.historyCart = action.payload;
+            builder.addCase(detailHistoryCart.fulfilled,(state,action) => {
+                state.cart = action.payload;
             });
+
 
         }
     }

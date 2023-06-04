@@ -41,10 +41,12 @@ const defaultTheme = createTheme();
 
 export default function SignIn(props) {
 
-//  console.log(props)
+
   const [message, setMessage] = React.useState("");
 
   const dispatch = useDispatch();
+
+
 
   const submit = (user) => {
     dispatch(login(user)).then((data) => {
@@ -54,7 +56,8 @@ export default function SignIn(props) {
       else if (data.payload === "User is not exist") {
         setMessage("Tài khoản không tồn tại!");
       } else{
-
+        
+        
       }
     });
   };
