@@ -15,6 +15,7 @@ import { Form, Formik, Field, ErrorMessage } from "formik";
 import { register } from "../../sevives/useService";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearProgress } from "@mui/material";
+import LoginWithGG from "./LoginWithGG";
 
 function Copyright(props) {
   return (
@@ -64,7 +65,7 @@ export default function SignUp(props) {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -152,6 +153,7 @@ export default function SignUp(props) {
               </Form>
             )}
           </Formik>
+          <LoginWithGG/>
         </Box>
         <Copyright sx={{ mt: 5, mb: 5 }} />
       </Container>

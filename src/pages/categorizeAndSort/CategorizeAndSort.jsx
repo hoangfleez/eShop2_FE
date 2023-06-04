@@ -29,7 +29,7 @@ const CategorizeAndSort = () => {
             width: "100%",
           }}
         >
-          <i class="fa-solid fa-bars"></i>
+          <i className="fa-solid fa-bars"></i>
           <span>Tất cả danh mục</span>
         </div>
         <div style={{ marginLeft: "40px" }}>
