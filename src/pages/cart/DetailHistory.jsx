@@ -1,17 +1,28 @@
 import {useDispatch, useSelector} from "react-redux";
 import React from "react";
+import { IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
-const DetailHistory = () => {
+const DetailHistory = (props) => {
+    console.log(props)
     
     const detailHistory = useSelector(state => {
         return state.cart.cart.map(item => item.product);
     });
-    console.log(detailHistory,2222)
+    const handleClose = () =>{
+        props.close("none")
+    }
+    console.log(handleClose)
     let totalMoney = 0;
 
     return (
-        <div style={{ width:"100%", height:"100%", padding:"20px"}}>
-        <h3>Chi tiết hóa đơn</h3>
+        <div style={{ width:"100%", height:"100%", padding:"20px", display:props.style}}>
+        <div style={{display:"flex", justifyContent:"space-evenly"}}>   
+            <h3>Chi tiết hóa đơn</h3>
+            <IconButton onClick={handleClose}>
+                <Close/>
+            </IconButton>
+        </div>
             <div className="box-bill" style={{width:"70%", marginLeft:"10px"}}>
             <div className="container">
                 <div className="row">
@@ -89,10 +100,10 @@ const DetailHistory = () => {
                                     <small style={{color:"red"}}>*Số tiền thanh toán đã cộng thêm 10% tiền thuế.</small>
                                     <br />
                                     <small style={{color:"red"}}>*Đóng thuế là trách nhiệm và nghĩa vụ của mỗi công dân!</small>
-                                    <div style={{padding:"50px", display:"flex", justifyContent:"center", alignItems:"center", color:"green"}}>
+                                    {/* <div style={{padding:"50px", display:"flex", justifyContent:"center", alignItems:"center", color:"green"}}>
                                     <i class="fa-solid fa-check fa-2xl"></i>
                                         <h2>Đã thu</h2>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

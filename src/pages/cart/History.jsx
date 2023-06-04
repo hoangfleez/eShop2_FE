@@ -13,6 +13,10 @@ import { TableControl } from "react-bootstrap-table-control";
 
 const Historys = () => {
 const dispatch = useDispatch();
+const [style, setStyle] = useState("none")
+const handleStyle = () =>{
+    setStyle("block")
+}
 
 const currentUser = useSelector(({ user }) => {
     return user.currentUser.idUser;
@@ -23,7 +27,8 @@ const history = useSelector((state) => {
 });
         
 const handleDetail = (id) => {
-    dispatch(detailHistoryCart(id));
+    dispatch(detailHistoryCart(id)).then(() => {handleStyle()})
+    
 };
 
 useEffect(() => {
@@ -57,7 +62,7 @@ return (
     />
     </div>
     <div style={{width:"50%"}}>
-        <DetailHistory />
+        <DetailHistory style={style} close={setStyle}/>
     </div>
     </div>
 );

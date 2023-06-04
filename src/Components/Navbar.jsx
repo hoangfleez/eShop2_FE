@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { logout } from "../sevives/useService";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "@mui/icons-material";
+import { LockOpen, Login, ShoppingCart } from "@mui/icons-material";
 import FooComponent from "../Components/Marquee"
 import {searchCategoryProduct, searchProduct} from "../sevives/productService.js";
 import {getCategory} from "../sevives/categoryService.js";
@@ -240,6 +240,7 @@ const Navbar = () => {
                   <div className="navbar-nav ml-auto py-0">
                     <Button onClick={handleModal} >
                     Đăng nhập
+                    <Login/>
                     </Button>
                       <ModalLogin open={isOpen} close={setIsOpen} />
                   </div>
