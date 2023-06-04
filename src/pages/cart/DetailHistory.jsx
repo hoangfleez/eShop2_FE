@@ -7,7 +7,6 @@ const DetailHistory = () => {
         return state.cart.cart.map(item => item.product);
     });
 
-
     let totalMoney = 0;
 
     return (
@@ -32,7 +31,6 @@ const DetailHistory = () => {
                     </tr>
                 ))}
                 <td> tổng thiêt hại: {totalMoney}</td>
-
 
             </table>
         </>
