@@ -76,6 +76,7 @@ const ListClient = () => {
             price: price
         }
         if (user){
+            console.log(data,555)
             dispatch(addCart(data))
             MySwal.fire({
                 icon: 'success',

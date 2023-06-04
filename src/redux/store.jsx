@@ -4,6 +4,7 @@ import productReducer from "./products/productSlice";
 import categoryReducer from "./categories/categorySlice";
 import cartReducer from "./cart/cartSlice";
 import adminReducer from "./user/adminSlice.jsx";
+import billReducer from "./bill/billSlice.jsx"
 
 
 const store = configureStore({
@@ -12,7 +13,8 @@ const store = configureStore({
         user:userReducer,
         category: categoryReducer,
         cart: cartReducer,
-        admin: adminReducer
+        admin: adminReducer,
+        bill: billReducer
     }
 })
 

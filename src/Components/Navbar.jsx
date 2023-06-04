@@ -22,14 +22,18 @@ const Navbar = () => {
   const user = useSelector(({ user }) => {
     return user.currentUser;
   });
-  
+
   const [isOpen,setIsOpen] = React.useState(false);
 
   const handleModal = ()=>{
     setIsOpen(true);
   }
 
-  
+  const [openMoadl, setOpenMoadl] = React.useState(false);
+
+
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = React.useState('')
 
