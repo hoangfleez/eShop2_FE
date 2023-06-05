@@ -4,8 +4,8 @@ import customAPI from "./customAPI";
 
 export const billCart = createAsyncThunk(
     'bill/orderUser',
-    async (id)=>{
-        const res = await customAPI.get(`/order/bill/${id}`);
+    async ()=>{
+        const res = await customAPI.get(`/order/bill`);
         return res.data;
     }
 )

@@ -18,12 +18,12 @@ export default function SimpleSlider() {
     <div className="custom">
       <Slider {...settings}>
         <img
-          src="https://static.vecteezy.com/system/resources/previews/002/006/605/original/paper-art-shopping-online-on-smartphone-and-new-buy-sale-promotion-pink-backgroud-for-banner-market-ecommerce-free-vector.jpg"
+          src="https://st.depositphotos.com/1001001/4536/i/600/depositphotos_45364743-stock-photo-young-woman-at-beach.jpg"
           alt=""
         />
 
         <img
-          src="https://img.freepik.com/free-vector/template-banner-online-store-with-shopping-cart-with-purchases-boxes-delivery-from-supermarket-vector-illustration_548887-104.jpg"
+          src="https://img.freepik.com/premium-vector/summer-sale-banner-template-design-with-woman-bikini-sits-beach-illustration_468966-129.jpg"
           alt=""
         />
 

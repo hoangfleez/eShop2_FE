@@ -113,13 +113,13 @@ const ListClient = () => {
                         <span>Sắp xếp theo giá</span>
                     </div>
                     <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center", cursor: "pointer"}}
-                        onClick={() => handleSort("desc", "price")}
+                        onClick={() => handleSort("asc", "price")}
                     >
                         <span>Giá tăng dần</span>
                         <i className="fa-solid fa-arrow-up"></i>
                     </div>
                     <div style={{padding:10, display:"flex", justifyContent:"space-evenly",alignItems:"center",cursor: "pointer"}}
-                        onClick={() => handleSort("asc", "price")}
+                        onClick={() => handleSort("desc", "price")}
                     >   <span>Giá dảm dần</span>
                         <i className="fa-sharp fa-solid fa-arrow-down">
                         </i>

@@ -12,17 +12,19 @@ import ModalEdit from "./ModalEdit.jsx";
 import "./List.css";
 import AddProduct from "./AddProduct.jsx";
 import ListUsers from "../user/ListUsers.jsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import CategorizeAndSort from "../categorizeAndSort/CategorizeAndSort.jsx";
 import {CSVLink, CSVDownload} from "react-csv";
 import Papa from "papaparse"
 import Excel from "./Excel.jsx";
+import {Button} from "@mui/material";
 
 
 const List = () => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
     const [isShowModalListUsers, setIsShowModalListUsers] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
@@ -89,27 +91,31 @@ const List = () => {
         setDataProductEdit(product);
         setShowEditModal(true);
     };
-
-
+    const handleExcel = () =>{
+        navigate("excel")
+    }
 
     return (
         <>
 
             <div>
 
-                <button
+                <Button
                     className="btn-btn-success"
                     onClick={() => setIsShowModalAddNew(true)}
                 >
                     Add new Product
-                </button>
+                </Button>
 
-                <button
+                <Button
                     className="btn-btn-success"
                     onClick={() => setIsShowModalListUsers(true)}
                 >
                     List Users
-                </button>
+                </Button>
+                <Button onClick={handleExcel}>
+                    Excel
+                </Button>
 
             </div>
 
@@ -177,18 +183,12 @@ const List = () => {
                                 </div>
 
                                 <div className="home-product-item__action">
-                    <span className="home-product-item__like">
-                      <i className="home-product-item__like-icon-empty fa-solid fa-heart"></i>
-                      <i className="home-product-item__like-icon-fill fa-regular fa-heart"></i>
-                    </span>
                                 </div>
                                 <div className="home-product-item_origin">
                     <span className="home-product-item__brand">
                       {item.category.name}
                     </span>
-                                    <span className="home-product-item_origin-name">
-                      Nhật bản
-                    </span>
+
                                 </div>
                                 <div
                                     style={{
@@ -229,7 +229,6 @@ const List = () => {
                 handleClose={handleClose}
                 handleUpdateProduct={handleUpdateProduct}
             />
-            <Excel/>
 
             <ListUsers show={isShowModalListUsers} handleClose={handleClose}/>
 

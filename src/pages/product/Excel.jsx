@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {topFiveProducts} from "../../sevives/productService.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { TableControl } from 'react-bootstrap-table-control';
 import Papa from "papaparse";
 import {CSVLink} from "react-csv";
+import { Button } from "@mui/material";
 
 const Excel = () => {
     const dispatch = useDispatch();
@@ -85,45 +88,43 @@ const Excel = () => {
 
     return (
         <>
-            <div>
-                <label
-                    htmlFor="test"
-                    className="btn btn-warning"
-                >
-                    <i className="fa-solid fa-file-import"></i>
-                    Import
-                </label>
+            <div style={{display:"flex" ,alignItems:"flex-start"}}>
+                <Button>
+                    <label
+                        htmlFor="test"
+                        className="btn btn-warning"
+                    >
+                        <i className="fa-solid fa-file-import"></i>
+                        Import
+                    </label>
+                </Button>
                 <input id="test" type="file" hidden
                        onChange={(event) => handleImportCSV(event)}/>
-                <CSVLink
-                    data={dataExport}
-                    filename={"my-file.csv"}
-                    className="btn btn-primary"
-                    asyncOnClick={true}
-                    onClick={getProductsExport}
-                ><i className="fa-solid fa-download"></i>
-                    Export
-                </CSVLink>
+                <Button>
+                    <CSVLink
+                        data={dataExport}
+                        filename={"my-file.csv"}
+                        className="btn btn-primary"
+                        asyncOnClick={true}
+                        onClick={getProductsExport}
+                    ><i className="fa-solid fa-download"></i>
+                        Export
+                    </CSVLink>
+                </Button>
             </div>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-            </tr>
-            </thead>
-            <tbody>
-            {Array.isArray(topProducts) &&
-                topProducts.map((item) => (
-                    <tr key={item.id}>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.quantity}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+            <TableControl
+                header={[
+                    { key: "name", name: "Name" },
+                    { key: "price", name: "Price" },
+                    { key: "quantity", name: "Quantity" }
+                ]}
+                itens={Array.isArray(topProducts) &&
+                    topProducts.map((item) => ({
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity
+                    }))}
+            />
         </>
     );
 };

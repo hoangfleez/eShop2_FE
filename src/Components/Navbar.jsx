@@ -100,13 +100,13 @@ const Navbar = () => {
                   value={name}
                   onChange={handleInput}
                 />
-                <button type="submit" onClick={handleSearch}>
+                <Button type="submit" onClick={handleSearch}>
                 <div className="input-group-append">
                   <span className="input-group-text bg-transparent text-pink">
                     <i className="fa fa-search"></i>
                   </span>
                 </div>
-                </button>
+                </Button>
               </div>
             </form>
           </div>

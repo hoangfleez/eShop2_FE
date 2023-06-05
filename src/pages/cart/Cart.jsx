@@ -149,7 +149,7 @@ const CartDetail = () => {
 
                             <div className="card-footer border-secondary bg-transparent">
                                 <div className="d-flex justify-content-between mt-2">
-                                    <h5 className="font-weight-bold">Tổng sản phẩm</h5>
+                                    <h5 className="font-weight-bold">Tổng tiền</h5>
                                     <h5 className="font-weight-bold">{total}</h5>
                                 </div>
                                 <button className="btn btn-block btn-success my-3 py-3" onClick={toPayment}>Tiến hành thanh toán</button>

@@ -33,7 +33,7 @@ const handleDetail = (id) => {
 
 useEffect(() => {
     if (currentUser) {
-    dispatch(billCart(currentUser));
+    dispatch(billCart());
     }
 }, [currentUser]);
 

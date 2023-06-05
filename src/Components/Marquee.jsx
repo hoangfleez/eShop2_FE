@@ -10,7 +10,7 @@ export default function FooComponent() {
       }}
     >
       <Marquee>
-        Chào mừng đến với thiên đường mua sắm E-Shop - Sản phẩm của nhóm ...
+        Chào mừng đến với thiên đường mua sắm E-Shop - Sản phẩm của nhóm Cà Bổn
         C1222I1     -    Templet này là sản phẩm kiến tiền của Linh tiu tồ!    
       </Marquee>
     </div>

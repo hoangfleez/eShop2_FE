@@ -67,11 +67,12 @@ const Bill = () => {
                                             <td>
                                                 <strong>Sản phẩm</strong>
                                             </td>
-                                            <td className="text-center">
-                                                <strong>Giá</strong>
-                                            </td>
+
                                             <td className="text-center">
                                                 <strong>Số lượng</strong>
+                                            </td>
+                                            <td className="text-center">
+                                                <strong>Giá</strong>
                                             </td>
                                             <td className="text-right">
                                                 <strong>Thành tiền</strong>
