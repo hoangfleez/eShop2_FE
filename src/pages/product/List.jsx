@@ -12,14 +12,17 @@ import ModalEdit from "./ModalEdit.jsx";
 import "./List.css";
 import AddProduct from "./AddProduct.jsx";
 import ListUsers from "../user/ListUsers.jsx";
-import {Link} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import CategorizeAndSort from "../categorizeAndSort/CategorizeAndSort.jsx";
 import {CSVLink, CSVDownload} from "react-csv";
 import Papa from "papaparse"
 import Excel from "./Excel.jsx";
+import { Button } from "@mui/material";
 
 
 const List = () => {
+    const navigate = useNavigate();
+
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
     const [isShowModalListUsers, setIsShowModalListUsers] = useState(false);
     const dispatch = useDispatch();
@@ -90,26 +93,30 @@ const List = () => {
         setShowEditModal(true);
     };
 
-
+    const handleExcel = () =>{
+        navigate("excel");
+    }
 
     return (
         <>
-
+            
             <div>
 
-                <button
-                    className="btn-btn-success"
+                <Button
                     onClick={() => setIsShowModalAddNew(true)}
                 >
-                    Add new Product
-                </button>
+                    Thêm sản phẩm
+                </Button>
 
-                <button
+                <Button
                     className="btn-btn-success"
                     onClick={() => setIsShowModalListUsers(true)}
                 >
-                    List Users
-                </button>
+                    Danh sách người dùng
+                </Button>
+                <Button onClick={handleExcel}>
+                    Excel
+                </Button>
 
             </div>
 
@@ -128,7 +135,7 @@ const List = () => {
                             alignItems: "center",
                             cursor: "pointer"
                         }}
-                             onClick={() => handleSort("desc", "price")}
+                             onClick={() => handleSort("asc", "price")}
                         >
                             <span>Giá tăng dần</span>
                             <i className="fa-solid fa-arrow-up"></i>
@@ -140,7 +147,7 @@ const List = () => {
                             alignItems: "center",
                             cursor: "pointer"
                         }}
-                             onClick={() => handleSort("asc", "price")}
+                             onClick={() => handleSort("desc", "price")}
                         ><span>Giá dảm dần</span>
                             <i className="fa-sharp fa-solid fa-arrow-down">
                             </i>
@@ -166,7 +173,7 @@ const List = () => {
 
                                 <div className="home-product-item__price">
                     <span className="home-product-item__price-old">
-                      {item.price}$
+                        ${item.price}
                     </span>
                                     <span
                                         style={{marginLeft: "100px"}}
@@ -186,9 +193,7 @@ const List = () => {
                     <span className="home-product-item__brand">
                       {item.category.name}
                     </span>
-                                    <span className="home-product-item_origin-name">
-                      Nhật bản
-                    </span>
+
                                 </div>
                                 <div
                                     style={{
@@ -222,14 +227,13 @@ const List = () => {
                 </div>
             </div>
             <AddProduct show={isShowModalAddNew} handleClose={handleClose}/>
-
             <ModalEdit
                 show={showEditModal}
                 dataProductEdit={dataProductEdit}
                 handleClose={handleClose}
                 handleUpdateProduct={handleUpdateProduct}
             />
-            <Excel/>
+            
 
             <ListUsers show={isShowModalListUsers} handleClose={handleClose}/>
 
@@ -251,6 +255,7 @@ const List = () => {
                 containerClassName="pagination"
                 activeClassName="active"
             />
+            
         </>
     );
 };

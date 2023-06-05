@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { ClassSharp, History } from "@mui/icons-material";
 import Bill from "./pages/cart/Bill.jsx";
 import Historys from "./pages/cart/History.jsx";
+import Excel from "./pages/product/Excel";
+import Admin from "./admin/Admin";
 
 // import { List } from "./pages/product/List";
 
@@ -28,8 +30,9 @@ return (
             <Route path={"/history"} element={<Historys />} />
             {user && user.role === "admin" ? (
                 <>
-                <Route path={"/admin"} element={<List />}>
-                    <Route path={"add-product"} element={<AddProduct />} />
+                <Route path={"/admin"} element={<Admin />}>
+                    <Route path={""} element={<List />} />
+                    <Route path={"excel"}  element={<Excel/>} />
                 </Route>
                 </>
             ) : (

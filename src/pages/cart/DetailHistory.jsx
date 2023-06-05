@@ -12,7 +12,6 @@ const DetailHistory = (props) => {
     const handleClose = () =>{
         props.close("none")
     }
-    console.log(handleClose)
     let totalMoney = 0;
 
     return (
