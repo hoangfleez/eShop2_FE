@@ -5,12 +5,13 @@ import {
     findProductById,
     getProduct,
     editProduct,
-    searchProduct, searchCategoryProduct, fetchProducts
+    searchProduct, searchCategoryProduct, fetchProducts, topFiveProducts
 } from "../../sevives/productService.js";
 
 const initialState = {
     list: [],
-    currentProduct: {}
+    currentProduct: {},
+    excel: []
 }
 const productSlice = createSlice({
     name: 'products',
@@ -53,6 +54,11 @@ const productSlice = createSlice({
 
         builder.addCase(searchCategoryProduct.fulfilled, (state, action) => {
             state.list = action.payload;
+
+        });
+
+        builder.addCase(topFiveProducts.fulfilled, (state, action) => {
+            state.excel = action.payload;
 
         });
     }

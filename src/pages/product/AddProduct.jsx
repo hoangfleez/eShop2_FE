@@ -169,4 +169,7 @@ const AddProduct = (props) => {
     )
 }
 
-export default AddProduct
+export default AddProduct;
+
+
+

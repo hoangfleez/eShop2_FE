@@ -73,3 +73,11 @@ export const searchCategoryProduct = createAsyncThunk(
         return response.data;
     }
 );
+
+export const topFiveProducts = createAsyncThunk(
+    'products/topFiveProducts',
+    async () => {
+        const response = await customAPI.get(`products/topFive/excel/file`);
+        return response.data;
+    }
+);
