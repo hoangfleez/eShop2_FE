@@ -89,42 +89,42 @@ const Excel = () => {
     return (
         <>
             <div style={{display:"flex" ,alignItems:"flex-start"}}>
-                <Button>
-                    <label
-                        htmlFor="test"
-                        className="btn btn-warning"
-                    >
-                        <i className="fa-solid fa-file-import"></i>
-                        Import
-                    </label>
-                </Button>
+            <Button>
+                <label
+                    htmlFor="test"
+                    className="btn btn-warning"
+                >
+                    <i className="fa-solid fa-file-import"></i>
+                    Import
+                </label>
+            </Button>
                 <input id="test" type="file" hidden
-                       onChange={(event) => handleImportCSV(event)}/>
-                <Button>
-                    <CSVLink
-                        data={dataExport}
-                        filename={"my-file.csv"}
-                        className="btn btn-primary"
-                        asyncOnClick={true}
-                        onClick={getProductsExport}
-                    ><i className="fa-solid fa-download"></i>
-                        Export
-                    </CSVLink>
-                </Button>
+                    onChange={(event) => handleImportCSV(event)}/>
+            <Button>       
+                <CSVLink
+                    data={dataExport}
+                    filename={"my-file.csv"}
+                    className="btn btn-primary"
+                    asyncOnClick={true}
+                    onClick={getProductsExport}
+                ><i className="fa-solid fa-download"></i>
+                    Export
+                </CSVLink>
+            </Button> 
             </div>
-            <TableControl
-                header={[
-                    { key: "name", name: "Name" },
-                    { key: "price", name: "Price" },
-                    { key: "quantity", name: "Quantity" }
-                ]}
-                itens={Array.isArray(topProducts) &&
-                    topProducts.map((item) => ({
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity
-                    }))}
-            />
+        <TableControl
+    header={[
+      { key: "name", name: "Name" },
+      { key: "price", name: "Price" },
+      { key: "quantity", name: "Quantity" }
+    ]}
+    itens={Array.isArray(topProducts) &&
+                topProducts.map((item) => ({
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                }))}
+  />
         </>
     );
 };

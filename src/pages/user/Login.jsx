@@ -49,6 +49,7 @@ export default function SignIn(props) {
 
 
   const submit = (user) => {
+    console.log(1)
     dispatch(login(user)).then((data) => {
       if (data.payload === "Password is wrong") {
         setMessage("Mật khẩu không đúng! Hãy nhập lại!");
@@ -56,8 +57,7 @@ export default function SignIn(props) {
       else if (data.payload === "User is not exist") {
         setMessage("Tài khoản không tồn tại!");
       } else{
-        
-        
+        props.close(false)
       }
     });
   };

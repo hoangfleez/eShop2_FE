@@ -12,19 +12,20 @@ import ModalEdit from "./ModalEdit.jsx";
 import "./List.css";
 import AddProduct from "./AddProduct.jsx";
 import ListUsers from "../user/ListUsers.jsx";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import CategorizeAndSort from "../categorizeAndSort/CategorizeAndSort.jsx";
 import {CSVLink, CSVDownload} from "react-csv";
 import Papa from "papaparse"
 import Excel from "./Excel.jsx";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 
 
 const List = () => {
+    const navigate = useNavigate();
+
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
     const [isShowModalListUsers, setIsShowModalListUsers] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [dataProductEdit, setDataProductEdit] = useState({});
@@ -91,27 +92,27 @@ const List = () => {
         setDataProductEdit(product);
         setShowEditModal(true);
     };
+
     const handleExcel = () =>{
-        navigate("excel")
+        navigate("excel");
     }
 
     return (
         <>
-
+            
             <div>
 
                 <Button
-                    className="btn-btn-success"
                     onClick={() => setIsShowModalAddNew(true)}
                 >
-                    Add new Product
+                    Thêm sản phẩm
                 </Button>
 
                 <Button
                     className="btn-btn-success"
                     onClick={() => setIsShowModalListUsers(true)}
                 >
-                    List Users
+                    Danh sách người dùng
                 </Button>
                 <Button onClick={handleExcel}>
                     Excel
@@ -134,7 +135,7 @@ const List = () => {
                             alignItems: "center",
                             cursor: "pointer"
                         }}
-                             onClick={() => handleSort("desc", "price")}
+                             onClick={() => handleSort("asc", "price")}
                         >
                             <span>Giá tăng dần</span>
                             <i className="fa-solid fa-arrow-up"></i>
@@ -146,7 +147,7 @@ const List = () => {
                             alignItems: "center",
                             cursor: "pointer"
                         }}
-                             onClick={() => handleSort("asc", "price")}
+                             onClick={() => handleSort("desc", "price")}
                         ><span>Giá dảm dần</span>
                             <i className="fa-sharp fa-solid fa-arrow-down">
                             </i>
@@ -172,7 +173,7 @@ const List = () => {
 
                                 <div className="home-product-item__price">
                     <span className="home-product-item__price-old">
-                      {item.price}$
+                        ${item.price}
                     </span>
                                     <span
                                         style={{marginLeft: "100px"}}
@@ -183,6 +184,10 @@ const List = () => {
                                 </div>
 
                                 <div className="home-product-item__action">
+                    <span className="home-product-item__like">
+                      <i className="home-product-item__like-icon-empty fa-solid fa-heart"></i>
+                      <i className="home-product-item__like-icon-fill fa-regular fa-heart"></i>
+                    </span>
                                 </div>
                                 <div className="home-product-item_origin">
                     <span className="home-product-item__brand">
@@ -222,13 +227,13 @@ const List = () => {
                 </div>
             </div>
             <AddProduct show={isShowModalAddNew} handleClose={handleClose}/>
-
             <ModalEdit
                 show={showEditModal}
                 dataProductEdit={dataProductEdit}
                 handleClose={handleClose}
                 handleUpdateProduct={handleUpdateProduct}
             />
+            
 
             <ListUsers show={isShowModalListUsers} handleClose={handleClose}/>
 
@@ -250,6 +255,7 @@ const List = () => {
                 containerClassName="pagination"
                 activeClassName="active"
             />
+            
         </>
     );
 };
